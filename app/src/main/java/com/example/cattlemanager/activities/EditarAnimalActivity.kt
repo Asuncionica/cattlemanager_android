@@ -5,6 +5,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.cattlemanager.databinding.ActivityCrearAnimalBinding
 import com.example.cattlemanager.model.AnimalRequest
+import com.example.cattlemanager.model.GranjaIdRequest
 import com.example.cattlemanager.model.GranjaRequest
 import com.example.cattlemanager.network.RetrofitClient
 import kotlinx.coroutines.CoroutineScope
@@ -52,7 +53,7 @@ class EditarAnimalActivity : AppCompatActivity() {
             raza = raza,
             sexo = sexo,
             fechaNacimiento = fecha,
-            granja = GranjaRequest(1)
+            granja = GranjaIdRequest(1)
         )
 
         val api = RetrofitClient.getAnimalApi(this)
