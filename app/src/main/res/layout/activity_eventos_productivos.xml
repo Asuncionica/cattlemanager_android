@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFDF5">
+
+    <TextView
+        android:id="@+id/tvTituloEventos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="📊 Producción"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:textColor="#2E7D32"
+        android:layout_marginBottom="12dp"/>
+
+    <TextView
+        android:id="@+id/tvSubtituloEventos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Gestiona los eventos productivos de la granja"
+        android:textSize="14sp"
+        android:textColor="#666666"
+        android:gravity="center"
+        android:layout_marginBottom="16dp"/>
+
+    <Button
+        android:id="@+id/btnCrearEvento"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="➕ Añadir evento productivo"
+        android:backgroundTint="#2E7D32"
+        android:textColor="#FFFFFF"
+        android:layout_marginBottom="10dp"/>
+
+    <TextView
+        android:id="@+id/tvInfoEventos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="👉 Pulsa un evento para ver el detalle o borrarlo"
+        android:textSize="14sp"
+        android:textColor="#555555"
+        android:gravity="center"
+        android:layout_marginBottom="10dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerEventos"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</LinearLayout>

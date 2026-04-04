@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tvTituloFormulario"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Formulario Animal"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginBottom="20dp"/>
+
+    <EditText
+        android:id="@+id/etIdentificador"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Identificador"
+        android:layout_marginBottom="12dp"/>
+
+    <EditText
+        android:id="@+id/etRaza"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Raza"
+        android:layout_marginBottom="12dp"/>
+
+    <EditText
+        android:id="@+id/etSexo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Sexo"
+        android:layout_marginBottom="12dp"/>
+
+    <EditText
+        android:id="@+id/etFecha"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Fecha nacimiento"
+        android:layout_marginBottom="20dp"/>
+
+    <Button
+        android:id="@+id/btnGuardar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Guardar"/>
+</LinearLayout>

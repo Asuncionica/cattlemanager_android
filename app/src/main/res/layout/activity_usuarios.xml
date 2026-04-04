@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tvTituloUsuarios"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="👷 Lista de Empleados"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginBottom="16dp"/>
+
+    <Button
+        android:id="@+id/btnCrearUsuario"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="➕ Añadir Empleado"
+        android:layout_marginBottom="12dp"/>
+
+    <TextView
+        android:id="@+id/tvInfoUsuarios"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="👉 Pulsa un empleado para ver su ficha"
+        android:textSize="14sp"
+        android:textColor="#555555"
+        android:gravity="center"
+        android:layout_marginBottom="10dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerUsuarios"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</LinearLayout>
