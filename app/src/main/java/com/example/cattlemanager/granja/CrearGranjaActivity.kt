@@ -9,42 +9,44 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-class EditarGranjaActivity : AppCompatActivity() {
+class CrearGranjaActivity : AppCompatActivity() {
     private lateinit var binding: ActivityEditarGranjaBinding
-    private var id: Long = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityEditarGranjaBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        id = intent.getLongExtra("id", 0)
-        binding.tvTituloFormularioGranja.text = "✏️ Editar Granja"
-        binding.btnGuardar.text = "Actualizar"
-        binding.etNombre.setText(intent.getStringExtra("nombre"))
-        binding.etUbicacion.setText(intent.getStringExtra("ubicacion"))
-        binding.etTelefono.setText(intent.getStringExtra("telefono"))
+        binding.tvTituloFormularioGranja.text = "➕ Crear Granja"
+        binding.btnGuardar.text = "Crear"
         binding.btnGuardar.setOnClickListener {
-            actualizar()
+            crearGranja()
         }
     }
-    private fun actualizar() {
+    private fun crearGranja() {
+        val nombre = binding.etNombre.text.toString().trim()
+        val ubicacion = binding.etUbicacion.text.toString().trim()
+        val telefono = binding.etTelefono.text.toString().trim()
+        if (nombre.isEmpty() || ubicacion.isEmpty() || telefono.isEmpty()) {
+            Toast.makeText(this, "Rellena todos los campos", Toast.LENGTH_SHORT).show()
+            return
+        }
         val request = GranjaRequest(
-            id = id,
-            nombre = binding.etNombre.text.toString().trim(),
-            ubicacion = binding.etUbicacion.text.toString().trim(),
-            telefono = binding.etTelefono.text.toString().trim()
+            id = 0,
+            nombre = nombre,
+            ubicacion = ubicacion,
+            telefono = telefono
         )
         val api = RetrofitClient.getGranjaApi(this)
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                api.actualizarGranja(id, request)
+                api.crearGranja(request)
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(this@EditarGranjaActivity, "Granja actualizada", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@CrearGranjaActivity, "Granja creada", Toast.LENGTH_SHORT).show()
                     finish()
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(this@EditarGranjaActivity, "Error al actualizar", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@CrearGranjaActivity, "Error al crear la granja", Toast.LENGTH_SHORT).show()
                 }
             }
         }

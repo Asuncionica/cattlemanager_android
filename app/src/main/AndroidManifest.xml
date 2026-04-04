@@ -37,6 +37,7 @@ xmlns:tools="http://schemas.android.com/tools">
         <activity android:name=".eventosproductivos.DetalleEventoProductivoActivity" />
         <activity android:name=".granja.GranjaActivity"/>
         <activity android:name=".granja.EditarGranjaActivity"/>
+        <activity android:name=".granja.CrearGranjaActivity" />
 
     </application>
 
