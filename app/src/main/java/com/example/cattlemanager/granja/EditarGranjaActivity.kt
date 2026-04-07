@@ -1,6 +1,8 @@
 package com.example.cattlemanager.granja
+
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.cattlemanager.databinding.ActivityEditarGranjaBinding
 import com.example.cattlemanager.model.GranjaRequest
@@ -9,42 +11,110 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+
 class EditarGranjaActivity : AppCompatActivity() {
+
     private lateinit var binding: ActivityEditarGranjaBinding
-    private var id: Long = 0
+
+    private var usuarioId: Long = -1L
+    private var granjaId: Long = -1L
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityEditarGranjaBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        id = intent.getLongExtra("id", 0)
-        binding.tvTituloFormularioGranja.text = "✏️ Editar Granja"
-        binding.btnGuardar.text = "Actualizar"
-        binding.etNombre.setText(intent.getStringExtra("nombre"))
-        binding.etUbicacion.setText(intent.getStringExtra("ubicacion"))
-        binding.etTelefono.setText(intent.getStringExtra("telefono"))
-        binding.btnGuardar.setOnClickListener {
-            actualizar()
+
+        usuarioId = intent.getLongExtra("usuarioId", -1L)
+        granjaId = intent.getLongExtra("id", -1L)
+
+        val nombre = intent.getStringExtra("nombre") ?: ""
+        val ubicacion = intent.getStringExtra("ubicacion") ?: ""
+        val telefono = intent.getStringExtra("telefono") ?: ""
+
+        binding.etNombreGranja.setText(nombre)
+        binding.etUbicacion.setText(ubicacion)
+        binding.etTelefono.setText(telefono)
+
+        binding.btnActualizarGranja.setOnClickListener {
+            actualizarGranja()
+        }
+
+        binding.btnEliminarGranja.setOnClickListener {
+            AlertDialog.Builder(this)
+                .setTitle("Eliminar granja")
+                .setMessage("¿Seguro que quieres eliminar esta granja?")
+                .setPositiveButton("Sí") { _, _ ->
+                    eliminarGranja()
+                }
+                .setNegativeButton("No", null)
+                .show()
         }
     }
-    private fun actualizar() {
+
+    private fun actualizarGranja() {
+        val nombre = binding.etNombreGranja.text.toString().trim()
+        val ubicacion = binding.etUbicacion.text.toString().trim()
+        val telefono = binding.etTelefono.text.toString().trim()
+
+        if (nombre.isEmpty() || ubicacion.isEmpty() || telefono.isEmpty()) {
+            Toast.makeText(this, "Completa todos los campos", Toast.LENGTH_SHORT).show()
+            return
+        }
+
         val request = GranjaRequest(
-            id = id,
-            nombre = binding.etNombre.text.toString().trim(),
-            ubicacion = binding.etUbicacion.text.toString().trim(),
-            telefono = binding.etTelefono.text.toString().trim()
+            nombre = nombre,
+            ubicacion = ubicacion,
+            telefono = telefono
         )
+
         val api = RetrofitClient.getGranjaApi(this)
+
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                api.actualizarGranja(id, request)
+                api.actualizarGranja(usuarioId, granjaId, request)
+
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(this@EditarGranjaActivity, "Granja actualizada", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this@EditarGranjaActivity,
+                        "Granja actualizada correctamente",
+                        Toast.LENGTH_SHORT
+                    ).show()
                     finish()
                 }
             } catch (e: Exception) {
-                e.printStackTrace()
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(this@EditarGranjaActivity, "Error al actualizar", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this@EditarGranjaActivity,
+                        "Error al actualizar la granja",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }
+    }
+
+    private fun eliminarGranja() {
+        val api = RetrofitClient.getGranjaApi(this)
+
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                api.eliminarGranja(usuarioId, granjaId)
+
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(
+                        this@EditarGranjaActivity,
+                        "Granja eliminada correctamente",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    finish()
+                }
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(
+                        this@EditarGranjaActivity,
+                        "Error al eliminar la granja",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }
