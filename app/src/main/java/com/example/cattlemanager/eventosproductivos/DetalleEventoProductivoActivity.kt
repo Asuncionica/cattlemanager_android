@@ -23,6 +23,8 @@ class DetalleEventoProductivoActivity : AppCompatActivity() {
 
         eventoId = intent.getLongExtra("id", 0)
 
+        binding.btnVolver.setOnClickListener { finish() }
+
         binding.tvTipoDetalle.text = intent.getStringExtra("tipo") ?: ""
         binding.tvFechaDetalle.text = "Fecha: " + (intent.getStringExtra("fecha") ?: "")
         binding.tvDescripcionDetalle.text = "Descripción: " + (intent.getStringExtra("descripcion") ?: "")

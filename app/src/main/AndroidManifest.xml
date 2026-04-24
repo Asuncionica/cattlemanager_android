@@ -33,11 +33,26 @@ xmlns:tools="http://schemas.android.com/tools">
         <activity android:name=".usuarios.CrearUsuarioActivity"/>
         <activity android:name=".usuarios.EditarUsuarioActivity" />
         <activity android:name=".eventosproductivos.EventoProductivoActivity" />
+        <activity android:name=".eventosproductivos.EventosProductivosPorTipoActivity" />
         <activity android:name=".eventosproductivos.CrearEventoProductivoActivity" />
         <activity android:name=".eventosproductivos.DetalleEventoProductivoActivity" />
         <activity android:name=".granja.GranjaActivity"/>
         <activity android:name=".granja.EditarGranjaActivity"/>
         <activity android:name=".granja.CrearGranjaActivity" />
+        <activity android:name=".eventosreproductivos.EventoReproductivoActivity" />
+        <activity android:name=".eventosreproductivos.EventosReproductivosPorTipoActivity" />
+        <activity android:name=".eventosreproductivos.CrearEventoReproductivoActivity" />
+        <activity android:name=".eventosreproductivos.DetalleEventoReproductivoActivity" />
+        <activity android:name=".eventossanitarios.EventoSanitarioActivity" />
+        <activity android:name=".eventossanitarios.EventosSanitariosPorTipoActivity" />
+        <activity android:name=".eventossanitarios.CrearEventoSanitarioActivity" />
+        <activity android:name=".eventossanitarios.DetalleEventoSanitarioActivity" />
+        <activity android:name=".alertas.AlertasVeterinariaActivity" />
+        <activity android:name=".alertas.CrearAlertaVeterinariaActivity" />
+        <activity android:name=".tareas.TareaActivity" />
+        <activity android:name=".tareas.CrearTareaActivity" />
+        <activity android:name=".tareas.DetalleTareaActivity" />
+        <activity android:name=".tareas.TareasPendientesActivity" />
 
     </application>
 

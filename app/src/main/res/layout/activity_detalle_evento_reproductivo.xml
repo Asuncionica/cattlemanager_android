@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFDF5">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="16dp"
+        android:background="@color/primary">
+
+        <Button
+            android:id="@+id/btnVolver"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="←"
+            android:textSize="18sp"
+            android:backgroundTint="@android:color/transparent"
+            android:textColor="#FFFFFF"
+            android:minWidth="0dp"
+            android:paddingHorizontal="4dp"/>
+
+        <TextView
+            android:id="@+id/tvTipoDetalleReproductivo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Detalle"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"/>
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="#FFFFFF"
+                android:padding="20dp"
+                android:layout_marginBottom="20dp">
+
+                <TextView
+                    android:id="@+id/tvAnimalDetalleReproductivo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Animal: ---"
+                    android:textSize="18sp"
+                    android:textColor="#333333"
+                    android:layout_marginBottom="14dp"/>
+
+                <TextView
+                    android:id="@+id/tvFechaDetalleReproductivo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Fecha: ---"
+                    android:textSize="18sp"
+                    android:textColor="#333333"
+                    android:layout_marginBottom="14dp"/>
+
+                <TextView
+                    android:id="@+id/tvDescripcionDetalleReproductivo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Descripción: ---"
+                    android:textSize="16sp"
+                    android:textColor="#555555"/>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnBorrarReproductivo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Borrar evento"
+                android:backgroundTint="#C62828"
+                android:textColor="#FFFFFF"
+                android:padding="14dp"
+                android:textSize="16sp"/>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

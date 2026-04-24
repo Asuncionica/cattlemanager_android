@@ -13,7 +13,7 @@
             android:id="@+id/tvTituloFormularioGranja"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="✏️ Editar Granja"
+            android:text="Editar Granja"
             android:textSize="26sp"
             android:textStyle="bold"
             android:textColor="#2E7D32"
@@ -66,7 +66,7 @@
             android:id="@+id/btnGuardar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="💾 Guardar"
+            android:text="Guardar"
             android:backgroundTint="#2E7D32"
             android:textColor="#FFFFFF"/>
     </LinearLayout>

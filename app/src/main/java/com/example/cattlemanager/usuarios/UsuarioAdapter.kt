@@ -28,9 +28,9 @@ class UsuarioAdapter(
 
         holder.binding.tvNombreUsuario.text = usuario.nombre
         holder.binding.tvEmailUsuario.text = usuario.email
-        holder.binding.tvRolUsuario.text = "Rol: ${usuario.rol.nombre}"
+        holder.binding.tvRolUsuario.text = usuario.rol.nombre
 
-        holder.itemView.setOnClickListener {
+        holder.binding.btnVerUsuario.setOnClickListener {
             onClick(usuario)
         }
     }

@@ -29,7 +29,7 @@ class EditarUsuarioActivity : AppCompatActivity() {
         binding = ActivityCrearUsuarioBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.tvTitulo.text = "✏️ Editar Empleado"
+        binding.tvTitulo.text = "Editar Empleado"
         binding.btnGuardarUsuario.text = "Actualizar"
 
         usuarioId = intent.getLongExtra("id", 0)

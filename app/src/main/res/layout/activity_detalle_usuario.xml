@@ -11,11 +11,21 @@
         android:orientation="vertical"
         android:padding="24dp">
 
+        <Button
+            android:id="@+id/btnVolver"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="← Volver"
+            android:backgroundTint="@android:color/transparent"
+            android:textColor="@color/primary"
+            android:layout_marginBottom="8dp"
+            android:paddingStart="0dp"/>
+
         <TextView
             android:id="@+id/tvTituloUsuario"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="👷 Ficha del Empleado"
+            android:text="Ficha del Empleado"
             android:textSize="26sp"
             android:textStyle="bold"
             android:gravity="center"
@@ -48,13 +58,13 @@
             android:id="@+id/btnEditarUsuario"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="✏️ Editar empleado"
+            android:text="Editar empleado"
             android:layout_marginBottom="10dp"/>
 
         <Button
             android:id="@+id/btnBorrarUsuario"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="🗑️ Borrar empleado"/>
+            android:text="Borrar empleado"/>
     </LinearLayout>
 </ScrollView>

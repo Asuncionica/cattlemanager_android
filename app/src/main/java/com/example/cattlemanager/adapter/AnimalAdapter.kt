@@ -26,11 +26,11 @@ class AnimalAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val animal = lista[position]
 
-        holder.binding.tvNombre.text = "ID: ${animal.identificador}"
-        holder.binding.tvRaza.text = "Raza: ${animal.raza}"
-        holder.binding.tvSexo.text = "Sexo: ${animal.sexo}"
+        holder.binding.tvNombre.text = animal.identificador
+        holder.binding.tvRaza.text = animal.raza
+        holder.binding.tvSexo.text = animal.sexo
 
-        holder.itemView.setOnClickListener {
+        holder.binding.btnFichaCompleta.setOnClickListener {
             onClick(animal)
         }
     }

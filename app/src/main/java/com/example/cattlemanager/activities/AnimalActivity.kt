@@ -26,6 +26,8 @@ class AnimalActivity : AppCompatActivity() {
 
         rolUsuario = intent.getStringExtra("rolUsuario") ?: ""
 
+        binding.btnVolver.setOnClickListener { finish() }
+
         binding.recyclerAnimales.layoutManager = LinearLayoutManager(this)
 
         if (rolUsuario == "ENCARGADO") {

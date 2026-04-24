@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.cattlemanager.databinding.ActivityCrearAnimalBinding
 import com.example.cattlemanager.model.AnimalRequest
 import com.example.cattlemanager.model.GranjaIdRequest
-import com.example.cattlemanager.model.GranjaRequest
 import com.example.cattlemanager.network.RetrofitClient
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -16,16 +15,33 @@ import kotlinx.coroutines.withContext
 class CrearAnimalActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCrearAnimalBinding
+    private var granjaId: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCrearAnimalBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.tvTituloFormulario.text = "➕ Crear Animal"
+        binding.tvTituloFormulario.text = "Crear Animal"
+
+        cargarGranja()
 
         binding.btnGuardar.setOnClickListener {
             crearAnimal()
+        }
+    }
+
+    private fun cargarGranja() {
+        val api = RetrofitClient.getGranjaApi(this)
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val granjas = api.obtenerGranjas()
+                if (granjas.isNotEmpty()) {
+                    granjaId = granjas.first().id
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
     }
 
@@ -40,12 +56,17 @@ class CrearAnimalActivity : AppCompatActivity() {
             return
         }
 
+        if (granjaId == 0L) {
+            Toast.makeText(this, "No se encontró ninguna granja", Toast.LENGTH_SHORT).show()
+            return
+        }
+
         val animal = AnimalRequest(
             identificador = identificador,
             raza = raza,
             sexo = sexo,
             fechaNacimiento = fecha,
-            granja = GranjaIdRequest(1)
+            granja = GranjaIdRequest(granjaId)
         )
 
         val api = RetrofitClient.getAnimalApi(this)
@@ -61,11 +82,7 @@ class CrearAnimalActivity : AppCompatActivity() {
             } catch (e: Exception) {
                 e.printStackTrace()
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(
-                        this@CrearAnimalActivity,
-                        "Error al crear animal: ${e.message}",
-                        Toast.LENGTH_LONG
-                    ).show()
+                    Toast.makeText(this@CrearAnimalActivity, "Error al crear animal: ${e.message}", Toast.LENGTH_LONG).show()
                 }
             }
         }

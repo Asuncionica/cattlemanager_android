@@ -18,17 +18,28 @@ class CrearEventoProductivoActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCrearEventoProductivoBinding
     private var listaAnimales: List<Animal> = emptyList()
+    private val tiposProductivos = listOf("Leche", "Pesaje", "Destete", "Venta")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCrearEventoProductivoBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.btnVolver.setOnClickListener { finish() }
+
+        val tipoAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, tiposProductivos)
+        tipoAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.spinnerTipoProductivo.adapter = tipoAdapter
+
+        val tipoPreseleccionado = intent.getStringExtra("tipo")
+        if (tipoPreseleccionado != null) {
+            val index = tiposProductivos.indexOf(tipoPreseleccionado)
+            if (index >= 0) binding.spinnerTipoProductivo.setSelection(index)
+        }
+
         cargarAnimalesEnSpinner()
 
-        binding.btnGuardarEvento.setOnClickListener {
-            crearEvento()
-        }
+        binding.btnGuardarEvento.setOnClickListener { crearEvento() }
     }
 
     private fun cargarAnimalesEnSpinner() {
@@ -50,26 +61,21 @@ class CrearEventoProductivoActivity : AppCompatActivity() {
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                     binding.spinnerAnimal.adapter = adapter
                 }
-
             } catch (e: Exception) {
                 e.printStackTrace()
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(
-                        this@CrearEventoProductivoActivity,
-                        "Error al cargar animales",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    Toast.makeText(this@CrearEventoProductivoActivity, "Error al cargar animales", Toast.LENGTH_SHORT).show()
                 }
             }
         }
     }
 
     private fun crearEvento() {
-        val tipo = binding.etTipo.text.toString().trim()
+        val tipo = tiposProductivos[binding.spinnerTipoProductivo.selectedItemPosition]
         val descripcion = binding.etDescripcion.text.toString().trim()
         val fecha = binding.etFecha.text.toString().trim()
 
-        if (tipo.isEmpty() || descripcion.isEmpty() || fecha.isEmpty()) {
+        if (descripcion.isEmpty() || fecha.isEmpty()) {
             Toast.makeText(this, "Rellena todos los campos", Toast.LENGTH_SHORT).show()
             return
         }
@@ -79,8 +85,7 @@ class CrearEventoProductivoActivity : AppCompatActivity() {
             return
         }
 
-        val posicionSeleccionada = binding.spinnerAnimal.selectedItemPosition
-        val animalSeleccionado = listaAnimales[posicionSeleccionada]
+        val animalSeleccionado = listaAnimales[binding.spinnerAnimal.selectedItemPosition]
 
         val evento = EventoProductivoRequest(
             tipo = tipo,
@@ -96,22 +101,13 @@ class CrearEventoProductivoActivity : AppCompatActivity() {
                 api.crearEvento(evento)
 
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(
-                        this@CrearEventoProductivoActivity,
-                        "Evento creado correctamente",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    Toast.makeText(this@CrearEventoProductivoActivity, "Evento creado correctamente", Toast.LENGTH_SHORT).show()
                     finish()
                 }
-
             } catch (e: Exception) {
                 e.printStackTrace()
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(
-                        this@CrearEventoProductivoActivity,
-                        "Error: ${e.message}",
-                        Toast.LENGTH_LONG
-                    ).show()
+                    Toast.makeText(this@CrearEventoProductivoActivity, "Error: ${e.message}", Toast.LENGTH_LONG).show()
                 }
             }
         }

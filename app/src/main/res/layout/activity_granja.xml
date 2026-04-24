@@ -13,7 +13,7 @@
             android:id="@+id/tvTituloGranja"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="🏡 Datos de la Granja"
+            android:text="Datos de la Granja"
             android:textSize="28sp"
             android:textStyle="bold"
             android:textColor="#2E7D32"

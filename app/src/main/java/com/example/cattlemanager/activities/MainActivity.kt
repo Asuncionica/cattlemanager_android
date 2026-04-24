@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val retrofit = Retrofit.Builder()
-            .baseUrl("http://192.168.1.133:8085/") // Cambia por tu IP local
+            .baseUrl("http://192.168.1.14:8085/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
@@ -68,9 +68,15 @@ class MainActivity : AppCompatActivity() {
                     val usuario = api.login(LoginRequest(email, password))
 
                     withContext(Dispatchers.Main) {
+                        val prefs = getSharedPreferences("app", MODE_PRIVATE)
+                        prefs.edit()
+                            .putLong("USUARIO_ID", usuario.id)
+                            .putString("ROL", usuario.rol.nombre)
+                            .apply()
+
                         binding.progressBar.visibility = View.GONE
                         binding.loginButton.isEnabled = true
-                        Toast.makeText(this@MainActivity, "Login correcto ✅", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@MainActivity, "Login correcto", Toast.LENGTH_SHORT).show()
                         abrirPantallaSegunRol(usuario)
                     }
 

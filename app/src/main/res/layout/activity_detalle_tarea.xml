@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background">
+
+    <!-- Header -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/primary"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
+        android:paddingTop="28dp"
+        android:paddingBottom="20dp">
+
+        <Button
+            android:id="@+id/btnVolver"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="← Volver"
+            android:backgroundTint="@android:color/transparent"
+            android:textColor="#FFFFFF"
+            android:paddingStart="0dp"
+            android:layout_marginBottom="4dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="DETALLE DE TAREA"
+            android:textSize="11sp"
+            android:textColor="@color/primary_light"
+            android:letterSpacing="0.12"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/tvTituloDetalleTarea"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tarea"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:layout_marginTop="4dp"/>
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Ficha de datos -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                card_view:cardCornerRadius="12dp"
+                card_view:cardElevation="1dp"
+                card_view:cardBackgroundColor="@color/surface">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <!-- Estado badge -->
+                    <TextView
+                        android:id="@+id/tvEstadoDetalleTarea"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Pendiente"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/status_pending"
+                        android:background="@color/status_pending_bg"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp"
+                        android:paddingTop="4dp"
+                        android:paddingBottom="4dp"
+                        android:layout_marginBottom="16dp"/>
+
+                    <!-- Vencimiento -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="FECHA DE VENCIMIENTO"
+                        android:textSize="10sp"
+                        android:textColor="@color/text_hint"
+                        android:letterSpacing="0.1"
+                        android:textAllCaps="true"
+                        android:layout_marginBottom="3dp"/>
+
+                    <TextView
+                        android:id="@+id/tvFechaDetalleTarea"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"
+                        android:textColor="@color/text_primary"
+                        android:layout_marginBottom="16dp"/>
+
+                    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/divider" android:layout_marginBottom="16dp"/>
+
+                    <!-- Descripción -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="DESCRIPCIÓN"
+                        android:textSize="10sp"
+                        android:textColor="@color/text_hint"
+                        android:letterSpacing="0.1"
+                        android:textAllCaps="true"
+                        android:layout_marginBottom="3dp"/>
+
+                    <TextView
+                        android:id="@+id/tvDescripcionDetalleTarea"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"
+                        android:textColor="@color/text_primary"
+                        android:layout_marginBottom="16dp"/>
+
+                    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/divider" android:layout_marginBottom="16dp"/>
+
+                    <!-- Peón -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="PEÓN ASIGNADO"
+                        android:textSize="10sp"
+                        android:textColor="@color/text_hint"
+                        android:letterSpacing="0.1"
+                        android:textAllCaps="true"
+                        android:layout_marginBottom="3dp"/>
+
+                    <TextView
+                        android:id="@+id/tvPeonDetalleTarea"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"
+                        android:textColor="@color/text_primary"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Acción: toggle estado -->
+            <Button
+                android:id="@+id/btnToggleCompletada"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:text="Marcar como completada"
+                android:textSize="14sp"
+                android:backgroundTint="@color/status_done"
+                android:textColor="@color/white"
+                android:layout_marginBottom="10dp"/>
+
+            <!-- Acción: borrar -->
+            <Button
+                android:id="@+id/btnBorrarTarea"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:text="Eliminar tarea"
+                android:textSize="14sp"
+                android:backgroundTint="@color/danger"
+                android:textColor="@color/white"/>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
