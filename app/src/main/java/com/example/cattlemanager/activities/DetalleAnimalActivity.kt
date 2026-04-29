@@ -1,13 +1,15 @@
 package com.example.cattlemanager.activities
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.cardview.widget.CardView
+import com.example.cattlemanager.R
 import com.example.cattlemanager.databinding.ActivityDetalleAnimalBinding
 import com.example.cattlemanager.model.Animal
 import com.example.cattlemanager.network.RetrofitClient
@@ -22,6 +24,7 @@ class DetalleAnimalActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetalleAnimalBinding
     private var animalId: Long = 0
     private var rolUsuario: String = ""
+    private var esMacho: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +34,15 @@ class DetalleAnimalActivity : AppCompatActivity() {
         animalId = intent.getLongExtra("id", 0)
         rolUsuario = intent.getStringExtra("rolUsuario") ?: ""
 
+        val identificador = intent.getStringExtra("identificador") ?: ""
+        val raza = intent.getStringExtra("raza") ?: ""
+        val sexo = intent.getStringExtra("sexo") ?: ""
+        esMacho = sexo.equals("Macho", ignoreCase = true)
+
+        binding.tvIdentificador.text = identificador
+        binding.tvSubtituloHeader.text = raza
+        aplicarEstiloSexo()
+
         binding.btnVolver.setOnClickListener { finish() }
         configurarPermisos()
         configurarBotones()
@@ -39,6 +51,14 @@ class DetalleAnimalActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         cargarDatos()
+    }
+
+    private fun aplicarEstiloSexo() {
+        val colorSexo = if (esMacho) Color.parseColor("#1E88E5") else Color.parseColor("#60AD5E")
+        binding.tvSubtituloHeader.setTextColor(colorSexo)
+        binding.panelInfo.setBackgroundResource(
+            if (esMacho) R.drawable.animal_card_male else R.drawable.animal_card_female
+        )
     }
 
     private fun configurarPermisos() {
@@ -56,9 +76,9 @@ class DetalleAnimalActivity : AppCompatActivity() {
             val intent = Intent(this, EditarAnimalActivity::class.java)
             intent.putExtra("id", animalId)
             intent.putExtra("identificador", binding.tvIdentificador.text.toString())
-            intent.putExtra("raza", binding.tvRaza.text.toString().replace("Raza: ", ""))
-            intent.putExtra("sexo", binding.tvSexo.text.toString().replace("Sexo: ", ""))
-            intent.putExtra("fecha", binding.tvFecha.text.toString().replace("Nacimiento: ", ""))
+            intent.putExtra("raza", binding.tvRaza.text.toString())
+            intent.putExtra("sexo", binding.tvSexo.text.toString())
+            intent.putExtra("fecha", binding.tvFecha.text.toString())
             startActivity(intent)
         }
         binding.btnBorrar.setOnClickListener { confirmarBorrado() }
@@ -94,11 +114,14 @@ class DetalleAnimalActivity : AppCompatActivity() {
     }
 
     private fun mostrarAnimal(animal: Animal) {
+        esMacho = animal.sexo.equals("Macho", ignoreCase = true)
         binding.tvIdentificador.text = animal.identificador
-        binding.tvRaza.text = "Raza: ${animal.raza}"
-        binding.tvSexo.text = "Sexo: ${animal.sexo}"
-        binding.tvFecha.text = "Nacimiento: ${animal.fechaNacimiento}"
-        binding.tvGranja.text = "Granja: ${animal.granja?.nombre ?: "Sin granja"}"
+        binding.tvSubtituloHeader.text = animal.raza
+        binding.tvSexo.text = animal.sexo
+        binding.tvRaza.text = animal.raza
+        binding.tvFecha.text = animal.fechaNacimiento
+        binding.tvGranja.text = animal.granja?.nombre ?: "Sin granja"
+        aplicarEstiloSexo()
     }
 
     private fun mostrarEventosSanitarios(eventos: List<String>) {
@@ -119,32 +142,37 @@ class DetalleAnimalActivity : AppCompatActivity() {
         eventos.forEach { binding.layoutEventosReproductivos.addView(crearTarjetaEvento(it)) }
     }
 
-    private fun crearTarjetaEvento(texto: String): CardView {
-        val card = CardView(this).apply {
-            radius = 8f
-            cardElevation = 2f
-            setCardBackgroundColor(android.graphics.Color.WHITE)
-            layoutParams = android.widget.LinearLayout.LayoutParams(
-                android.widget.LinearLayout.LayoutParams.MATCH_PARENT,
-                android.widget.LinearLayout.LayoutParams.WRAP_CONTENT
-            ).apply { bottomMargin = 8 }
+    private fun crearTarjetaEvento(texto: String): View {
+        val borderColor = if (esMacho) "#1565C0" else "#2E7D32"
+        val bgDrawable = if (esMacho) R.drawable.animal_card_male else R.drawable.animal_card_female
+        val container = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            setBackgroundResource(bgDrawable)
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply {
+                bottomMargin = (8 * resources.displayMetrics.density).toInt()
+            }
+            val pad = (14 * resources.displayMetrics.density).toInt()
+            setPadding(pad, pad, pad, pad)
         }
         val tv = TextView(this).apply {
             text = texto
             textSize = 14f
-            setPadding(32, 20, 32, 20)
-            setTextColor(resources.getColor(com.example.cattlemanager.R.color.text_primary, theme))
+            setTextColor(Color.WHITE)
         }
-        card.addView(tv)
-        return card
+        container.addView(tv)
+        return container
     }
 
     private fun crearTextoVacio(texto: String): TextView {
         return TextView(this).apply {
             text = texto
             textSize = 13f
-            setTextColor(resources.getColor(com.example.cattlemanager.R.color.text_hint, theme))
-            setPadding(8, 8, 8, 16)
+            setTextColor(Color.parseColor("#AAFFFFFF"))
+            val pad = (8 * resources.displayMetrics.density).toInt()
+            setPadding(pad, pad, pad, (16 * resources.displayMetrics.density).toInt())
         }
     }
 

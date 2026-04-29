@@ -1,24 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_pressed="true">
-        <objectAnimator
-            android:duration="90"
-            android:propertyName="translationZ"
-            android:valueTo="8dp"
-            android:valueType="floatType" />
+        <set>
+            <objectAnimator
+                android:duration="90"
+                android:propertyName="translationZ"
+                android:valueTo="10dp"
+                android:valueType="floatType" />
+            <objectAnimator
+                android:duration="90"
+                android:propertyName="scaleX"
+                android:valueTo="0.94"
+                android:valueType="floatType" />
+            <objectAnimator
+                android:duration="90"
+                android:propertyName="scaleY"
+                android:valueTo="0.94"
+                android:valueType="floatType" />
+        </set>
     </item>
     <item android:state_hovered="true">
-        <objectAnimator
-            android:duration="120"
-            android:propertyName="translationZ"
-            android:valueTo="5dp"
-            android:valueType="floatType" />
+        <set>
+            <objectAnimator
+                android:duration="120"
+                android:propertyName="translationZ"
+                android:valueTo="14dp"
+                android:valueType="floatType" />
+            <objectAnimator
+                android:duration="120"
+                android:propertyName="scaleX"
+                android:valueTo="1.08"
+                android:valueType="floatType" />
+            <objectAnimator
+                android:duration="120"
+                android:propertyName="scaleY"
+                android:valueTo="1.08"
+                android:valueType="floatType" />
+            <objectAnimator
+                android:duration="120"
+                android:propertyName="rotation"
+                android:valueTo="-1.5"
+                android:valueType="floatType" />
+        </set>
     </item>
     <item>
-        <objectAnimator
-            android:duration="120"
-            android:propertyName="translationZ"
-            android:valueTo="0dp"
-            android:valueType="floatType" />
+        <set>
+            <objectAnimator
+                android:duration="120"
+                android:propertyName="translationZ"
+                android:valueTo="0dp"
+                android:valueType="floatType" />
+            <objectAnimator
+                android:duration="120"
+                android:propertyName="scaleX"
+                android:valueTo="1"
+                android:valueType="floatType" />
+            <objectAnimator
+                android:duration="120"
+                android:propertyName="scaleY"
+                android:valueTo="1"
+                android:valueType="floatType" />
+            <objectAnimator
+                android:duration="120"
+                android:propertyName="rotation"
+                android:valueTo="0"
+                android:valueType="floatType" />
+        </set>
     </item>
 </selector>

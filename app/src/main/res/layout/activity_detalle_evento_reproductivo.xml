@@ -1,97 +1,144 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#FFFDF5">
+    android:layout_height="match_parent">
 
-    <LinearLayout
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:padding="16dp"
-        android:background="@color/primary">
+        android:layout_height="match_parent"
+        android:contentDescription="@null"
+        android:scaleType="centerCrop"
+        android:src="@drawable/hero_veterinario_tratamiento"/>
 
-        <Button
-            android:id="@+id/btnVolver"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="←"
-            android:textSize="18sp"
-            android:backgroundTint="@android:color/transparent"
-            android:textColor="#FFFFFF"
-            android:minWidth="0dp"
-            android:paddingHorizontal="4dp"/>
-
-        <TextView
-            android:id="@+id/tvTipoDetalleReproductivo"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Detalle"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:textColor="#FFFFFF"/>
-    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/animales_overlay_gradient"/>
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="24dp">
+            android:paddingBottom="32dp">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="190dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="bottom"
+                    android:orientation="vertical"
+                    android:paddingStart="24dp"
+                    android:paddingEnd="24dp"
+                    android:paddingBottom="20dp">
+
+                    <TextView
+                        android:id="@+id/tvTipoDetalleReproductivo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="serif"
+                        android:shadowColor="#CC000000"
+                        android:shadowDx="0" android:shadowDy="3" android:shadowRadius="10"
+                        android:textColor="#FFF8EA"
+                        android:textSize="30sp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="Evento Reproductivo"
+                        android:textColor="#80CBC4"
+                        android:textSize="14sp"
+                        android:textStyle="bold"/>
+                </LinearLayout>
+
+                <ImageButton
+                    android:id="@+id/btnVolver"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:layout_gravity="top|start"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/dashboard_logout_button"
+                    android:contentDescription="@null"
+                    android:elevation="4dp"
+                    android:padding="12dp"
+                    android:src="@drawable/ic_arrow_back"/>
+            </FrameLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:background="#FFFFFF"
-                android:padding="20dp"
-                android:layout_marginBottom="20dp">
+                android:paddingStart="18dp"
+                android:paddingEnd="18dp"
+                android:paddingTop="4dp">
 
-                <TextView
-                    android:id="@+id/tvAnimalDetalleReproductivo"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Animal: ---"
-                    android:textSize="18sp"
-                    android:textColor="#333333"
-                    android:layout_marginBottom="14dp"/>
+                    android:orientation="vertical"
+                    android:padding="20dp"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/repro_item_card">
 
-                <TextView
-                    android:id="@+id/tvFechaDetalleReproductivo"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Fecha: ---"
-                    android:textSize="18sp"
-                    android:textColor="#333333"
-                    android:layout_marginBottom="14dp"/>
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:orientation="horizontal" android:gravity="center_vertical" android:layout_marginBottom="10dp">
+                        <TextView android:layout_width="90dp" android:layout_height="wrap_content"
+                            android:text="Animal" android:textColor="#AAFFFFFF" android:textSize="12sp" android:textAllCaps="true"/>
+                        <TextView android:id="@+id/tvAnimalDetalleReproductivo" android:layout_width="0dp"
+                            android:layout_height="wrap_content" android:layout_weight="1"
+                            android:textColor="#FFFFFF" android:textSize="15sp" android:textStyle="bold"/>
+                    </LinearLayout>
 
-                <TextView
-                    android:id="@+id/tvDescripcionDetalleReproductivo"
+                    <View android:layout_width="match_parent" android:layout_height="1dp"
+                        android:background="#33FFFFFF" android:layout_marginBottom="10dp"/>
+
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:orientation="horizontal" android:gravity="center_vertical" android:layout_marginBottom="10dp">
+                        <TextView android:layout_width="90dp" android:layout_height="wrap_content"
+                            android:text="Fecha" android:textColor="#AAFFFFFF" android:textSize="12sp" android:textAllCaps="true"/>
+                        <TextView android:id="@+id/tvFechaDetalleReproductivo" android:layout_width="0dp"
+                            android:layout_height="wrap_content" android:layout_weight="1"
+                            android:textColor="#FFFFFF" android:textSize="15sp"/>
+                    </LinearLayout>
+
+                    <View android:layout_width="match_parent" android:layout_height="1dp"
+                        android:background="#33FFFFFF" android:layout_marginBottom="10dp"/>
+
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:orientation="horizontal" android:gravity="top">
+                        <TextView android:layout_width="90dp" android:layout_height="wrap_content"
+                            android:text="Descripción" android:textColor="#AAFFFFFF" android:textSize="12sp" android:textAllCaps="true"/>
+                        <TextView android:id="@+id/tvDescripcionDetalleReproductivo" android:layout_width="0dp"
+                            android:layout_height="wrap_content" android:layout_weight="1"
+                            android:textColor="#FFFFFF" android:textSize="15sp"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnBorrarReproductivo"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Descripción: ---"
-                    android:textSize="16sp"
-                    android:textColor="#555555"/>
+                    android:layout_height="48dp"
+                    android:backgroundTint="#C62828"
+                    android:text="Borrar evento"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    app:cornerRadius="24dp"/>
             </LinearLayout>
-
-            <Button
-                android:id="@+id/btnBorrarReproductivo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Borrar evento"
-                android:backgroundTint="#C62828"
-                android:textColor="#FFFFFF"
-                android:padding="14dp"
-                android:textSize="16sp"/>
         </LinearLayout>
     </ScrollView>
-
-</LinearLayout>
+</FrameLayout>

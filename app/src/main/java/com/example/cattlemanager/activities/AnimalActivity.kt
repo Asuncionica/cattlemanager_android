@@ -27,14 +27,12 @@ class AnimalActivity : AppCompatActivity() {
         rolUsuario = intent.getStringExtra("rolUsuario") ?: ""
 
         binding.btnVolver.setOnClickListener { finish() }
-
         binding.recyclerAnimales.layoutManager = LinearLayoutManager(this)
 
         if (rolUsuario == "ENCARGADO") {
             binding.btnCrearAnimal.visibility = View.VISIBLE
             binding.btnCrearAnimal.setOnClickListener {
-                val intent = Intent(this, CrearAnimalActivity::class.java)
-                startActivity(intent)
+                startActivity(Intent(this, CrearAnimalActivity::class.java))
             }
         } else {
             binding.btnCrearAnimal.visibility = View.GONE
@@ -56,6 +54,9 @@ class AnimalActivity : AppCompatActivity() {
                 val lista = api.obtenerAnimales()
 
                 withContext(Dispatchers.Main) {
+                    val n = lista.size
+                    binding.tvContadorAnimales.text = "$n ${if (n == 1) "animal registrado" else "animales registrados"}"
+
                     binding.recyclerAnimales.adapter = AnimalAdapter(lista) { animal: Animal ->
                         val intent = Intent(this@AnimalActivity, DetalleAnimalActivity::class.java)
                         intent.putExtra("id", animal.id)

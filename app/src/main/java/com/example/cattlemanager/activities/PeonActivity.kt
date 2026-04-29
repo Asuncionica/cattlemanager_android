@@ -2,6 +2,7 @@ package com.example.cattlemanager.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.animation.DecelerateInterpolator
 import androidx.appcompat.app.AppCompatActivity
 import com.example.cattlemanager.alertas.CrearAlertaVeterinariaActivity
 import com.example.cattlemanager.databinding.ActivityPeonBinding
@@ -21,24 +22,54 @@ class PeonActivity : AppCompatActivity() {
         binding.tvNombreUsuario.text = nombreUsuario
 
         binding.btnAnimalesPeon.setOnClickListener {
-            val intent = Intent(this, AnimalActivity::class.java)
-            intent.putExtra("rolUsuario", "PEON")
-            startActivity(intent)
+            startActivity(Intent(this, AnimalActivity::class.java).apply {
+                putExtra("rolUsuario", "PEON")
+            })
         }
         binding.btnProduccionPeon.setOnClickListener {
             startActivity(Intent(this, EventoProductivoActivity::class.java))
         }
         binding.btnTareas.setOnClickListener {
-            val intent = Intent(this, TareaActivity::class.java)
-            intent.putExtra("rolUsuario", "PEON")
-            startActivity(intent)
+            startActivity(Intent(this, TareaActivity::class.java).apply {
+                putExtra("rolUsuario", "PEON")
+            })
         }
-        // El peón puede avisar al veterinario si detecta un problema en un animal
         binding.btnAlertasVet.setOnClickListener {
             startActivity(Intent(this, CrearAlertaVeterinariaActivity::class.java))
         }
-
         binding.btnCerrarSesion.setOnClickListener { cerrarSesion() }
+
+        animarEntrada()
+    }
+
+    private fun animarEntrada() {
+        val interp = DecelerateInterpolator()
+        val offsetY = 70f * resources.displayMetrics.density
+
+        listOf(
+            binding.btnAnimalesPeon,
+            binding.btnProduccionPeon,
+            binding.btnTareas,
+            binding.btnAlertasVet
+        ).forEachIndexed { i, card ->
+            card.alpha = 0f
+            card.translationY = offsetY
+            card.animate()
+                .alpha(1f)
+                .translationY(0f)
+                .setDuration(420)
+                .setStartDelay((i * 90).toLong())
+                .setInterpolator(interp)
+                .start()
+        }
+
+        binding.btnCerrarSesion.alpha = 0f
+        binding.btnCerrarSesion.animate()
+            .alpha(1f)
+            .setDuration(300)
+            .setStartDelay(460L)
+            .setInterpolator(interp)
+            .start()
     }
 
     private fun cerrarSesion() {

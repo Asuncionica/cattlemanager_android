@@ -1,177 +1,163 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/background">
+    android:layout_height="match_parent">
 
-    <!-- Header -->
-    <LinearLayout
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@color/primary"
-        android:paddingStart="24dp"
-        android:paddingEnd="24dp"
-        android:paddingTop="28dp"
-        android:paddingBottom="20dp">
+        android:layout_height="match_parent"
+        android:contentDescription="@null"
+        android:scaleType="centerCrop"
+        android:src="@drawable/hero_ganaderia_terneros"/>
 
-        <Button
-            android:id="@+id/btnVolver"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="← Volver"
-            android:backgroundTint="@android:color/transparent"
-            android:textColor="#FFFFFF"
-            android:paddingStart="0dp"
-            android:layout_marginBottom="4dp"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="DETALLE DE TAREA"
-            android:textSize="11sp"
-            android:textColor="@color/primary_light"
-            android:letterSpacing="0.12"
-            android:textStyle="bold"/>
-
-        <TextView
-            android:id="@+id/tvTituloDetalleTarea"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Tarea"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            android:textColor="@color/white"
-            android:layout_marginTop="4dp"/>
-    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/animales_overlay_gradient"/>
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:paddingBottom="32dp">
 
-            <!-- Ficha de datos -->
-            <androidx.cardview.widget.CardView
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="190dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="bottom"
+                    android:orientation="vertical"
+                    android:paddingStart="24dp"
+                    android:paddingEnd="24dp"
+                    android:paddingBottom="20dp">
+
+                    <TextView
+                        android:id="@+id/tvTituloDetalleTarea"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="serif"
+                        android:shadowColor="#CC000000"
+                        android:shadowDx="0" android:shadowDy="3" android:shadowRadius="10"
+                        android:text="Tarea"
+                        android:textColor="#FFF8EA"
+                        android:textSize="28sp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:id="@+id/tvEstadoDetalleTarea"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp"
+                        android:paddingTop="4dp"
+                        android:paddingBottom="4dp"
+                        android:text="Pendiente"
+                        android:textColor="#FFFFFF"
+                        android:textSize="12sp"
+                        android:textStyle="bold"/>
+                </LinearLayout>
+
+                <ImageButton
+                    android:id="@+id/btnVolver"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:layout_gravity="top|start"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/peon_logout_button"
+                    android:contentDescription="@null"
+                    android:elevation="4dp"
+                    android:padding="12dp"
+                    android:src="@drawable/ic_arrow_back"/>
+            </FrameLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                card_view:cardCornerRadius="12dp"
-                card_view:cardElevation="1dp"
-                card_view:cardBackgroundColor="@color/surface">
+                android:orientation="vertical"
+                android:paddingStart="18dp"
+                android:paddingEnd="18dp"
+                android:paddingTop="4dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="20dp">
+                    android:padding="20dp"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/peon_card_panel">
 
-                    <!-- Estado badge -->
-                    <TextView
-                        android:id="@+id/tvEstadoDetalleTarea"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Pendiente"
-                        android:textSize="12sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/status_pending"
-                        android:background="@color/status_pending_bg"
-                        android:paddingStart="10dp"
-                        android:paddingEnd="10dp"
-                        android:paddingTop="4dp"
-                        android:paddingBottom="4dp"
-                        android:layout_marginBottom="16dp"/>
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:orientation="horizontal" android:gravity="center_vertical" android:layout_marginBottom="10dp">
+                        <TextView android:layout_width="90dp" android:layout_height="wrap_content"
+                            android:text="Vencimiento" android:textColor="#AAFFFFFF" android:textSize="12sp" android:textAllCaps="true"/>
+                        <TextView android:id="@+id/tvFechaDetalleTarea" android:layout_width="0dp"
+                            android:layout_height="wrap_content" android:layout_weight="1"
+                            android:textColor="#FFFFFF" android:textSize="15sp" android:textStyle="bold"/>
+                    </LinearLayout>
 
-                    <!-- Vencimiento -->
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="FECHA DE VENCIMIENTO"
-                        android:textSize="10sp"
-                        android:textColor="@color/text_hint"
-                        android:letterSpacing="0.1"
-                        android:textAllCaps="true"
-                        android:layout_marginBottom="3dp"/>
+                    <View android:layout_width="match_parent" android:layout_height="1dp"
+                        android:background="#33FFFFFF" android:layout_marginBottom="10dp"/>
 
-                    <TextView
-                        android:id="@+id/tvFechaDetalleTarea"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="15sp"
-                        android:textColor="@color/text_primary"
-                        android:layout_marginBottom="16dp"/>
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:orientation="horizontal" android:gravity="center_vertical" android:layout_marginBottom="10dp">
+                        <TextView android:layout_width="90dp" android:layout_height="wrap_content"
+                            android:text="Peón" android:textColor="#AAFFFFFF" android:textSize="12sp" android:textAllCaps="true"/>
+                        <TextView android:id="@+id/tvPeonDetalleTarea" android:layout_width="0dp"
+                            android:layout_height="wrap_content" android:layout_weight="1"
+                            android:textColor="#82B1FF" android:textSize="15sp" android:textStyle="bold"/>
+                    </LinearLayout>
 
-                    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/divider" android:layout_marginBottom="16dp"/>
+                    <View android:layout_width="match_parent" android:layout_height="1dp"
+                        android:background="#33FFFFFF" android:layout_marginBottom="10dp"/>
 
-                    <!-- Descripción -->
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="DESCRIPCIÓN"
-                        android:textSize="10sp"
-                        android:textColor="@color/text_hint"
-                        android:letterSpacing="0.1"
-                        android:textAllCaps="true"
-                        android:layout_marginBottom="3dp"/>
-
-                    <TextView
-                        android:id="@+id/tvDescripcionDetalleTarea"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="15sp"
-                        android:textColor="@color/text_primary"
-                        android:layout_marginBottom="16dp"/>
-
-                    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/divider" android:layout_marginBottom="16dp"/>
-
-                    <!-- Peón -->
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="PEÓN ASIGNADO"
-                        android:textSize="10sp"
-                        android:textColor="@color/text_hint"
-                        android:letterSpacing="0.1"
-                        android:textAllCaps="true"
-                        android:layout_marginBottom="3dp"/>
-
-                    <TextView
-                        android:id="@+id/tvPeonDetalleTarea"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="15sp"
-                        android:textColor="@color/text_primary"/>
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:orientation="horizontal" android:gravity="top">
+                        <TextView android:layout_width="90dp" android:layout_height="wrap_content"
+                            android:text="Descripción" android:textColor="#AAFFFFFF" android:textSize="12sp" android:textAllCaps="true"/>
+                        <TextView android:id="@+id/tvDescripcionDetalleTarea" android:layout_width="0dp"
+                            android:layout_height="wrap_content" android:layout_weight="1"
+                            android:textColor="#FFFFFF" android:textSize="15sp"/>
+                    </LinearLayout>
                 </LinearLayout>
-            </androidx.cardview.widget.CardView>
 
-            <!-- Acción: toggle estado -->
-            <Button
-                android:id="@+id/btnToggleCompletada"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:text="Marcar como completada"
-                android:textSize="14sp"
-                android:backgroundTint="@color/status_done"
-                android:textColor="@color/white"
-                android:layout_marginBottom="10dp"/>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnToggleCompletada"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginBottom="10dp"
+                    android:backgroundTint="#1565C0"
+                    android:text="Marcar como completada"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    app:cornerRadius="24dp"/>
 
-            <!-- Acción: borrar -->
-            <Button
-                android:id="@+id/btnBorrarTarea"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:text="Eliminar tarea"
-                android:textSize="14sp"
-                android:backgroundTint="@color/danger"
-                android:textColor="@color/white"/>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnBorrarTarea"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:backgroundTint="#C62828"
+                    android:text="Eliminar tarea"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    app:cornerRadius="24dp"/>
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
-</LinearLayout>
+</FrameLayout>

@@ -2,6 +2,7 @@ package com.example.cattlemanager.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.animation.DecelerateInterpolator
 import androidx.appcompat.app.AppCompatActivity
 import com.example.cattlemanager.alertas.AlertasVeterinariaActivity
 import com.example.cattlemanager.databinding.ActivityVeterinarioBinding
@@ -31,12 +32,45 @@ class VeterinarioActivity : AppCompatActivity() {
         binding.btnReproductivo.setOnClickListener {
             startActivity(Intent(this, EventoReproductivoActivity::class.java))
         }
-        // Accede a las alertas que encargado/peón han enviado sobre animales
         binding.btnAlertas.setOnClickListener {
             startActivity(Intent(this, AlertasVeterinariaActivity::class.java))
         }
-
         binding.btnCerrarSesion.setOnClickListener { cerrarSesion() }
+
+        animarEntrada()
+    }
+
+    private fun animarEntrada() {
+        val interp = DecelerateInterpolator()
+        val dp = resources.displayMetrics.density
+        val offsetY = 70f * dp
+
+        val cards = listOf(
+            binding.btnAnimalesVet,
+            binding.btnSanitario,
+            binding.btnReproductivo,
+            binding.btnAlertas
+        )
+
+        cards.forEachIndexed { i, card ->
+            card.alpha = 0f
+            card.translationY = offsetY
+            card.animate()
+                .alpha(1f)
+                .translationY(0f)
+                .setDuration(420)
+                .setStartDelay((i * 90).toLong())
+                .setInterpolator(interp)
+                .start()
+        }
+
+        binding.btnCerrarSesion.alpha = 0f
+        binding.btnCerrarSesion.animate()
+            .alpha(1f)
+            .setDuration(300)
+            .setStartDelay(460L)
+            .setInterpolator(interp)
+            .start()
     }
 
     private fun cerrarSesion() {

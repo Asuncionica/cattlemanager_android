@@ -1,101 +1,162 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#FFFDF5">
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@null"
+        android:scaleType="centerCrop"
+        android:src="@drawable/hero_veterinario_tratamiento"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/form_overlay_gradient"/>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="24dp">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tvTituloCrearSanitario"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Crear Evento Sanitario"
-            android:textSize="26sp"
-            android:textStyle="bold"
-            android:textColor="#2E7D32"
-            android:gravity="center"
-            android:layout_marginBottom="24dp"/>
+            android:layout_height="140dp">
 
-        <LinearLayout
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="bottom"
+                android:orientation="vertical"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp"
+                android:paddingBottom="20dp">
+
+                <TextView
+                    android:id="@+id/tvTituloCrearSanitario"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="serif"
+                    android:shadowColor="#CC000000"
+                    android:shadowDx="0" android:shadowDy="3" android:shadowRadius="10"
+                    android:text="Nuevo Evento Sanitario"
+                    android:textColor="#FFF8EA"
+                    android:textSize="24sp"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/btnVolver"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:layout_gravity="top|start"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/dashboard_logout_button"
+                android:contentDescription="@null"
+                android:elevation="4dp"
+                android:padding="12dp"
+                android:src="@drawable/ic_arrow_back"/>
+        </FrameLayout>
+
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="#FFFFFF"
-            android:padding="20dp"
-            android:layout_marginBottom="20dp">
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:clipToPadding="false">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Animal"
-                android:textStyle="bold"
-                android:layout_marginBottom="6dp"/>
+                android:orientation="vertical"
+                android:paddingStart="18dp"
+                android:paddingEnd="18dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="32dp">
 
-            <Spinner
-                android:id="@+id/spinnerAnimalSanitario"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/form_panel_green">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Tipo de evento"
-                android:textStyle="bold"
-                android:layout_marginBottom="6dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="ANIMAL" android:textColor="#AAFFFFFF" android:textSize="11sp"
+                        android:textAllCaps="true" android:layout_marginBottom="6dp"/>
+                    <Spinner
+                        android:id="@+id/spinnerAnimalSanitario"
+                        android:layout_width="match_parent" android:layout_height="52dp"
+                        android:background="@drawable/form_input_dark"
+                        android:paddingStart="14dp" android:paddingEnd="14dp"
+                        android:layout_marginBottom="16dp"/>
 
-            <Spinner
-                android:id="@+id/spinnerTipoSanitario"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:background="@drawable/login_input_background"
-                android:padding="8dp"
-                android:layout_marginBottom="16dp"/>
+                    <View android:layout_width="match_parent" android:layout_height="1dp"
+                        android:background="#22FFFFFF" android:layout_marginBottom="16dp"/>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Fecha"
-                android:textStyle="bold"
-                android:layout_marginBottom="6dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="TIPO DE EVENTO" android:textColor="#AAFFFFFF" android:textSize="11sp"
+                        android:textAllCaps="true" android:layout_marginBottom="6dp"/>
+                    <Spinner
+                        android:id="@+id/spinnerTipoSanitario"
+                        android:layout_width="match_parent" android:layout_height="52dp"
+                        android:background="@drawable/form_input_dark"
+                        android:paddingStart="14dp" android:paddingEnd="14dp"
+                        android:layout_marginBottom="16dp"/>
 
-            <EditText
-                android:id="@+id/etFechaSanitario"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="YYYY-MM-DD"
-                android:layout_marginBottom="16dp"/>
+                    <View android:layout_width="match_parent" android:layout_height="1dp"
+                        android:background="#22FFFFFF" android:layout_marginBottom="16dp"/>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Descripción"
-                android:textStyle="bold"
-                android:layout_marginBottom="6dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="FECHA" android:textColor="#AAFFFFFF" android:textSize="11sp"
+                        android:textAllCaps="true" android:layout_marginBottom="6dp"/>
+                    <EditText
+                        android:id="@+id/etFechaSanitario"
+                        android:layout_width="match_parent" android:layout_height="52dp"
+                        android:background="@drawable/form_input_dark"
+                        android:hint="AAAA-MM-DD"
+                        android:padding="14dp"
+                        android:textColor="#FFFFFF"
+                        android:textColorHint="#66FFFFFF"
+                        android:textSize="15sp"
+                        android:layout_marginBottom="16dp"/>
 
-            <EditText
-                android:id="@+id/etDescripcionSanitario"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Describe el tratamiento o vacuna"
-                android:minLines="4"
-                android:gravity="top"/>
-        </LinearLayout>
+                    <View android:layout_width="match_parent" android:layout_height="1dp"
+                        android:background="#22FFFFFF" android:layout_marginBottom="16dp"/>
 
-        <Button
-            android:id="@+id/btnGuardarSanitario"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Guardar evento"
-            android:backgroundTint="#2E7D32"
-            android:textColor="#FFFFFF"
-            android:padding="14dp"
-            android:textSize="16sp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="DESCRIPCIÓN" android:textColor="#AAFFFFFF" android:textSize="11sp"
+                        android:textAllCaps="true" android:layout_marginBottom="6dp"/>
+                    <EditText
+                        android:id="@+id/etDescripcionSanitario"
+                        android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:background="@drawable/form_input_dark"
+                        android:hint="Describe el tratamiento o vacuna..."
+                        android:inputType="textMultiLine|textCapSentences"
+                        android:minLines="4"
+                        android:gravity="top"
+                        android:padding="14dp"
+                        android:textColor="#FFFFFF"
+                        android:textColorHint="#66FFFFFF"
+                        android:textSize="15sp"/>
+                </LinearLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnGuardarSanitario"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:backgroundTint="#2E5D34"
+                    android:text="Guardar evento"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    app:cornerRadius="26dp"/>
+            </LinearLayout>
+        </ScrollView>
     </LinearLayout>
-</ScrollView>
+</FrameLayout>

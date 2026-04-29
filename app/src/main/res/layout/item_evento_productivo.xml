@@ -4,96 +4,81 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="8dp"
-    android:layout_marginVertical="4dp"
-    app:cardCornerRadius="10dp"
-    app:cardElevation="3dp"
-    app:cardBackgroundColor="#FFFFFF">
+    android:layout_marginVertical="5dp"
+    android:clickable="true"
+    android:focusable="true"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="4dp"
+    app:cardBackgroundColor="#00FFFFFF">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:padding="12dp"
-        android:background="?attr/selectableItemBackground"
-        android:clickable="true"
-        android:focusable="true">
+        android:background="@drawable/encargado_card_panel">
 
-        <TextView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:text=""
-            android:textSize="22sp"
-            android:gravity="center"
-            android:layout_marginEnd="12dp"/>
+        <View
+            android:layout_width="5dp"
+            android:layout_height="match_parent"
+            android:minHeight="72dp"
+            android:background="#E65100"/>
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingStart="14dp"
+            android:paddingTop="14dp"
+            android:paddingBottom="14dp"
+            android:paddingEnd="8dp">
 
             <TextView
                 android:id="@+id/tvTipoEvento"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:textColor="@color/primary"/>
+                android:textColor="#FFFFFF"
+                android:textSize="15sp"
+                android:textStyle="bold"/>
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/tvAnimalEvento"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="2dp">
+                android:layout_marginTop="3dp"
+                android:textColor="#CCFFFFFF"
+                android:textSize="13sp"/>
 
-                <TextView
-                    android:id="@+id/tvAnimalEvento"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="13sp"
-                    android:textColor="@color/text_secondary"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=" · "
-                    android:textSize="13sp"
-                    android:textColor="@color/text_secondary"/>
-
-                <TextView
-                    android:id="@+id/tvFechaEvento"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="13sp"
-                    android:textColor="@color/text_secondary"/>
-
-            </LinearLayout>
+            <TextView
+                android:id="@+id/tvFechaEvento"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:textColor="#AAFFFFFF"
+                android:textSize="12sp"/>
 
             <TextView
                 android:id="@+id/tvDescripcionEvento"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="12sp"
-                android:textColor="@color/text_hint"
-                android:maxLines="1"
+                android:layout_marginTop="2dp"
                 android:ellipsize="end"
-                android:layout_marginTop="2dp"/>
-
+                android:maxLines="1"
+                android:textColor="#88FFFFFF"
+                android:textSize="12sp"/>
         </LinearLayout>
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnVerEvento"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="36dp"
+            android:layout_marginEnd="12dp"
+            android:backgroundTint="#E65100"
             android:text="Ver"
-            android:textSize="12sp"
-            android:backgroundTint="@color/primary"
+            android:textAllCaps="false"
             android:textColor="#FFFFFF"
-            android:paddingHorizontal="12dp"
-            android:paddingVertical="6dp"
-            android:minHeight="0dp"/>
-
+            android:textSize="12sp"
+            app:cornerRadius="18dp"/>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

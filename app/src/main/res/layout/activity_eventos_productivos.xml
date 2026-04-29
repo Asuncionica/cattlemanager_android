@@ -1,209 +1,189 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#E8F5E9">
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@null"
+        android:scaleType="centerCrop"
+        android:src="@drawable/hero_ganaderia_realista"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/vet_overlay_gradient"/>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:padding="16dp"
-        android:background="@color/primary">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <Button
-            android:id="@+id/btnVolver"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="←"
-            android:textSize="18sp"
-            android:backgroundTint="@android:color/transparent"
-            android:textColor="#FFFFFF"
-            android:minWidth="0dp"
-            android:paddingHorizontal="4dp"/>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="190dp">
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Producción"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:textColor="#FFFFFF"/>
-    </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="bottom"
+                android:orientation="vertical"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp"
+                android:paddingBottom="20dp">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        android:padding="16dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Encargado"
+                    android:textColor="#AAFFF8EA"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:shadowColor="#99000000"
+                    android:shadowDx="0" android:shadowDy="1" android:shadowRadius="4"/>
 
-        <!-- Fila 1 -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="serif"
+                    android:shadowColor="#CC000000"
+                    android:shadowDx="0" android:shadowDy="3" android:shadowRadius="10"
+                    android:text="Producción"
+                    android:textColor="#FFF8EA"
+                    android:textSize="28sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/tvContadorProductivos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:shadowColor="#BBFF8F00"
+                    android:shadowDx="0" android:shadowDy="0" android:shadowRadius="8"
+                    android:text=""
+                    android:textColor="#FFCC80"
+                    android:textSize="14sp"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/btnVolver"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:layout_gravity="top|start"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/encargado_logout_button"
+                android:contentDescription="@null"
+                android:elevation="4dp"
+                android:padding="12dp"
+                android:src="@drawable/ic_arrow_back"/>
+        </FrameLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:orientation="horizontal"
-            android:layout_marginBottom="12dp">
+            android:orientation="vertical"
+            android:padding="16dp">
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardLeche"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
                 android:layout_weight="1"
-                android:layout_marginEnd="6dp"
-                android:clickable="true"
-                android:focusable="true"
-                app:cardCornerRadius="14dp"
-                app:cardElevation="4dp">
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:background="#E3F2FD"
-                    android:padding="16dp">
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardLeche"
+                    android:layout_width="0dp" android:layout_height="match_parent"
+                    android:layout_weight="1" android:layout_marginEnd="8dp"
+                    android:clickable="true" android:focusable="true"
+                    app:cardCornerRadius="14dp" app:cardElevation="6dp"
+                    app:cardBackgroundColor="#00FFFFFF">
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
+                        android:gravity="center" android:orientation="vertical"
+                        android:background="@drawable/encargado_card_panel">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="Leche" android:textSize="22sp" android:textStyle="bold"
+                            android:textColor="#FFFFFF" android:shadowColor="#CC000000"
+                            android:shadowDx="0" android:shadowDy="2" android:shadowRadius="6"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp" android:text="Producción láctea"
+                            android:textSize="12sp" android:textColor="#FFCC80"/>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text=""
-                        android:textSize="44sp"/>
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardPesaje"
+                    android:layout_width="0dp" android:layout_height="match_parent"
+                    android:layout_weight="1" android:layout_marginStart="8dp"
+                    android:clickable="true" android:focusable="true"
+                    app:cardCornerRadius="14dp" app:cardElevation="6dp"
+                    app:cardBackgroundColor="#00FFFFFF">
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
+                        android:gravity="center" android:orientation="vertical"
+                        android:background="@drawable/encargado_card_panel">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="Pesaje" android:textSize="22sp" android:textStyle="bold"
+                            android:textColor="#FFFFFF" android:shadowColor="#CC000000"
+                            android:shadowDx="0" android:shadowDy="2" android:shadowRadius="6"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp" android:text="Control de peso"
+                            android:textSize="12sp" android:textColor="#FFCC80"/>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Leche"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:textColor="#0277BD"
-                        android:layout_marginTop="8dp"/>
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardPesaje"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
                 android:layout_weight="1"
-                android:layout_marginStart="6dp"
-                android:clickable="true"
-                android:focusable="true"
-                app:cardCornerRadius="14dp"
-                app:cardElevation="4dp">
+                android:orientation="horizontal">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:background="#EDE7F6"
-                    android:padding="16dp">
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardDestete"
+                    android:layout_width="0dp" android:layout_height="match_parent"
+                    android:layout_weight="1" android:layout_marginEnd="8dp"
+                    android:clickable="true" android:focusable="true"
+                    app:cardCornerRadius="14dp" app:cardElevation="6dp"
+                    app:cardBackgroundColor="#00FFFFFF">
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
+                        android:gravity="center" android:orientation="vertical"
+                        android:background="@drawable/encargado_card_panel">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="Destete" android:textSize="22sp" android:textStyle="bold"
+                            android:textColor="#FFFFFF" android:shadowColor="#CC000000"
+                            android:shadowDx="0" android:shadowDy="2" android:shadowRadius="6"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp" android:text="Separación cría"
+                            android:textSize="12sp" android:textColor="#FFCC80"/>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text=""
-                        android:textSize="44sp"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Pesaje"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:textColor="#4527A0"
-                        android:layout_marginTop="8dp"/>
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardVenta"
+                    android:layout_width="0dp" android:layout_height="match_parent"
+                    android:layout_weight="1" android:layout_marginStart="8dp"
+                    android:clickable="true" android:focusable="true"
+                    app:cardCornerRadius="14dp" app:cardElevation="6dp"
+                    app:cardBackgroundColor="#00FFFFFF">
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
+                        android:gravity="center" android:orientation="vertical"
+                        android:background="@drawable/encargado_card_panel">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="Venta" android:textSize="22sp" android:textStyle="bold"
+                            android:textColor="#FFFFFF" android:shadowColor="#CC000000"
+                            android:shadowDx="0" android:shadowDy="2" android:shadowRadius="6"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp" android:text="Comercialización"
+                            android:textSize="12sp" android:textColor="#FFCC80"/>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
         </LinearLayout>
-
-        <!-- Fila 2 -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="horizontal">
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardDestete"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:layout_marginEnd="6dp"
-                android:clickable="true"
-                android:focusable="true"
-                app:cardCornerRadius="14dp"
-                app:cardElevation="4dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:background="#FCE4EC"
-                    android:padding="16dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text=""
-                        android:textSize="44sp"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Destete"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:textColor="#C2185B"
-                        android:layout_marginTop="8dp"/>
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardVenta"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:layout_marginStart="6dp"
-                android:clickable="true"
-                android:focusable="true"
-                app:cardCornerRadius="14dp"
-                app:cardElevation="4dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:background="#E8F5E9"
-                    android:padding="16dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text=""
-                        android:textSize="44sp"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Venta"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:textColor="#2E7D32"
-                        android:layout_marginTop="8dp"/>
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-        </LinearLayout>
-
     </LinearLayout>
-
-</LinearLayout>
+</FrameLayout>

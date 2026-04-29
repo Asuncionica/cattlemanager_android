@@ -1,70 +1,168 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#FFFDF5">
+    android:layout_height="match_parent">
 
-    <LinearLayout
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="24dp">
+        android:layout_height="match_parent"
+        android:contentDescription="@null"
+        android:scaleType="centerCrop"
+        android:src="@drawable/hero_ganaderia_realista"/>
 
-        <Button
-            android:id="@+id/btnVolver"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="← Volver"
-            android:backgroundTint="@android:color/transparent"
-            android:textColor="@color/primary"
-            android:layout_marginBottom="8dp"
-            android:paddingStart="0dp"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/animales_overlay_gradient"/>
 
-        <TextView
-            android:id="@+id/tvTituloUsuario"
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:fillViewport="true">
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Ficha del Empleado"
-            android:textSize="26sp"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:layout_marginBottom="24dp"/>
+            android:orientation="vertical"
+            android:paddingBottom="32dp">
 
-        <TextView
-            android:id="@+id/tvNombre"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Nombre"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="10dp"/>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="190dp">
 
-        <TextView
-            android:id="@+id/tvEmail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Email"
-            android:layout_marginBottom="10dp"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="bottom"
+                    android:orientation="vertical"
+                    android:paddingStart="24dp"
+                    android:paddingEnd="24dp"
+                    android:paddingBottom="20dp">
 
-        <TextView
-            android:id="@+id/tvRol"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Rol"
-            android:layout_marginBottom="20dp"/>
+                    <TextView
+                        android:id="@+id/tvTituloUsuario"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="serif"
+                        android:shadowColor="#CC000000"
+                        android:shadowDx="0" android:shadowDy="3" android:shadowRadius="10"
+                        android:text="Empleado"
+                        android:textColor="#FFF8EA"
+                        android:textSize="30sp"
+                        android:textStyle="bold"/>
 
-        <Button
-            android:id="@+id/btnEditarUsuario"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Editar empleado"
-            android:layout_marginBottom="10dp"/>
+                    <TextView
+                        android:id="@+id/tvRolBadge"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:textColor="#FFCC80"
+                        android:textSize="14sp"
+                        android:textStyle="bold"/>
+                </LinearLayout>
 
-        <Button
-            android:id="@+id/btnBorrarUsuario"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Borrar empleado"/>
-    </LinearLayout>
-</ScrollView>
+                <ImageButton
+                    android:id="@+id/btnVolver"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:layout_gravity="top|start"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/encargado_logout_button"
+                    android:contentDescription="@null"
+                    android:elevation="4dp"
+                    android:padding="12dp"
+                    android:src="@drawable/ic_arrow_back"/>
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingStart="18dp"
+                android:paddingEnd="18dp"
+                android:paddingTop="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/encargado_card_panel">
+
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:orientation="horizontal" android:gravity="center_vertical" android:layout_marginBottom="10dp">
+                        <TextView android:layout_width="90dp" android:layout_height="wrap_content"
+                            android:text="Nombre" android:textColor="#AAFFFFFF" android:textSize="12sp" android:textAllCaps="true"/>
+                        <TextView android:id="@+id/tvNombre" android:layout_width="0dp"
+                            android:layout_height="wrap_content" android:layout_weight="1"
+                            android:textColor="#FFFFFF" android:textSize="15sp" android:textStyle="bold"/>
+                    </LinearLayout>
+
+                    <View android:layout_width="match_parent" android:layout_height="1dp"
+                        android:background="#33FFFFFF" android:layout_marginBottom="10dp"/>
+
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:orientation="horizontal" android:gravity="center_vertical" android:layout_marginBottom="10dp">
+                        <TextView android:layout_width="90dp" android:layout_height="wrap_content"
+                            android:text="Email" android:textColor="#AAFFFFFF" android:textSize="12sp" android:textAllCaps="true"/>
+                        <TextView android:id="@+id/tvEmail" android:layout_width="0dp"
+                            android:layout_height="wrap_content" android:layout_weight="1"
+                            android:textColor="#FFFFFF" android:textSize="15sp"/>
+                    </LinearLayout>
+
+                    <View android:layout_width="match_parent" android:layout_height="1dp"
+                        android:background="#33FFFFFF" android:layout_marginBottom="10dp"/>
+
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:orientation="horizontal" android:gravity="center_vertical">
+                        <TextView android:layout_width="90dp" android:layout_height="wrap_content"
+                            android:text="Rol" android:textColor="#AAFFFFFF" android:textSize="12sp" android:textAllCaps="true"/>
+                        <TextView android:id="@+id/tvRol" android:layout_width="0dp"
+                            android:layout_height="wrap_content" android:layout_weight="1"
+                            android:textColor="#FFCC80" android:textSize="15sp" android:textStyle="bold"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="8dp">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnEditarUsuario"
+                        android:layout_width="0dp"
+                        android:layout_height="48dp"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="8dp"
+                        android:backgroundTint="#E65100"
+                        android:text="Editar"
+                        android:textAllCaps="false"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:cornerRadius="24dp"/>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnBorrarUsuario"
+                        android:layout_width="0dp"
+                        android:layout_height="48dp"
+                        android:layout_weight="1"
+                        android:layout_marginStart="8dp"
+                        android:backgroundTint="#C62828"
+                        android:text="Borrar"
+                        android:textAllCaps="false"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:cornerRadius="24dp"/>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</FrameLayout>
