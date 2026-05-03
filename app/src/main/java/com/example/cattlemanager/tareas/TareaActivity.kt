@@ -33,6 +33,8 @@ class TareaActivity : AppCompatActivity() {
             peonId = getSharedPreferences("app", MODE_PRIVATE).getLong("USUARIO_ID", 0L)
             binding.btnCrearTarea.visibility = View.GONE
             binding.tvTituloTareas.text = "Mis Tareas"
+        } else {
+            binding.btnCrearTarea.visibility = View.VISIBLE
         }
 
         binding.btnCrearTarea.setOnClickListener {

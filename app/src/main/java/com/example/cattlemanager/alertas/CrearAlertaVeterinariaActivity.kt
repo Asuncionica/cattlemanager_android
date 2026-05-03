@@ -1,10 +1,15 @@
 package com.example.cattlemanager.alertas
 
+import android.graphics.Rect
 import android.os.Bundle
+import android.view.MotionEvent
+import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
+import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import com.example.cattlemanager.R
 import com.example.cattlemanager.databinding.ActivityCrearAlertaVeterinariaBinding
 import com.example.cattlemanager.model.Animal
 import com.example.cattlemanager.model.AlertaVeterinariaRequest
@@ -29,9 +34,23 @@ class CrearAlertaVeterinariaActivity : AppCompatActivity() {
 
         cargarAnimalesEnSpinner()
 
-        binding.btnEnviarAlerta.setOnClickListener {
-            enviarAlerta()
+        binding.btnEnviarAlerta.setOnClickListener { enviarAlerta() }
+    }
+
+    override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
+        if (ev.action == MotionEvent.ACTION_DOWN) {
+            val v = currentFocus
+            if (v is EditText) {
+                val outRect = Rect()
+                v.getGlobalVisibleRect(outRect)
+                if (!outRect.contains(ev.rawX.toInt(), ev.rawY.toInt())) {
+                    v.clearFocus()
+                    val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.hideSoftInputFromWindow(v.windowToken, 0)
+                }
+            }
         }
+        return super.dispatchTouchEvent(ev)
     }
 
     private fun cargarAnimalesEnSpinner() {
@@ -44,7 +63,7 @@ class CrearAlertaVeterinariaActivity : AppCompatActivity() {
 
                 val adapter = ArrayAdapter(
                     this@CrearAlertaVeterinariaActivity,
-                    android.R.layout.simple_spinner_item,
+                    R.layout.spinner_item_white,
                     animales.map { it.identificador }
                 )
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)

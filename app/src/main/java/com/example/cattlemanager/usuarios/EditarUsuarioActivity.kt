@@ -31,6 +31,7 @@ class EditarUsuarioActivity : AppCompatActivity() {
 
         binding.tvTitulo.text = "Editar Empleado"
         binding.btnGuardarUsuario.text = "Actualizar"
+        binding.btnVolver.setOnClickListener { finish() }
 
         usuarioId = intent.getLongExtra("id", 0)
 

@@ -36,15 +36,17 @@ class TareaAdapter(
         holder.binding.tvPeonTarea.text = tarea.peon?.nombre ?: ""
 
         if (tarea.completada) {
-            holder.binding.tvEstadoTarea.text = "Completada"
-            holder.binding.tvEstadoTarea.setTextColor(ContextCompat.getColor(ctx, R.color.status_done))
-            holder.binding.tvEstadoTarea.setBackgroundColor(ContextCompat.getColor(ctx, R.color.status_done_bg))
+            holder.binding.layoutTareaFondo.setBackgroundResource(R.drawable.task_item_done)
             holder.binding.viewEstadoBarra.setBackgroundColor(ContextCompat.getColor(ctx, R.color.status_done))
+            holder.binding.tvEstadoTarea.text = "✓ Completada"
+            holder.binding.tvEstadoTarea.setTextColor(ContextCompat.getColor(ctx, R.color.status_done))
+            holder.binding.tvEstadoTarea.setBackgroundColor(0x00000000)
         } else {
+            holder.binding.layoutTareaFondo.setBackgroundResource(R.drawable.task_item_pending)
+            holder.binding.viewEstadoBarra.setBackgroundColor(ContextCompat.getColor(ctx, R.color.status_pending))
             holder.binding.tvEstadoTarea.text = "Pendiente"
             holder.binding.tvEstadoTarea.setTextColor(ContextCompat.getColor(ctx, R.color.status_pending))
-            holder.binding.tvEstadoTarea.setBackgroundColor(ContextCompat.getColor(ctx, R.color.status_pending_bg))
-            holder.binding.viewEstadoBarra.setBackgroundColor(ContextCompat.getColor(ctx, R.color.status_pending))
+            holder.binding.tvEstadoTarea.setBackgroundColor(0x00000000)
         }
 
         holder.itemView.setOnClickListener { onClick(tarea) }

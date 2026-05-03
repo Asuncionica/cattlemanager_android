@@ -12,11 +12,12 @@
     app:cardBackgroundColor="#00FFFFFF">
 
     <LinearLayout
+        android:id="@+id/layoutTareaFondo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:background="@drawable/peon_card_panel">
+        android:background="@drawable/task_item_pending">
 
         <View
             android:id="@+id/viewEstadoBarra"

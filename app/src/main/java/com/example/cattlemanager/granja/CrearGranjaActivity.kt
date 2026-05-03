@@ -15,6 +15,7 @@ class CrearGranjaActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityEditarGranjaBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        binding.btnVolver.setOnClickListener { finish() }
         binding.tvTituloFormularioGranja.text = "Crear Granja"
         binding.btnGuardar.text = "Crear"
         binding.btnGuardar.setOnClickListener {

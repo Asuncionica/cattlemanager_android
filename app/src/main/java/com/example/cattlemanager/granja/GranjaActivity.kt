@@ -18,6 +18,7 @@ class GranjaActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityGranjaBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        binding.btnVolver.setOnClickListener { finish() }
         binding.btnEditarGranja.setOnClickListener {
             granjaActual?.let {
                 val intent = Intent(this, EditarGranjaActivity::class.java)

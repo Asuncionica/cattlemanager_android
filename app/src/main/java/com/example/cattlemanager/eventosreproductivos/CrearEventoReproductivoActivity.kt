@@ -1,9 +1,15 @@
 package com.example.cattlemanager.eventosreproductivos
 
+import android.app.DatePickerDialog
+import android.graphics.Rect
 import android.os.Bundle
+import android.view.MotionEvent
+import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
+import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.cattlemanager.R
 import com.example.cattlemanager.databinding.ActivityCrearEventoReproductivoBinding
 import com.example.cattlemanager.model.Animal
 import com.example.cattlemanager.model.AnimalIdRequest
@@ -13,6 +19,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.Calendar
+import java.util.Locale
 
 class CrearEventoReproductivoActivity : AppCompatActivity() {
 
@@ -24,8 +32,10 @@ class CrearEventoReproductivoActivity : AppCompatActivity() {
         binding = ActivityCrearEventoReproductivoBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.btnVolver.setOnClickListener { finish() }
+
         val tiposReproductivos = listOf("Parto", "Inseminación", "Celo", "Revisión")
-        val tipoAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, tiposReproductivos)
+        val tipoAdapter = ArrayAdapter(this, R.layout.spinner_item_white, tiposReproductivos)
         tipoAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.spinnerTipoReproductivo.adapter = tipoAdapter
 
@@ -35,11 +45,38 @@ class CrearEventoReproductivoActivity : AppCompatActivity() {
             if (index >= 0) binding.spinnerTipoReproductivo.setSelection(index)
         }
 
+        binding.etFechaReproductivo.setOnClickListener { mostrarDatePicker() }
+
         cargarAnimalesEnSpinner()
 
-        binding.btnGuardarReproductivo.setOnClickListener {
-            crearEvento()
+        binding.btnGuardarReproductivo.setOnClickListener { crearEvento() }
+    }
+
+    override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
+        if (ev.action == MotionEvent.ACTION_DOWN) {
+            val v = currentFocus
+            if (v is EditText) {
+                val outRect = Rect()
+                v.getGlobalVisibleRect(outRect)
+                if (!outRect.contains(ev.rawX.toInt(), ev.rawY.toInt())) {
+                    v.clearFocus()
+                    val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.hideSoftInputFromWindow(v.windowToken, 0)
+                }
+            }
         }
+        return super.dispatchTouchEvent(ev)
+    }
+
+    private fun mostrarDatePicker() {
+        val cal = Calendar.getInstance()
+        val locale = Locale("es", "ES")
+        val config = resources.configuration
+        config.setLocale(locale)
+        val ctx = createConfigurationContext(config)
+        DatePickerDialog(ctx, { _, year, month, day ->
+            binding.etFechaReproductivo.setText(String.format("%04d-%02d-%02d", year, month + 1, day))
+        }, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)).show()
     }
 
     private fun cargarAnimalesEnSpinner() {
@@ -53,7 +90,7 @@ class CrearEventoReproductivoActivity : AppCompatActivity() {
                 withContext(Dispatchers.Main) {
                     val adapter = ArrayAdapter(
                         this@CrearEventoReproductivoActivity,
-                        android.R.layout.simple_spinner_item,
+                        R.layout.spinner_item_white,
                         animales.map { it.identificador }
                     )
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)

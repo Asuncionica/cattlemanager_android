@@ -118,11 +118,14 @@
                         android:id="@+id/etFechaReproductivo"
                         android:layout_width="match_parent" android:layout_height="52dp"
                         android:background="@drawable/form_input_dark"
-                        android:hint="AAAA-MM-DD"
+                        android:hint="Toca para seleccionar fecha"
                         android:padding="14dp"
                         android:textColor="#FFFFFF"
                         android:textColorHint="#66FFFFFF"
                         android:textSize="15sp"
+                        android:focusable="false"
+                        android:clickable="true"
+                        android:cursorVisible="false"
                         android:layout_marginBottom="16dp"/>
 
                     <View android:layout_width="match_parent" android:layout_height="1dp"

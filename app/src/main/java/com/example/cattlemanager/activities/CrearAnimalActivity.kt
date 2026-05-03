@@ -23,6 +23,7 @@ class CrearAnimalActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.tvTituloFormulario.text = "Crear Animal"
+        binding.btnVolver.setOnClickListener { finish() }
 
         cargarGranja()
 

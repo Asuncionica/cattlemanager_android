@@ -76,7 +76,7 @@
                     android:layout_gravity="top|start"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
-                    android:background="@drawable/peon_logout_button"
+                    android:background="@drawable/dashboard_logout_button"
                     android:contentDescription="@null"
                     android:elevation="4dp"
                     android:padding="12dp"

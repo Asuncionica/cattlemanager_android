@@ -24,6 +24,7 @@ class EditarAnimalActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.tvTituloFormulario.text = "Editar Animal"
+        binding.btnVolver.setOnClickListener { finish() }
 
         animalId = intent.getLongExtra("id", 0)
 

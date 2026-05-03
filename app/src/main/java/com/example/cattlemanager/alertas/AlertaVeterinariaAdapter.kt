@@ -1,10 +1,11 @@
 package com.example.cattlemanager.alertas
 
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.example.cattlemanager.R
 import com.example.cattlemanager.databinding.ItemAlertaVeterinariaBinding
 import com.example.cattlemanager.model.AlertaVeterinaria
 
@@ -30,16 +31,15 @@ class AlertaVeterinariaAdapter(
         holder.binding.tvDescripcionAlerta.text = alerta.descripcion
         holder.binding.tvMetaAlerta.text = "Por: ${alerta.creadoPor?.nombre ?: "?"} · ${alerta.fecha}"
 
+        val ctx = holder.itemView.context
         if (alerta.atendida) {
-            // Alerta ya atendida: barra verde, sin botón
-            holder.binding.viewEstado.setBackgroundColor(Color.parseColor("#388E3C"))
+            holder.binding.layoutAlertaFondo.setBackgroundResource(R.drawable.alerta_item_done)
+            holder.binding.viewEstado.setBackgroundColor(ContextCompat.getColor(ctx, R.color.status_done))
             holder.binding.btnAtender.visibility = View.GONE
-            holder.binding.root.alpha = 0.6f
         } else {
-            // Alerta pendiente: barra naranja, botón visible
-            holder.binding.viewEstado.setBackgroundColor(Color.parseColor("#FF6F00"))
+            holder.binding.layoutAlertaFondo.setBackgroundResource(R.drawable.alerta_item_pending)
+            holder.binding.viewEstado.setBackgroundColor(ContextCompat.getColor(ctx, R.color.status_pending))
             holder.binding.btnAtender.visibility = View.VISIBLE
-            holder.binding.root.alpha = 1.0f
             holder.binding.btnAtender.setOnClickListener { onAtender(alerta) }
         }
     }

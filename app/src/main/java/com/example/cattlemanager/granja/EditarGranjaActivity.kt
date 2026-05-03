@@ -17,6 +17,7 @@ class EditarGranjaActivity : AppCompatActivity() {
         binding = ActivityEditarGranjaBinding.inflate(layoutInflater)
         setContentView(binding.root)
         id = intent.getLongExtra("id", 0)
+        binding.btnVolver.setOnClickListener { finish() }
         binding.tvTituloFormularioGranja.text = "Editar Granja"
         binding.btnGuardar.text = "Actualizar"
         binding.etNombre.setText(intent.getStringExtra("nombre"))

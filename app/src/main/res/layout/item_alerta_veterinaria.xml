@@ -12,11 +12,12 @@
     app:cardBackgroundColor="#00FFFFFF">
 
     <LinearLayout
+        android:id="@+id/layoutAlertaFondo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:background="@drawable/alerta_item_card">
+        android:background="@drawable/alerta_item_pending">
 
         <View
             android:id="@+id/viewEstado"

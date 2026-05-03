@@ -1,10 +1,15 @@
 package com.example.cattlemanager.tareas
 
 import android.app.DatePickerDialog
+import android.graphics.Rect
 import android.os.Bundle
+import android.view.MotionEvent
+import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
+import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.cattlemanager.R
 import com.example.cattlemanager.databinding.ActivityCrearTareaBinding
 import com.example.cattlemanager.model.GranjaIdRequest
 import com.example.cattlemanager.model.TareaRequest
@@ -17,6 +22,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.Calendar
+import java.util.Locale
 
 class CrearTareaActivity : AppCompatActivity() {
 
@@ -29,6 +35,7 @@ class CrearTareaActivity : AppCompatActivity() {
         binding = ActivityCrearTareaBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.btnVolver.setOnClickListener { finish() }
         configurarCampoFecha()
         cargarDatosIniciales()
 
@@ -44,24 +51,38 @@ class CrearTareaActivity : AppCompatActivity() {
         binding.etFechaTarea.setOnClickListener { mostrarSelectorFecha() }
     }
 
+    override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
+        if (ev.action == MotionEvent.ACTION_DOWN) {
+            val v = currentFocus
+            if (v is EditText) {
+                val outRect = Rect()
+                v.getGlobalVisibleRect(outRect)
+                if (!outRect.contains(ev.rawX.toInt(), ev.rawY.toInt())) {
+                    v.clearFocus()
+                    val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.hideSoftInputFromWindow(v.windowToken, 0)
+                }
+            }
+        }
+        return super.dispatchTouchEvent(ev)
+    }
+
     private fun mostrarSelectorFecha() {
         val hoy = Calendar.getInstance()
-        DatePickerDialog(
-            this,
-            { _, year, month, dayOfMonth ->
-                val fechaFormateada = String.format(
-                    java.util.Locale.forLanguageTag("es-ES"),
-                    "%02d/%02d/%04d",
-                    dayOfMonth,
-                    month + 1,
-                    year
-                )
-                binding.etFechaTarea.setText(fechaFormateada)
-            },
-            hoy.get(Calendar.YEAR),
-            hoy.get(Calendar.MONTH),
-            hoy.get(Calendar.DAY_OF_MONTH)
-        ).show()
+        val locale = Locale("es", "ES")
+        val config = resources.configuration
+        config.setLocale(locale)
+        val ctx = createConfigurationContext(config)
+        DatePickerDialog(ctx, { _, year, month, dayOfMonth ->
+            val fechaFormateada = String.format(
+                Locale("es", "ES"),
+                "%02d/%02d/%04d",
+                dayOfMonth,
+                month + 1,
+                year
+            )
+            binding.etFechaTarea.setText(fechaFormateada)
+        }, hoy.get(Calendar.YEAR), hoy.get(Calendar.MONTH), hoy.get(Calendar.DAY_OF_MONTH)).show()
     }
 
     private fun cargarDatosIniciales() {
@@ -86,7 +107,7 @@ class CrearTareaActivity : AppCompatActivity() {
                     val nombres = peones.map { it.nombre }
                     val adapter = ArrayAdapter(
                         this@CrearTareaActivity,
-                        android.R.layout.simple_spinner_item,
+                        R.layout.spinner_item_white,
                         nombres
                     )
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
