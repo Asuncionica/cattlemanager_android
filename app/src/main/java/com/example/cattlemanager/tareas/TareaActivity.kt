@@ -62,19 +62,22 @@ class TareaActivity : AppCompatActivity() {
 
                 withContext(Dispatchers.Main) {
                     binding.recyclerTareas.layoutManager = LinearLayoutManager(this@TareaActivity)
-                    binding.recyclerTareas.adapter = TareaAdapter(lista) { tarea: Tarea ->
-                        val intent = Intent(this@TareaActivity, DetalleTareaActivity::class.java)
-                        intent.putExtra("id", tarea.id)
-                        intent.putExtra("titulo", tarea.titulo)
-                        intent.putExtra("descripcion", tarea.descripcion)
-                        intent.putExtra("fechaVencimiento", tarea.fechaVencimiento)
-                        intent.putExtra("completada", tarea.completada)
-                        intent.putExtra("granjaId", tarea.granja?.id ?: 0L)
-                        intent.putExtra("peonId", tarea.peon?.id ?: 0L)
-                        intent.putExtra("peonNombre", tarea.peon?.nombre ?: "Sin asignar")
-                        intent.putExtra("rolUsuario", rolUsuario)
-                        startActivity(intent)
-                    }
+                    binding.recyclerTareas.adapter = TareaAdapter(
+                        lista = lista,
+                        onClick = { tarea ->
+                            val intent = Intent(this@TareaActivity, DetalleTareaActivity::class.java)
+                            intent.putExtra("id", tarea.id)
+                            intent.putExtra("titulo", tarea.titulo)
+                            intent.putExtra("descripcion", tarea.descripcion)
+                            intent.putExtra("fechaVencimiento", tarea.fechaVencimiento)
+                            intent.putExtra("completada", tarea.completada)
+                            intent.putExtra("granjaId", tarea.granja?.id ?: 0L)
+                            intent.putExtra("peonId", tarea.peon?.id ?: 0L)
+                            intent.putExtra("peonNombre", tarea.peon?.nombre ?: "Sin asignar")
+                            intent.putExtra("rolUsuario", rolUsuario)
+                            startActivity(intent)
+                        }
+                    )
                 }
             } catch (e: Exception) {
                 e.printStackTrace()

@@ -10,7 +10,7 @@
         android:layout_height="match_parent"
         android:contentDescription="@null"
         android:scaleType="centerCrop"
-        android:src="@drawable/hero_ganaderia_terneros"/>
+        android:src="@drawable/hero_tareas_oficina_granja"/>
 
     <View
         android:layout_width="match_parent"
@@ -82,6 +82,63 @@
                 android:padding="12dp"
                 android:src="@drawable/ic_arrow_back"/>
         </FrameLayout>
+
+        <!-- Filtros -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="4dp">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnFiltroPendientes"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="4dp"
+                android:backgroundTint="#FFB74D"
+                android:text="Pendientes"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:textSize="13sp"
+                app:cornerRadius="20dp"
+                app:strokeWidth="1.5dp"
+                app:strokeColor="#FFB74D"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnFiltroTodas"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp"
+                android:backgroundTint="#00000000"
+                android:text="Todas"
+                android:textAllCaps="false"
+                android:textColor="#CCFFFFFF"
+                android:textSize="13sp"
+                app:cornerRadius="20dp"
+                app:strokeWidth="1.5dp"
+                app:strokeColor="#55FFFFFF"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnFiltroCompletadas"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:layout_marginStart="4dp"
+                android:backgroundTint="#00000000"
+                android:text="Hechas"
+                android:textAllCaps="false"
+                android:textColor="#CCFFFFFF"
+                android:textSize="13sp"
+                app:cornerRadius="20dp"
+                app:strokeWidth="1.5dp"
+                app:strokeColor="#55FFFFFF"/>
+        </LinearLayout>
 
         <FrameLayout
             android:layout_width="match_parent"

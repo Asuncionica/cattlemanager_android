@@ -10,12 +10,12 @@
         android:layout_height="match_parent"
         android:contentDescription="@null"
         android:scaleType="centerCrop"
-        android:src="@drawable/hero_ganaderia_realista"/>
+        android:src="@drawable/hero_eventos_productivos_manejo"/>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/form_overlay_gradient"/>
+        android:background="@drawable/form_overlay_productivo_light"/>
 
     <LinearLayout
         android:layout_width="match_parent"

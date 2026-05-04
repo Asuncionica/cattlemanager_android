@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.cattlemanager.alertas.CrearAlertaVeterinariaActivity
 import com.example.cattlemanager.databinding.ActivityPeonBinding
 import com.example.cattlemanager.eventosproductivos.EventoProductivoActivity
-import com.example.cattlemanager.tareas.TareaActivity
+import com.example.cattlemanager.tareas.TareasPendientesActivity
 
 class PeonActivity : AppCompatActivity() {
 
@@ -30,9 +30,7 @@ class PeonActivity : AppCompatActivity() {
             startActivity(Intent(this, EventoProductivoActivity::class.java))
         }
         binding.btnTareas.setOnClickListener {
-            startActivity(Intent(this, TareaActivity::class.java).apply {
-                putExtra("rolUsuario", "PEON")
-            })
+            startActivity(Intent(this, TareasPendientesActivity::class.java))
         }
         binding.btnAlertasVet.setOnClickListener {
             startActivity(Intent(this, CrearAlertaVeterinariaActivity::class.java))

@@ -10,12 +10,12 @@
         android:layout_height="match_parent"
         android:contentDescription="@null"
         android:scaleType="centerCrop"
-        android:src="@drawable/hero_veterinario_tratamiento"/>
+        android:src="@drawable/hero_alerta_veterinaria"/>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/animales_overlay_gradient"/>
+        android:background="@drawable/alerta_veterinaria_overlay_light"/>
 
     <LinearLayout
         android:layout_width="match_parent"
