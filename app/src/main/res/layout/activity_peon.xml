@@ -85,8 +85,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:orientation="vertical"
-                android:paddingStart="18dp"
-                android:paddingEnd="18dp"
+                android:paddingStart="14dp"
+                android:paddingEnd="14dp"
                 android:paddingBottom="22dp">
 
                 <LinearLayout
@@ -97,7 +97,7 @@
                     <androidx.cardview.widget.CardView
                         android:id="@+id/btnAnimalesPeon"
                         android:layout_width="0dp"
-                        android:layout_height="148dp"
+                        android:layout_height="95dp"
                         android:layout_marginEnd="7dp"
                         android:layout_weight="1"
                         android:clickable="true"
@@ -112,7 +112,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:background="@drawable/peon_card_panel"
+                            android:background="@drawable/card_animales"
                             android:gravity="center_vertical"
                             android:orientation="vertical"
                             android:padding="18dp">
@@ -122,8 +122,10 @@
                                 android:layout_height="wrap_content"
                                 android:text="Animales"
                                 android:textColor="#FFFFFF"
-                                android:textSize="19sp"
-                                android:textStyle="bold" />
+                                android:textSize="17sp"
+                                android:textStyle="bold"
+                                android:maxLines="1"
+                                android:ellipsize="end"/>
 
                             <TextView
                                 android:layout_width="match_parent"
@@ -139,7 +141,7 @@
                     <androidx.cardview.widget.CardView
                         android:id="@+id/btnProduccionPeon"
                         android:layout_width="0dp"
-                        android:layout_height="148dp"
+                        android:layout_height="95dp"
                         android:layout_marginStart="7dp"
                         android:layout_weight="1"
                         android:clickable="true"
@@ -154,7 +156,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:background="@drawable/peon_card_panel"
+                            android:background="@drawable/card_produccion"
                             android:gravity="center_vertical"
                             android:orientation="vertical"
                             android:padding="18dp">
@@ -164,8 +166,10 @@
                                 android:layout_height="wrap_content"
                                 android:text="Producción"
                                 android:textColor="#FFFFFF"
-                                android:textSize="19sp"
-                                android:textStyle="bold" />
+                                android:textSize="17sp"
+                                android:textStyle="bold"
+                                android:maxLines="1"
+                                android:ellipsize="end"/>
 
                             <TextView
                                 android:layout_width="match_parent"
@@ -188,7 +192,7 @@
                     <androidx.cardview.widget.CardView
                         android:id="@+id/btnTareas"
                         android:layout_width="0dp"
-                        android:layout_height="148dp"
+                        android:layout_height="95dp"
                         android:layout_marginEnd="7dp"
                         android:layout_weight="1"
                         android:clickable="true"
@@ -203,7 +207,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:background="@drawable/peon_card_panel"
+                            android:background="@drawable/card_tareas"
                             android:gravity="center_vertical"
                             android:orientation="vertical"
                             android:padding="18dp">
@@ -213,8 +217,10 @@
                                 android:layout_height="wrap_content"
                                 android:text="Mis Tareas"
                                 android:textColor="#FFFFFF"
-                                android:textSize="19sp"
-                                android:textStyle="bold" />
+                                android:textSize="17sp"
+                                android:textStyle="bold"
+                                android:maxLines="1"
+                                android:ellipsize="end"/>
 
                             <TextView
                                 android:layout_width="match_parent"
@@ -230,7 +236,7 @@
                     <androidx.cardview.widget.CardView
                         android:id="@+id/btnAlertasVet"
                         android:layout_width="0dp"
-                        android:layout_height="148dp"
+                        android:layout_height="95dp"
                         android:layout_marginStart="7dp"
                         android:layout_weight="1"
                         android:clickable="true"
@@ -245,7 +251,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:background="@drawable/peon_card_panel"
+                            android:background="@drawable/card_alertas"
                             android:gravity="center_vertical"
                             android:orientation="vertical"
                             android:padding="18dp">
@@ -255,8 +261,10 @@
                                 android:layout_height="wrap_content"
                                 android:text="Avisar Vet"
                                 android:textColor="#FFFFFF"
-                                android:textSize="19sp"
-                                android:textStyle="bold" />
+                                android:textSize="17sp"
+                                android:textStyle="bold"
+                                android:maxLines="1"
+                                android:ellipsize="end"/>
 
                             <TextView
                                 android:layout_width="match_parent"

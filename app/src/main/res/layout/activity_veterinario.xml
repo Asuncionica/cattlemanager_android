@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!-- FONDO -->
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -12,6 +13,7 @@
         android:scaleType="centerCrop"
         android:src="@drawable/hero_veterinario_tratamiento" />
 
+    <!-- OVERLAY -->
     <View
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -29,26 +31,28 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!-- Header -->
+            <!-- CABECERA -->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="210dp"
-                android:gravity="bottom"
+                android:layout_height="170dp"
+                android:gravity="center"
                 android:orientation="vertical"
                 android:paddingStart="24dp"
                 android:paddingEnd="24dp"
-                android:paddingBottom="24dp">
+                android:paddingTop="18dp">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Bienvenido,"
+                    android:textAlignment="center"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
                     android:shadowColor="#99000000"
                     android:shadowDx="0"
                     android:shadowDy="1"
-                    android:shadowRadius="4"
-                    android:text="Bienvenido,"
-                    android:textColor="#FFFFFF"
-                    android:textSize="14sp" />
+                    android:shadowRadius="4" />
 
                 <TextView
                     android:id="@+id/tvNombreUsuario"
@@ -56,48 +60,54 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
                     android:fontFamily="serif"
+                    android:gravity="center"
+                    android:text=""
+                    android:textAlignment="center"
+                    android:textColor="#FFF8EA"
+                    android:textSize="34sp"
+                    android:textStyle="bold"
                     android:shadowColor="#CC000000"
                     android:shadowDx="0"
                     android:shadowDy="3"
-                    android:shadowRadius="10"
-                    android:text=""
-                    android:textColor="#FFF8EA"
-                    android:textSize="32sp"
-                    android:textStyle="bold" />
+                    android:shadowRadius="10" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:shadowColor="#BB2E5D34"
-                    android:shadowDx="0"
-                    android:shadowDy="0"
-                    android:shadowRadius="10"
+                    android:gravity="center"
                     android:text="Gestión Veterinaria"
-                    android:textColor="#60AD5E"
+                    android:textAlignment="center"
+                    android:textColor="#81C784"
                     android:textSize="15sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:shadowColor="#AA000000"
+                    android:shadowDx="0"
+                    android:shadowDy="1"
+                    android:shadowRadius="6" />
             </LinearLayout>
 
-            <!-- Cards -->
+            <!-- CONTENEDOR -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:orientation="vertical"
                 android:paddingStart="18dp"
                 android:paddingEnd="18dp"
-                android:paddingBottom="22dp">
+                android:paddingBottom="24dp">
 
+                <!-- FILA SUPERIOR -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
+                    <!-- ANIMALES -->
                     <androidx.cardview.widget.CardView
                         android:id="@+id/btnAnimalesVet"
                         android:layout_width="0dp"
-                        android:layout_height="148dp"
+                        android:layout_height="85dp"
+                        android:layout_marginTop="120dp"
                         android:layout_marginEnd="7dp"
                         android:layout_weight="1"
                         android:clickable="true"
@@ -105,41 +115,40 @@
                         android:foreground="@drawable/dashboard_card_ripple"
                         android:stateListAnimator="@animator/dashboard_card_state"
                         app:cardBackgroundColor="#00FFFFFF"
-                        app:cardCornerRadius="12dp"
-                        app:cardElevation="6dp"
-                        app:contentPadding="0dp">
+                        app:cardCornerRadius="18dp"
+                        app:cardElevation="6dp">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:background="@drawable/dashboard_transparent_panel"
+                            android:background="@drawable/card_vet_animales"
                             android:gravity="center_vertical"
                             android:orientation="vertical"
-                            android:padding="18dp">
+                            android:padding="14dp">
 
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="Animales"
                                 android:textColor="#FFFFFF"
-                                android:textSize="19sp"
+                                android:textSize="17sp"
                                 android:textStyle="bold" />
 
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="3dp"
-                                android:maxLines="1"
+                                android:layout_marginTop="2dp"
                                 android:text="Fichas e historial"
-                                android:textColor="#CCFFFFFF"
-                                android:textSize="13sp" />
+                                android:textColor="#F5FFFFFF"
+                                android:textSize="11sp" />
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
 
+                    <!-- SANITARIOS -->
                     <androidx.cardview.widget.CardView
                         android:id="@+id/btnSanitario"
                         android:layout_width="0dp"
-                        android:layout_height="148dp"
+                        android:layout_height="85dp"
                         android:layout_marginStart="7dp"
                         android:layout_weight="1"
                         android:clickable="true"
@@ -147,48 +156,47 @@
                         android:foreground="@drawable/dashboard_card_ripple"
                         android:stateListAnimator="@animator/dashboard_card_state"
                         app:cardBackgroundColor="#00FFFFFF"
-                        app:cardCornerRadius="12dp"
-                        app:cardElevation="6dp"
-                        app:contentPadding="0dp">
+                        app:cardCornerRadius="18dp"
+                        app:cardElevation="6dp">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:background="@drawable/dashboard_transparent_panel"
+                            android:background="@drawable/card_vet_sanitarios"
                             android:gravity="center_vertical"
                             android:orientation="vertical"
-                            android:padding="18dp">
+                            android:padding="14dp">
 
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="Sanitarios"
                                 android:textColor="#FFFFFF"
-                                android:textSize="19sp"
+                                android:textSize="17sp"
                                 android:textStyle="bold" />
 
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="3dp"
-                                android:maxLines="1"
+                                android:layout_marginTop="2dp"
                                 android:text="Tratamientos"
-                                android:textColor="#CCFFFFFF"
-                                android:textSize="13sp" />
+                                android:textColor="#F5FFFFFF"
+                                android:textSize="11sp" />
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
                 </LinearLayout>
 
+                <!-- REPRODUCTIVOS -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="14dp"
+                    android:layout_marginTop="30dp"
                     android:orientation="horizontal">
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/btnReproductivo"
                         android:layout_width="0dp"
-                        android:layout_height="148dp"
+                        android:layout_height="85dp"
                         android:layout_marginEnd="7dp"
                         android:layout_weight="1"
                         android:clickable="true"
@@ -196,83 +204,101 @@
                         android:foreground="@drawable/dashboard_card_ripple"
                         android:stateListAnimator="@animator/dashboard_card_state"
                         app:cardBackgroundColor="#00FFFFFF"
-                        app:cardCornerRadius="12dp"
-                        app:cardElevation="6dp"
-                        app:contentPadding="0dp">
+                        app:cardCornerRadius="18dp"
+                        app:cardElevation="6dp">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:background="@drawable/dashboard_transparent_panel"
+                            android:background="@drawable/card_vet_reproductivos"
                             android:gravity="center_vertical"
                             android:orientation="vertical"
-                            android:padding="18dp">
+                            android:padding="14dp">
 
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="Reproductivos"
                                 android:textColor="#FFFFFF"
-                                android:textSize="19sp"
+                                android:textSize="17sp"
                                 android:textStyle="bold" />
 
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="3dp"
-                                android:maxLines="1"
+                                android:layout_marginTop="2dp"
                                 android:text="Seguimiento"
-                                android:textColor="#CCFFFFFF"
-                                android:textSize="13sp" />
+                                android:textColor="#F5FFFFFF"
+                                android:textSize="11sp" />
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="85dp"
+                        android:layout_marginStart="7dp"
+                        android:layout_weight="1" />
+                </LinearLayout>
+
+                <!-- ALERTAS -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:orientation="horizontal">
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/btnAlertas"
                         android:layout_width="0dp"
-                        android:layout_height="148dp"
-                        android:layout_marginStart="7dp"
+                        android:layout_height="85dp"
+                        android:layout_marginEnd="7dp"
                         android:layout_weight="1"
                         android:clickable="true"
                         android:focusable="true"
                         android:foreground="@drawable/dashboard_card_ripple"
                         android:stateListAnimator="@animator/dashboard_card_state"
                         app:cardBackgroundColor="#00FFFFFF"
-                        app:cardCornerRadius="12dp"
-                        app:cardElevation="6dp"
-                        app:contentPadding="0dp">
+                        app:cardCornerRadius="18dp"
+                        app:cardElevation="6dp">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:background="@drawable/dashboard_transparent_panel"
+                            android:background="@drawable/card_vet_alertas"
                             android:gravity="center_vertical"
                             android:orientation="vertical"
-                            android:padding="18dp">
+                            android:padding="14dp">
 
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="Alertas"
                                 android:textColor="#FFFFFF"
-                                android:textSize="19sp"
+                                android:textSize="17sp"
                                 android:textStyle="bold" />
 
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="3dp"
-                                android:maxLines="1"
+                                android:layout_marginTop="2dp"
                                 android:text="Avisos"
-                                android:textColor="#CCFFFFFF"
-                                android:textSize="13sp" />
+                                android:textColor="#F5FFFFFF"
+                                android:textSize="11sp" />
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="85dp"
+                        android:layout_marginStart="7dp"
+                        android:layout_weight="1" />
                 </LinearLayout>
+
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
 
+    <!-- CERRAR SESIÓN -->
     <ImageButton
         android:id="@+id/btnCerrarSesion"
         android:layout_width="52dp"
