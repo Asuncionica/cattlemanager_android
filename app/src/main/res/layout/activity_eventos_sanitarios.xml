@@ -33,15 +33,16 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="210dp"
-                android:gravity="bottom"
+                android:gravity="bottom|center_horizontal"
                 android:orientation="vertical"
                 android:paddingStart="24dp"
                 android:paddingEnd="24dp"
                 android:paddingBottom="24dp">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:shadowColor="#99000000"
                     android:shadowDx="0"
                     android:shadowDy="1"
@@ -56,6 +57,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
                     android:fontFamily="serif"
+                    android:gravity="center"
                     android:shadowColor="#CC000000"
                     android:shadowDx="0"
                     android:shadowDy="3"
@@ -67,9 +69,10 @@
 
                 <TextView
                     android:id="@+id/tvContadorSanitarios"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
+                    android:gravity="center"
                     android:shadowColor="#BB2E5D34"
                     android:shadowDx="0"
                     android:shadowDy="0"
@@ -98,7 +101,7 @@
                     <androidx.cardview.widget.CardView
                         android:id="@+id/cardVacuna"
                         android:layout_width="0dp"
-                        android:layout_height="148dp"
+                        android:layout_height="115dp"
                         android:layout_marginEnd="7dp"
                         android:layout_weight="1"
                         android:clickable="true"
@@ -108,20 +111,23 @@
                         app:cardCornerRadius="12dp"
                         app:cardElevation="6dp"
                         app:contentPadding="0dp">
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:background="@drawable/dashboard_transparent_panel"
                             android:gravity="center_vertical"
                             android:orientation="vertical"
-                            android:padding="18dp">
+                            android:padding="14dp">
+
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="Vacuna"
                                 android:textColor="#FFFFFF"
-                                android:textSize="19sp"
+                                android:textSize="18sp"
                                 android:textStyle="bold"/>
+
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -129,14 +135,14 @@
                                 android:maxLines="1"
                                 android:text="Inmunización"
                                 android:textColor="#CCFFFFFF"
-                                android:textSize="13sp"/>
+                                android:textSize="12sp"/>
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/cardDesparasitacion"
                         android:layout_width="0dp"
-                        android:layout_height="148dp"
+                        android:layout_height="115dp"
                         android:layout_marginStart="7dp"
                         android:layout_weight="1"
                         android:clickable="true"
@@ -146,20 +152,23 @@
                         app:cardCornerRadius="12dp"
                         app:cardElevation="6dp"
                         app:contentPadding="0dp">
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:background="@drawable/dashboard_transparent_panel"
                             android:gravity="center_vertical"
                             android:orientation="vertical"
-                            android:padding="18dp">
+                            android:padding="14dp">
+
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Despar."
+                                android:text="Desparasit."
                                 android:textColor="#FFFFFF"
-                                android:textSize="19sp"
+                                android:textSize="18sp"
                                 android:textStyle="bold"/>
+
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -167,7 +176,7 @@
                                 android:maxLines="1"
                                 android:text="Antiparásitos"
                                 android:textColor="#CCFFFFFF"
-                                android:textSize="13sp"/>
+                                android:textSize="12sp"/>
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
                 </LinearLayout>
@@ -175,13 +184,13 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="14dp"
+                    android:layout_marginTop="12dp"
                     android:orientation="horizontal">
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/cardTratamiento"
                         android:layout_width="0dp"
-                        android:layout_height="148dp"
+                        android:layout_height="115dp"
                         android:layout_marginEnd="7dp"
                         android:layout_weight="1"
                         android:clickable="true"
@@ -191,20 +200,23 @@
                         app:cardCornerRadius="12dp"
                         app:cardElevation="6dp"
                         app:contentPadding="0dp">
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:background="@drawable/dashboard_transparent_panel"
                             android:gravity="center_vertical"
                             android:orientation="vertical"
-                            android:padding="18dp">
+                            android:padding="14dp">
+
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="Tratamiento"
                                 android:textColor="#FFFFFF"
-                                android:textSize="19sp"
+                                android:textSize="18sp"
                                 android:textStyle="bold"/>
+
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -212,14 +224,14 @@
                                 android:maxLines="1"
                                 android:text="Medicación"
                                 android:textColor="#CCFFFFFF"
-                                android:textSize="13sp"/>
+                                android:textSize="12sp"/>
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/cardRevision"
                         android:layout_width="0dp"
-                        android:layout_height="148dp"
+                        android:layout_height="115dp"
                         android:layout_marginStart="7dp"
                         android:layout_weight="1"
                         android:clickable="true"
@@ -229,20 +241,23 @@
                         app:cardCornerRadius="12dp"
                         app:cardElevation="6dp"
                         app:contentPadding="0dp">
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:background="@drawable/dashboard_transparent_panel"
                             android:gravity="center_vertical"
                             android:orientation="vertical"
-                            android:padding="18dp">
+                            android:padding="14dp">
+
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="Revisión"
                                 android:textColor="#FFFFFF"
-                                android:textSize="19sp"
+                                android:textSize="18sp"
                                 android:textStyle="bold"/>
+
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -250,7 +265,7 @@
                                 android:maxLines="1"
                                 android:text="Control general"
                                 android:textColor="#CCFFFFFF"
-                                android:textSize="13sp"/>
+                                android:textSize="12sp"/>
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
                 </LinearLayout>

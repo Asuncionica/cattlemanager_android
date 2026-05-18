@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- FONDO -->
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -13,7 +12,6 @@
         android:scaleType="centerCrop"
         android:src="@drawable/hero_veterinario_tratamiento" />
 
-    <!-- OVERLAY -->
     <View
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -34,7 +32,7 @@
             <!-- CABECERA -->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="170dp"
+                android:layout_height="165dp"
                 android:gravity="center"
                 android:orientation="vertical"
                 android:paddingStart="24dp"
@@ -78,7 +76,7 @@
                     android:gravity="center"
                     android:text="Gestión Veterinaria"
                     android:textAlignment="center"
-                    android:textColor="#81C784"
+                    android:textColor="#135216"
                     android:textSize="15sp"
                     android:textStyle="bold"
                     android:shadowColor="#AA000000"
@@ -87,218 +85,233 @@
                     android:shadowRadius="6" />
             </LinearLayout>
 
-            <!-- CONTENEDOR -->
+            <!-- SANITARIOS ARRIBA A LA DERECHA -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
+                android:orientation="horizontal"
+                android:paddingStart="18dp"
+                android:paddingEnd="18dp">
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="85dp"
+                    android:layout_marginEnd="7dp"
+                    android:layout_weight="1" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/btnSanitario"
+                    android:layout_width="0dp"
+                    android:layout_height="85dp"
+                    android:layout_marginStart="7dp"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="@drawable/dashboard_card_ripple"
+                    android:stateListAnimator="@animator/dashboard_card_state"
+                    app:cardBackgroundColor="#00FFFFFF"
+                    app:cardCornerRadius="18dp"
+                    app:cardElevation="6dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/card_vet_sanitarios"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical"
+                        android:padding="14dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Sanitarios"
+                            android:textColor="#01579B"
+                            android:textSize="17sp"
+                            android:textStyle="bold"
+                            android:shadowColor="#66000000"
+                            android:shadowDx="0"
+                            android:shadowDy="1"
+                            android:shadowRadius="3" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="Tratamientos"
+                            android:textColor="#01579B"
+                            android:textSize="11sp" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+
+            <!-- ALERTAS EN MEDIO A LA IZQUIERDA -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="200dp"
+                android:orientation="horizontal"
+                android:paddingStart="18dp"
+                android:paddingEnd="18dp">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/btnAlertas"
+                    android:layout_width="0dp"
+                    android:layout_height="85dp"
+                    android:layout_marginEnd="7dp"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="@drawable/dashboard_card_ripple"
+                    android:stateListAnimator="@animator/dashboard_card_state"
+                    app:cardBackgroundColor="#00FFFFFF"
+                    app:cardCornerRadius="18dp"
+                    app:cardElevation="6dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/card_vet_alertas"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical"
+                        android:padding="14dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Alertas"
+                            android:textColor="#B71C1C"
+                            android:textSize="17sp"
+                            android:textStyle="bold"
+                            android:shadowColor="#66000000"
+                            android:shadowDx="0"
+                            android:shadowDy="1"
+                            android:shadowRadius="3" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="Avisos"
+                            android:textColor="#B71C1C"
+                            android:textSize="11sp" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="85dp"
+                    android:layout_marginStart="7dp"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <!-- ESPACIO PARA VER IMAGEN -->
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="70dp" />
+
+            <!-- ANIMALES Y REPRODUCTIVOS ABAJO -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
                 android:paddingStart="18dp"
                 android:paddingEnd="18dp"
                 android:paddingBottom="24dp">
 
-                <!-- FILA SUPERIOR -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/btnAnimalesVet"
+                    android:layout_width="0dp"
+                    android:layout_height="85dp"
+                    android:layout_marginEnd="7dp"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="@drawable/dashboard_card_ripple"
+                    android:stateListAnimator="@animator/dashboard_card_state"
+                    app:cardBackgroundColor="#00FFFFFF"
+                    app:cardCornerRadius="18dp"
+                    app:cardElevation="6dp">
 
-                    <!-- ANIMALES -->
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/btnAnimalesVet"
-                        android:layout_width="0dp"
-                        android:layout_height="85dp"
-                        android:layout_marginTop="120dp"
-                        android:layout_marginEnd="7dp"
-                        android:layout_weight="1"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:foreground="@drawable/dashboard_card_ripple"
-                        android:stateListAnimator="@animator/dashboard_card_state"
-                        app:cardBackgroundColor="#00FFFFFF"
-                        app:cardCornerRadius="18dp"
-                        app:cardElevation="6dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/card_vet_animales"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical"
+                        android:padding="14dp">
 
-                        <LinearLayout
+                        <TextView
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="@drawable/card_vet_animales"
-                            android:gravity="center_vertical"
-                            android:orientation="vertical"
-                            android:padding="14dp">
+                            android:layout_height="wrap_content"
+                            android:text="Animales"
+                            android:textColor="#1B5E20"
+                            android:textSize="17sp"
+                            android:textStyle="bold"
+                            android:shadowColor="#66000000"
+                            android:shadowDx="0"
+                            android:shadowDy="1"
+                            android:shadowRadius="3" />
 
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="Animales"
-                                android:textColor="#FFFFFF"
-                                android:textSize="17sp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="2dp"
-                                android:text="Fichas e historial"
-                                android:textColor="#F5FFFFFF"
-                                android:textSize="11sp" />
-                        </LinearLayout>
-                    </androidx.cardview.widget.CardView>
-
-                    <!-- SANITARIOS -->
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/btnSanitario"
-                        android:layout_width="0dp"
-                        android:layout_height="85dp"
-                        android:layout_marginStart="7dp"
-                        android:layout_weight="1"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:foreground="@drawable/dashboard_card_ripple"
-                        android:stateListAnimator="@animator/dashboard_card_state"
-                        app:cardBackgroundColor="#00FFFFFF"
-                        app:cardCornerRadius="18dp"
-                        app:cardElevation="6dp">
-
-                        <LinearLayout
+                        <TextView
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="@drawable/card_vet_sanitarios"
-                            android:gravity="center_vertical"
-                            android:orientation="vertical"
-                            android:padding="14dp">
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="Fichas e historial"
+                            android:textColor="#1B5E20"
+                            android:textSize="11sp" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
 
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="Sanitarios"
-                                android:textColor="#FFFFFF"
-                                android:textSize="17sp"
-                                android:textStyle="bold" />
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/btnReproductivo"
+                    android:layout_width="0dp"
+                    android:layout_height="85dp"
+                    android:layout_marginStart="7dp"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="@drawable/dashboard_card_ripple"
+                    android:stateListAnimator="@animator/dashboard_card_state"
+                    app:cardBackgroundColor="#00FFFFFF"
+                    app:cardCornerRadius="18dp"
+                    app:cardElevation="6dp">
 
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="2dp"
-                                android:text="Tratamientos"
-                                android:textColor="#F5FFFFFF"
-                                android:textSize="11sp" />
-                        </LinearLayout>
-                    </androidx.cardview.widget.CardView>
-                </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/card_vet_reproductivos"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical"
+                        android:padding="14dp">
 
-                <!-- REPRODUCTIVOS -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
-                    android:orientation="horizontal">
-
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/btnReproductivo"
-                        android:layout_width="0dp"
-                        android:layout_height="85dp"
-                        android:layout_marginEnd="7dp"
-                        android:layout_weight="1"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:foreground="@drawable/dashboard_card_ripple"
-                        android:stateListAnimator="@animator/dashboard_card_state"
-                        app:cardBackgroundColor="#00FFFFFF"
-                        app:cardCornerRadius="18dp"
-                        app:cardElevation="6dp">
-
-                        <LinearLayout
+                        <TextView
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="@drawable/card_vet_reproductivos"
-                            android:gravity="center_vertical"
-                            android:orientation="vertical"
-                            android:padding="14dp">
+                            android:layout_height="wrap_content"
+                            android:text="Reproductivos"
+                            android:textColor="#4A148C"
+                            android:textSize="15sp"
+                            android:textStyle="bold"
+                            android:maxLines="1"
+                            android:ellipsize="end"
+                            android:shadowColor="#66000000"
+                            android:shadowDx="0"
+                            android:shadowDy="1"
+                            android:shadowRadius="3" />
 
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="Reproductivos"
-                                android:textColor="#FFFFFF"
-                                android:textSize="17sp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="2dp"
-                                android:text="Seguimiento"
-                                android:textColor="#F5FFFFFF"
-                                android:textSize="11sp" />
-                        </LinearLayout>
-                    </androidx.cardview.widget.CardView>
-
-                    <Space
-                        android:layout_width="0dp"
-                        android:layout_height="85dp"
-                        android:layout_marginStart="7dp"
-                        android:layout_weight="1" />
-                </LinearLayout>
-
-                <!-- ALERTAS -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
-                    android:orientation="horizontal">
-
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/btnAlertas"
-                        android:layout_width="0dp"
-                        android:layout_height="85dp"
-                        android:layout_marginEnd="7dp"
-                        android:layout_weight="1"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:foreground="@drawable/dashboard_card_ripple"
-                        android:stateListAnimator="@animator/dashboard_card_state"
-                        app:cardBackgroundColor="#00FFFFFF"
-                        app:cardCornerRadius="18dp"
-                        app:cardElevation="6dp">
-
-                        <LinearLayout
+                        <TextView
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="@drawable/card_vet_alertas"
-                            android:gravity="center_vertical"
-                            android:orientation="vertical"
-                            android:padding="14dp">
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="Alertas"
-                                android:textColor="#FFFFFF"
-                                android:textSize="17sp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="2dp"
-                                android:text="Avisos"
-                                android:textColor="#F5FFFFFF"
-                                android:textSize="11sp" />
-                        </LinearLayout>
-                    </androidx.cardview.widget.CardView>
-
-                    <Space
-                        android:layout_width="0dp"
-                        android:layout_height="85dp"
-                        android:layout_marginStart="7dp"
-                        android:layout_weight="1" />
-                </LinearLayout>
-
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="Seguimiento"
+                            android:textColor="#4A148C"
+                            android:textSize="11sp" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
             </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
 
-    <!-- CERRAR SESIÓN -->
     <ImageButton
         android:id="@+id/btnCerrarSesion"
         android:layout_width="52dp"
