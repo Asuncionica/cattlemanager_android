@@ -16,6 +16,7 @@ import com.example.cattlemanager.model.AlertaVeterinariaRequest
 import com.example.cattlemanager.model.AnimalIdRequest
 import com.example.cattlemanager.model.UsuarioIdRequest
 import com.example.cattlemanager.network.RetrofitClient
+import com.example.cattlemanager.security.SessionManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -88,7 +89,7 @@ class CrearAlertaVeterinariaActivity : AppCompatActivity() {
             return
         }
 
-        val usuarioId = getSharedPreferences("app", MODE_PRIVATE).getLong("USUARIO_ID", 0L)
+        val usuarioId = SessionManager(this).getUserId()
         if (usuarioId == 0L) {
             Toast.makeText(this, "Error: sesión no válida", Toast.LENGTH_SHORT).show()
             return

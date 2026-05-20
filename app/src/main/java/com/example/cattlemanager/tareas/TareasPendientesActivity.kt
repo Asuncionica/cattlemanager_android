@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.cattlemanager.databinding.ActivityTareasPendientesBinding
 import com.example.cattlemanager.model.Tarea
 import com.example.cattlemanager.network.RetrofitClient
+import com.example.cattlemanager.security.SessionManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -34,7 +35,7 @@ class TareasPendientesActivity : AppCompatActivity() {
 
         peonId = intent.getLongExtra(
             "peonId",
-            getSharedPreferences("app", MODE_PRIVATE).getLong("USUARIO_ID", 0L)
+            SessionManager(this).getUserId()
         )
 
         cargarUrgentes()

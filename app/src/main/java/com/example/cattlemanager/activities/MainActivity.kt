@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.cattlemanager.databinding.ActivityMainBinding
+import com.example.cattlemanager.security.SessionManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -24,7 +25,7 @@ data class UsuarioResponse(
     val id: Long,
     val nombre: String,
     val email: String,
-    val password: String,
+    val token: String,
     val rol: RolResponse
 )
 
@@ -38,14 +39,21 @@ interface AuthApi {
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var sessionManager: SessionManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        sessionManager = SessionManager(this)
+        if (sessionManager.isLoggedIn()) {
+            abrirPantallaSegunRol(sessionManager.getRoleId(), sessionManager.getUserName().orEmpty())
+            return
+        }
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val retrofit = Retrofit.Builder()
-            .baseUrl("http://192.168.1.133:8085/")
+            .baseUrl("http://192.168.18.37:8085/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
@@ -68,11 +76,13 @@ class MainActivity : AppCompatActivity() {
                     val usuario = api.login(LoginRequest(email, password))
 
                     withContext(Dispatchers.Main) {
-                        val prefs = getSharedPreferences("app", MODE_PRIVATE)
-                        prefs.edit()
-                            .putLong("USUARIO_ID", usuario.id)
-                            .putString("ROL", usuario.rol.nombre)
-                            .apply()
+                        sessionManager.saveSession(
+                            token = usuario.token,
+                            userId = usuario.id,
+                            roleName = usuario.rol.nombre,
+                            roleId = usuario.rol.id,
+                            userName = usuario.nombre
+                        )
 
                         binding.progressBar.visibility = View.GONE
                         binding.loginButton.isEnabled = true
@@ -92,7 +102,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun abrirPantallaSegunRol(usuario: UsuarioResponse) {
-        val intent = when (usuario.rol.id.toInt()) {
+        abrirPantallaSegunRol(usuario.rol.id, usuario.nombre)
+    }
+
+    private fun abrirPantallaSegunRol(rolId: Long, nombreUsuario: String) {
+        val intent = when (rolId.toInt()) {
             1 -> Intent(this, VeterinarioActivity::class.java)
             2 -> Intent(this, EncargadoActivity::class.java)
             3 -> Intent(this, PeonActivity::class.java)
@@ -101,7 +115,7 @@ class MainActivity : AppCompatActivity() {
                 return
             }
         }
-        intent.putExtra("nombreUsuario", usuario.nombre)
+        intent.putExtra("nombreUsuario", nombreUsuario)
         startActivity(intent)
         finish()
     }

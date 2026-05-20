@@ -8,6 +8,7 @@ import com.example.cattlemanager.alertas.AlertasVeterinariaActivity
 import com.example.cattlemanager.databinding.ActivityVeterinarioBinding
 import com.example.cattlemanager.eventosreproductivos.EventoReproductivoActivity
 import com.example.cattlemanager.eventossanitarios.EventoSanitarioActivity
+import com.example.cattlemanager.security.SessionManager
 
 class VeterinarioActivity : AppCompatActivity() {
 
@@ -74,7 +75,7 @@ class VeterinarioActivity : AppCompatActivity() {
     }
 
     private fun cerrarSesion() {
-        getSharedPreferences("app", MODE_PRIVATE).edit().clear().apply()
+        SessionManager(this).clearSession()
         val intent = Intent(this, MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)

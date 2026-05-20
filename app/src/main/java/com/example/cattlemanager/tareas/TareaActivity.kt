@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.cattlemanager.databinding.ActivityTareasBinding
 import com.example.cattlemanager.model.Tarea
 import com.example.cattlemanager.network.RetrofitClient
+import com.example.cattlemanager.security.SessionManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -30,7 +31,7 @@ class TareaActivity : AppCompatActivity() {
         binding.btnVolver.setOnClickListener { finish() }
 
         if (rolUsuario == "PEON") {
-            peonId = getSharedPreferences("app", MODE_PRIVATE).getLong("USUARIO_ID", 0L)
+            peonId = SessionManager(this).getUserId()
             binding.btnCrearTarea.visibility = View.GONE
             binding.tvTituloTareas.text = "Mis Tareas"
         } else {

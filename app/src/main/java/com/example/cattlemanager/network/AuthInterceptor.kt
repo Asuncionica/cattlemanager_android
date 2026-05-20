@@ -1,14 +1,19 @@
 package com.example.cattlemanager.network
 
+import com.example.cattlemanager.security.SessionManager
 import okhttp3.Interceptor
 import okhttp3.Response
 
-class AuthInterceptor(private val token: String) : Interceptor {
+class AuthInterceptor(private val sessionManager: SessionManager) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
-        val request = chain.request().newBuilder()
-            .addHeader("Authorization", "Bearer $token")
-            .build()
+        val requestBuilder = chain.request().newBuilder()
+            .header("Accept", "application/json")
+            .header("Content-Type", "application/json")
 
-        return chain.proceed(request)
+        sessionManager.getToken()
+            ?.takeIf { it.isNotBlank() }
+            ?.let { token -> requestBuilder.header("Authorization", "Bearer $token") }
+
+        return chain.proceed(requestBuilder.build())
     }
 }
