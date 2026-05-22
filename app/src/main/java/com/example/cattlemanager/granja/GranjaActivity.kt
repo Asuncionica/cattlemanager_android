@@ -1,11 +1,9 @@
 package com.example.cattlemanager.granja
-
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.cattlemanager.databinding.ActivityGranjaBinding
 import com.example.cattlemanager.model.Granja
 import com.example.cattlemanager.network.RetrofitClient
@@ -13,90 +11,68 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import retrofit2.HttpException
-
 class GranjaActivity : AppCompatActivity() {
-
     private lateinit var binding: ActivityGranjaBinding
-    private lateinit var adapter: GranjaAdapter
-    private var usuarioId: Long = -1L
-
+    private var granjaActual: Granja? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityGranjaBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        usuarioId = intent.getLongExtra("usuarioId", -1L)
-
-        if (usuarioId == -1L) {
-            Toast.makeText(this, "Error: usuario no válido", Toast.LENGTH_SHORT).show()
-            finish()
-            return
+        binding.btnVolver.setOnClickListener { finish() }
+        binding.btnEditarGranja.setOnClickListener {
+            granjaActual?.let {
+                val intent = Intent(this, EditarGranjaActivity::class.java)
+                intent.putExtra("id", it.id)
+                intent.putExtra("nombre", it.nombre)
+                intent.putExtra("ubicacion", it.ubicacion)
+                intent.putExtra("telefono", it.telefono)
+                startActivity(intent)
+            }
         }
-
-        adapter = GranjaAdapter(emptyList()) { granja ->
-            val intent = Intent(this, EditarGranjaActivity::class.java)
-            intent.putExtra("usuarioId", usuarioId)
-            intent.putExtra("id", granja.id)
-            intent.putExtra("nombre", granja.nombre)
-            intent.putExtra("ubicacion", granja.ubicacion)
-            intent.putExtra("telefono", granja.telefono)
-            startActivity(intent)
-        }
-
-        binding.recyclerGranjas.layoutManager = LinearLayoutManager(this)
-        binding.recyclerGranjas.adapter = adapter
-
         binding.btnCrearGranja.setOnClickListener {
-            val intent = Intent(this, CrearGranjaActivity::class.java)
-            intent.putExtra("usuarioId", usuarioId)
-            startActivity(intent)
+            startActivity(Intent(this, CrearGranjaActivity::class.java))
         }
-
-        cargarGranjas()
+        cargarGranja()
     }
-
     override fun onResume() {
         super.onResume()
-        cargarGranjas()
+        cargarGranja()
     }
-
-    private fun cargarGranjas() {
+    private fun cargarGranja() {
         val api = RetrofitClient.getGranjaApi(this)
-
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                val lista = api.obtenerGranjasPorUsuario(usuarioId)
-
+                val lista = api.obtenerGranjas()
+                val granja = lista.firstOrNull()
+                granjaActual = granja
                 withContext(Dispatchers.Main) {
-                    if (lista.isEmpty()) {
-                        binding.tvMensajeSinGranjas.visibility = View.VISIBLE
-                        binding.recyclerGranjas.visibility = View.GONE
+                    if (granja != null) {
+                        mostrarGranja(granja)
                     } else {
-                        binding.tvMensajeSinGranjas.visibility = View.GONE
-                        binding.recyclerGranjas.visibility = View.VISIBLE
-                        adapter.actualizarLista(lista)
+                        mostrarSinGranja()
                     }
-                }
-            } catch (e: HttpException) {
-                e.printStackTrace()
-                withContext(Dispatchers.Main) {
-                    Toast.makeText(
-                        this@GranjaActivity,
-                        "HTTP ${e.code()} al cargar granjas",
-                        Toast.LENGTH_LONG
-                    ).show()
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(
-                        this@GranjaActivity,
-                        "Error: ${e.message}",
-                        Toast.LENGTH_LONG
-                    ).show()
+                    Toast.makeText(this@GranjaActivity, "Error al cargar la granja", Toast.LENGTH_SHORT).show()
                 }
             }
         }
+    }
+    private fun mostrarGranja(granja: Granja) {
+        binding.cardGranja.visibility = View.VISIBLE
+        binding.btnEditarGranja.visibility = View.VISIBLE
+        binding.tvMensajeSinGranja.visibility = View.GONE
+        binding.btnCrearGranja.visibility = View.GONE
+        binding.tvNombreGranja.text = granja.nombre
+        binding.tvUbicacion.text = "Ubicación: ${granja.ubicacion}"
+        binding.tvTelefono.text = "Teléfono: ${granja.telefono}"
+    }
+    private fun mostrarSinGranja() {
+        binding.cardGranja.visibility = View.GONE
+        binding.btnEditarGranja.visibility = View.GONE
+        binding.tvMensajeSinGranja.visibility = View.VISIBLE
+        binding.btnCrearGranja.visibility = View.VISIBLE
     }
 }

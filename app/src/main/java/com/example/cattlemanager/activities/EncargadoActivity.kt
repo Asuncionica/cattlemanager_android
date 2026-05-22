@@ -2,74 +2,91 @@ package com.example.cattlemanager.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.animation.DecelerateInterpolator
 import androidx.appcompat.app.AppCompatActivity
+import com.example.cattlemanager.alertas.CrearAlertaVeterinariaActivity
 import com.example.cattlemanager.databinding.ActivityEncargadoBinding
 import com.example.cattlemanager.eventosproductivos.EventoProductivoActivity
 import com.example.cattlemanager.granja.GranjaActivity
+import com.example.cattlemanager.security.SessionManager
+import com.example.cattlemanager.tareas.TareaActivity
 import com.example.cattlemanager.usuarios.UsuarioActivity
 
-// Activity principal para el rol ENCARGADO
-// Desde aquí el usuario accede a las distintas funcionalidades de la app
 class EncargadoActivity : AppCompatActivity() {
 
-    // Binding para acceder a las vistas del layout
     private lateinit var binding: ActivityEncargadoBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        // Inicializa el binding
         binding = ActivityEncargadoBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Recoge datos del usuario enviados desde el login
-        val nombreUsuario = intent.getStringExtra("nombreUsuario") ?: "Encargado"
-        val usuarioId = intent.getLongExtra("usuarioId", -1)
+        val nombreUsuario = intent.getStringExtra("nombreUsuario") ?: ""
+        binding.tvNombreUsuario.text = nombreUsuario
 
-        // Muestra mensaje de bienvenida personalizado
-        binding.tvBienvenidaEnc.text = "¡Hola $nombreUsuario! Bienvenido Encargado. ID: $usuarioId"
-
-        // Botón para ir a la gestión de animales
         binding.btnAnimalesEnc.setOnClickListener {
-            val intent = Intent(this, AnimalActivity::class.java)
-
-            // Se envía el rol para controlar permisos en otras pantallas
-            intent.putExtra("rolUsuario", "ENCARGADO")
-
-            // Se envía el ID del usuario
-            intent.putExtra("usuarioId", usuarioId)
-
-            startActivity(intent)
+            startActivity(Intent(this, AnimalActivity::class.java).apply {
+                putExtra("rolUsuario", "ENCARGADO")
+            })
         }
-
-        // Botón para gestionar usuarios
         binding.btnUsuarios.setOnClickListener {
-            val intent = Intent(this, UsuarioActivity::class.java)
-
-            // Se pasa el ID del usuario
-            intent.putExtra("usuarioId", usuarioId)
-
-            startActivity(intent)
+            startActivity(Intent(this, UsuarioActivity::class.java))
         }
-
-        // Botón para acceder a eventos productivos
         binding.btnProduccionEnc.setOnClickListener {
-            val intent = Intent(this, EventoProductivoActivity::class.java)
-
-            // Se pasa el ID del usuario
-            intent.putExtra("usuarioId", usuarioId)
-
-            startActivity(intent)
+            startActivity(Intent(this, EventoProductivoActivity::class.java))
         }
-
-        // Botón para acceder a la gestión de granjas
         binding.btnGranja.setOnClickListener {
-            val intent = Intent(this, GranjaActivity::class.java)
-
-            // Se pasa el ID del usuario
-            intent.putExtra("usuarioId", usuarioId)
-
-            startActivity(intent)
+            startActivity(Intent(this, GranjaActivity::class.java))
         }
+        binding.btnTareas.setOnClickListener {
+            startActivity(Intent(this, TareaActivity::class.java).apply {
+                putExtra("rolUsuario", "ENCARGADO")
+            })
+        }
+        binding.btnAlertasVet.setOnClickListener {
+            startActivity(Intent(this, CrearAlertaVeterinariaActivity::class.java))
+        }
+        binding.btnCerrarSesion.setOnClickListener { cerrarSesion() }
+
+        animarEntrada()
+    }
+
+    private fun animarEntrada() {
+        val interp = DecelerateInterpolator()
+        val offsetY = 70f * resources.displayMetrics.density
+
+        listOf(
+            binding.btnAnimalesEnc,
+            binding.btnUsuarios,
+            binding.btnProduccionEnc,
+            binding.btnGranja,
+            binding.btnTareas,
+            binding.btnAlertasVet
+        ).forEachIndexed { i, card ->
+            card.alpha = 0f
+            card.translationY = offsetY
+            card.animate()
+                .alpha(1f)
+                .translationY(0f)
+                .setDuration(420)
+                .setStartDelay((i * 70).toLong())
+                .setInterpolator(interp)
+                .start()
+        }
+
+        binding.btnCerrarSesion.alpha = 0f
+        binding.btnCerrarSesion.animate()
+            .alpha(1f)
+            .setDuration(300)
+            .setStartDelay(520L)
+            .setInterpolator(interp)
+            .start()
+    }
+
+    private fun cerrarSesion() {
+        SessionManager(this).clearSession()
+        val intent = Intent(this, MainActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
     }
 }

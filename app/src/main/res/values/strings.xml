@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">CattleManager</string>
+    <string name="lotes_gen_ticos">Lotes Genéticos</string>
+    <string name="a_adir_lote">Añadir Lote</string>
 </resources>

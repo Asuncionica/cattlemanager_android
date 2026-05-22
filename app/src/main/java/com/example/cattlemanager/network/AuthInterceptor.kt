@@ -1,24 +1,19 @@
 package com.example.cattlemanager.network
 
+import com.example.cattlemanager.security.SessionManager
 import okhttp3.Interceptor
 import okhttp3.Response
 
-// Interceptor que añade automáticamente el token de autenticación
-// a todas las peticiones HTTP realizadas con Retrofit
-class AuthInterceptor(private val token: String) : Interceptor {
-
-    // Método que intercepta cada petición antes de enviarla
+class AuthInterceptor(private val sessionManager: SessionManager) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
-
-        // Crea un builder a partir de la petición original
         val requestBuilder = chain.request().newBuilder()
+            .header("Accept", "application/json")
+            .header("Content-Type", "application/json")
 
-        // Si hay token, lo añade como cabecera Authorization
-        if (token.isNotBlank()) {
-            requestBuilder.addHeader("Authorization", "Bearer $token")
-        }
+        sessionManager.getToken()
+            ?.takeIf { it.isNotBlank() }
+            ?.let { token -> requestBuilder.header("Authorization", "Bearer $token") }
 
-        // Continúa la petición con la cabecera añadida
         return chain.proceed(requestBuilder.build())
     }
 }

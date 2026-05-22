@@ -1,75 +1,178 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fillViewport="true"
-    android:background="@drawable/fondo_suave">
+    android:layout_height="match_parent">
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:gravity="center_horizontal"
-        android:padding="32dp"
+    <ImageView
+        android:id="@+id/loginBackgroundImageView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:contentDescription="@null"
+        android:scaleType="centerCrop"
+        android:src="@drawable/hero_ganaderia_realista" />
 
-        <!-- Título -->
-        <TextView
-            android:id="@+id/welcomeTextView"
-            android:text="¡Bienvenidos a CattleManager!"
-            android:textSize="26sp"
-            android:textStyle="bold"
-            android:textColor="#FFFFFF"
-            android:gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="40dp"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/login_overlay_gradient" />
 
-        <!-- Campo email -->
-        <EditText
-            android:id="@+id/emailEditText"
-            android:hint="Email"
-            android:inputType="textEmailAddress"
+    <!-- Título + formulario, apilados al fondo -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="top"
+        android:orientation="vertical"
+        android:paddingTop="60dp">
+
+        <!-- Branding -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:padding="12dp"
-            android:background="@drawable/fondo_amarillo"/>
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingHorizontal="24dp"
+            android:paddingBottom="28dp">
 
-        <!-- Campo contraseña -->
-        <EditText
-            android:id="@+id/passwordEditText"
-            android:hint="Contraseña"
-            android:inputType="textPassword"
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/welcomeTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="serif"
+                    android:letterSpacing="0.04"
+                    android:shadowColor="#CC000000"
+                    android:shadowDx="0"
+                    android:shadowDy="4"
+                    android:shadowRadius="14"
+                    android:text="Cattle "
+                    android:textColor="#FFF8EA"
+                    android:textSize="38sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="serif"
+                    android:letterSpacing="0.04"
+                    android:shadowColor="#BB2E5D34"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="18"
+                    android:text="Manager"
+                    android:textColor="#2E5D34"
+                    android:textSize="38sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Panel del formulario -->
+        <LinearLayout
+            android:id="@+id/loginFormContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="30dp"
-            android:padding="12dp"
-            android:background="@drawable/fondo_amarillo"/>
+            android:layout_marginHorizontal="24dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingTop="8dp">
 
-        <!-- Botón login -->
-        <Button
-            android:id="@+id/loginButton"
-            android:text="Iniciar Sesión"
-            android:textColor="#FFFFFF"
-            android:backgroundTint="#2E7D32"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="14dp"
-            android:textSize="16sp"
-            android:layout_marginTop="10dp"/>
-        <ProgressBar
-            android:id="@+id/progressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"/>
-        <ImageView
-            android:id="@+id/vacaImageView"
-            android:layout_width="match_parent"
-            android:layout_height="270dp"
-            android:src="@drawable/vaca"
-            android:layout_marginTop="40dp"
-            android:scaleType="centerCrop"/>
+            <EditText
+                android:id="@+id/emailEditText"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:background="@drawable/login_input_background"
+                android:hint="Email"
+                android:inputType="textEmailAddress"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:singleLine="true"
+                android:textColor="#1F2D1D"
+                android:textColorHint="#6D735E"
+                android:textSize="15sp" />
 
+            <EditText
+                android:id="@+id/passwordEditText"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/login_input_background"
+                android:hint="Contraseña"
+                android:inputType="textPassword"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:singleLine="true"
+                android:textColor="#1F2D1D"
+                android:textColorHint="#6D735E"
+                android:textSize="15sp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/loginButton"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="#2E5D34"
+                android:text="Iniciar sesión"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:cornerRadius="10dp" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:indeterminateTint="#FFFFFF"
+                android:visibility="gone" />
+        </LinearLayout>
     </LinearLayout>
-</ScrollView>
+
+    <!-- Footer -->
+    <LinearLayout
+        android:id="@+id/loginFooterContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
+        android:paddingBottom="20dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="start"
+            android:shadowColor="#CC000000"
+            android:shadowDx="0"
+            android:shadowDy="1"
+            android:shadowRadius="6"
+            android:text="© 2026 · Cattle Manager"
+            android:textColor="#FFF8EA"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/legalTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="end"
+            android:shadowColor="#CC000000"
+            android:shadowDx="0"
+            android:shadowDy="1"
+            android:shadowRadius="6"
+            android:text="Todos los derechos reservados"
+            android:textColor="#FFF8EA"
+            android:textSize="13sp" />
+    </LinearLayout>
+
+</FrameLayout>

@@ -1,60 +1,66 @@
 package com.example.cattlemanager.activities
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.example.cattlemanager.R
 import com.example.cattlemanager.databinding.ActivityDetalleAnimalBinding
 import com.example.cattlemanager.model.Animal
 import com.example.cattlemanager.network.RetrofitClient
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-// Activity que muestra el detalle de un animal y permite editarlo o borrarlo
 class DetalleAnimalActivity : AppCompatActivity() {
 
-    // Binding para acceder a las vistas
     private lateinit var binding: ActivityDetalleAnimalBinding
-
-    // ID del animal que se va a mostrar
     private var animalId: Long = 0
-
-    // Rol del usuario (ENCARGADO, PEON, etc.)
     private var rolUsuario: String = ""
+    private var esMacho: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        // Inicializa el binding
         binding = ActivityDetalleAnimalBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Recoge datos enviados desde la Activity anterior
         animalId = intent.getLongExtra("id", 0)
         rolUsuario = intent.getStringExtra("rolUsuario") ?: ""
 
-        // Mensaje de debug para comprobar el rol recibido
-        Toast.makeText(this, "Rol recibido: $rolUsuario", Toast.LENGTH_LONG).show()
+        val identificador = intent.getStringExtra("identificador") ?: ""
+        val raza = intent.getStringExtra("raza") ?: ""
+        val sexo = intent.getStringExtra("sexo") ?: ""
+        esMacho = sexo.equals("Macho", ignoreCase = true)
 
-        // Configura visibilidad de botones según permisos
+        binding.tvIdentificador.text = identificador
+        binding.tvSubtituloHeader.text = raza
+        aplicarEstiloSexo()
+
+        binding.btnVolver.setOnClickListener { finish() }
         configurarPermisos()
-
-        // Configura acciones de los botones
         configurarBotones()
     }
 
     override fun onResume() {
         super.onResume()
-
-        // Recarga el animal cada vez que se vuelve a la pantalla
-        cargarAnimal()
+        cargarDatos()
     }
 
-    // Muestra u oculta botones según el rol del usuario
+    private fun aplicarEstiloSexo() {
+        val colorSexo = if (esMacho) Color.parseColor("#1E88E5") else Color.parseColor("#60AD5E")
+        binding.tvSubtituloHeader.setTextColor(colorSexo)
+        binding.panelInfo.setBackgroundResource(
+            if (esMacho) R.drawable.animal_card_male else R.drawable.animal_card_female
+        )
+    }
+
     private fun configurarPermisos() {
         if (rolUsuario == "ENCARGADO") {
             binding.btnEditar.visibility = View.VISIBLE
@@ -65,98 +71,131 @@ class DetalleAnimalActivity : AppCompatActivity() {
         }
     }
 
-    // Define qué hacen los botones
     private fun configurarBotones() {
-
-        // Botón editar
         binding.btnEditar.setOnClickListener {
-
-            // Abre la pantalla de edición pasando los datos actuales
             val intent = Intent(this, EditarAnimalActivity::class.java)
             intent.putExtra("id", animalId)
             intent.putExtra("identificador", binding.tvIdentificador.text.toString())
-
-            // Se eliminan los textos añadidos ("Raza: ", etc.)
-            intent.putExtra("raza", binding.tvRaza.text.toString().replace("Raza: ", ""))
-            intent.putExtra("sexo", binding.tvSexo.text.toString().replace("Sexo: ", ""))
-            intent.putExtra("fecha", binding.tvFecha.text.toString().replace("Nacimiento: ", ""))
-
+            intent.putExtra("raza", binding.tvRaza.text.toString())
+            intent.putExtra("sexo", binding.tvSexo.text.toString())
+            intent.putExtra("fecha", binding.tvFecha.text.toString())
             startActivity(intent)
         }
-
-        // Botón borrar
-        binding.btnBorrar.setOnClickListener {
-            confirmarBorrado()
-        }
+        binding.btnBorrar.setOnClickListener { confirmarBorrado() }
     }
 
-    // Llama a la API para obtener el animal por ID
-    private fun cargarAnimal() {
-        val api = RetrofitClient.getAnimalApi(this)
-
+    private fun cargarDatos() {
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                val animal = api.obtenerAnimalPorId(animalId)
+                val animalApi = RetrofitClient.getAnimalApi(this@DetalleAnimalActivity)
+                val sanitarioApi = RetrofitClient.getEventoSanitarioApi(this@DetalleAnimalActivity)
+                val reproductivosApi = RetrofitClient.getEventoReproductivoApi(this@DetalleAnimalActivity)
 
-                // Actualiza la UI en el hilo principal
+                val animalDeferred = async { animalApi.obtenerAnimalPorId(animalId) }
+                val sanitariosDeferred = async { sanitarioApi.obtenerEventos() }
+                val reproductivosDeferred = async { reproductivosApi.obtenerEventos() }
+
+                val animal = animalDeferred.await()
+                val sanitarios = sanitariosDeferred.await().filter { it.animal?.id == animalId }
+                val reproductivos = reproductivosDeferred.await().filter { it.animal?.id == animalId }
+
                 withContext(Dispatchers.Main) {
                     mostrarAnimal(animal)
+                    mostrarEventosSanitarios(sanitarios.map { "${it.tipo} — ${it.fecha}" })
+                    mostrarEventosReproductivos(reproductivos.map { "${it.tipo} — ${it.fecha}" })
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
-
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(
-                        this@DetalleAnimalActivity,
-                        "Error al cargar detalle del animal",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    Toast.makeText(this@DetalleAnimalActivity, "Error al cargar datos", Toast.LENGTH_SHORT).show()
                 }
             }
         }
     }
 
-    // Muestra los datos del animal en pantalla
     private fun mostrarAnimal(animal: Animal) {
+        esMacho = animal.sexo.equals("Macho", ignoreCase = true)
         binding.tvIdentificador.text = animal.identificador
-        binding.tvRaza.text = "Raza: ${animal.raza}"
-        binding.tvSexo.text = "Sexo: ${animal.sexo}"
-        binding.tvFecha.text = "Nacimiento: ${animal.fechaNacimiento}"
-
-        // Si el animal tiene granja, se muestra, si no, se indica
-        val nombreGranja = animal.granja?.nombre ?: "Sin granja"
-        binding.tvGranja.text = "Granja: $nombreGranja"
+        binding.tvSubtituloHeader.text = animal.raza
+        binding.tvSexo.text = animal.sexo
+        binding.tvRaza.text = animal.raza
+        binding.tvFecha.text = animal.fechaNacimiento
+        binding.tvGranja.text = animal.granja?.nombre ?: "Sin granja"
+        aplicarEstiloSexo()
     }
 
-    // Muestra un diálogo de confirmación antes de borrar
+    private fun mostrarEventosSanitarios(eventos: List<String>) {
+        binding.layoutEventosSanitarios.removeAllViews()
+        if (eventos.isEmpty()) {
+            binding.layoutEventosSanitarios.addView(crearTextoVacio("Sin eventos sanitarios registrados"))
+            return
+        }
+        eventos.forEach { binding.layoutEventosSanitarios.addView(crearTarjetaEvento(it)) }
+    }
+
+    private fun mostrarEventosReproductivos(eventos: List<String>) {
+        binding.layoutEventosReproductivos.removeAllViews()
+        if (eventos.isEmpty()) {
+            binding.layoutEventosReproductivos.addView(crearTextoVacio("Sin eventos reproductivos registrados"))
+            return
+        }
+        eventos.forEach { binding.layoutEventosReproductivos.addView(crearTarjetaEvento(it)) }
+    }
+
+    private fun crearTarjetaEvento(texto: String): View {
+        val borderColor = if (esMacho) "#1565C0" else "#2E7D32"
+        val bgDrawable = if (esMacho) R.drawable.animal_card_male else R.drawable.animal_card_female
+        val container = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            setBackgroundResource(bgDrawable)
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply {
+                bottomMargin = (8 * resources.displayMetrics.density).toInt()
+            }
+            val pad = (14 * resources.displayMetrics.density).toInt()
+            setPadding(pad, pad, pad, pad)
+        }
+        val tv = TextView(this).apply {
+            text = texto
+            textSize = 14f
+            setTextColor(Color.WHITE)
+        }
+        container.addView(tv)
+        return container
+    }
+
+    private fun crearTextoVacio(texto: String): TextView {
+        return TextView(this).apply {
+            text = texto
+            textSize = 13f
+            setTextColor(Color.parseColor("#AAFFFFFF"))
+            val pad = (8 * resources.displayMetrics.density).toInt()
+            setPadding(pad, pad, pad, (16 * resources.displayMetrics.density).toInt())
+        }
+    }
+
     private fun confirmarBorrado() {
         AlertDialog.Builder(this)
             .setTitle("Borrar animal")
             .setMessage("¿Seguro que quieres borrar este animal?")
-            .setPositiveButton("Sí") { _, _ ->
-                borrarAnimal()
-            }
+            .setPositiveButton("Sí") { _, _ -> borrarAnimal() }
             .setNegativeButton("No", null)
             .show()
     }
 
-    // Llama a la API para borrar el animal
     private fun borrarAnimal() {
         val api = RetrofitClient.getAnimalApi(this)
-
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 api.borrarAnimal(animalId)
-
                 withContext(Dispatchers.Main) {
                     Toast.makeText(this@DetalleAnimalActivity, "Animal borrado", Toast.LENGTH_SHORT).show()
-
-                    // Cierra la pantalla y vuelve atrás
                     finish()
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
-
                 withContext(Dispatchers.Main) {
                     Toast.makeText(this@DetalleAnimalActivity, "Error al borrar animal", Toast.LENGTH_SHORT).show()
                 }

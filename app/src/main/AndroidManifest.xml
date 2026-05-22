@@ -1,22 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-    Archivo de configuración principal de la aplicación.
-    Aquí se definen permisos, actividades, tema, iconos y ajustes generales.
--->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+xmlns:tools="http://schemas.android.com/tools">
+<uses-permission android:name="android.permission.INTERNET"/>
 
-    <!-- Permiso para que la app pueda conectarse a Internet -->
-    <uses-permission android:name="android.permission.INTERNET" />
-
-    <!--
-        Configuración global de la aplicación:
-        - nombre
-        - icono
-        - tema
-        - copias de seguridad
-        - tráfico de red
-    -->
     <application
         android:usesCleartextTraffic="true"
         android:allowBackup="true"
@@ -28,79 +14,45 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CattleManager">
 
-        <!--
-            MainActivity es la pantalla principal de la app.
-            Al tener MAIN y LAUNCHER, Android la abre al pulsar el icono.
-            exported="true" es obligatorio al tener intent-filter.
-        -->
-        <activity
-            android:name=".activities.MainActivity"
-            android:exported="true">
-
+        <activity android:name=".activities.MainActivity" android:exported="true">
             <intent-filter>
-                <!-- Indica que esta es la actividad principal -->
                 <action android:name="android.intent.action.MAIN" />
-
-                <!-- Indica que esta actividad aparece como lanzador de la app -->
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <!-- Pantalla para funcionalidades del veterinario -->
         <activity android:name=".activities.VeterinarioActivity" />
-
-        <!-- Pantalla para funcionalidades del encargado -->
         <activity android:name=".activities.EncargadoActivity" />
-
-        <!-- Pantalla para funcionalidades del peón -->
         <activity android:name=".activities.PeonActivity" />
-
-        <!-- Pantalla principal de gestión o listado de animales -->
-        <activity android:name=".activities.AnimalActivity" />
-
-        <!-- Pantalla de detalle de un animal -->
-        <activity android:name=".activities.DetalleAnimalActivity" />
-
-        <!-- Pantalla para crear un nuevo animal -->
+        <activity android:name=".activities.AnimalActivity"/>
+        <activity android:name=".activities.DetalleAnimalActivity"/>
         <activity android:name=".activities.CrearAnimalActivity" />
-
-        <!-- Pantalla para editar un animal existente -->
         <activity android:name=".activities.EditarAnimalActivity" />
-
-        <!-- Pantalla principal de usuarios -->
         <activity android:name=".usuarios.UsuarioActivity" />
-
-        <!-- Pantalla de detalle de un usuario -->
-        <activity android:name=".usuarios.DetalleUsuarioActivity" />
-
-        <!-- Pantalla para crear un usuario -->
-        <activity android:name=".usuarios.CrearUsuarioActivity" />
-
-        <!-- Pantalla para editar un usuario -->
+        <activity android:name=".usuarios.DetalleUsuarioActivity"/>
+        <activity android:name=".usuarios.CrearUsuarioActivity"/>
         <activity android:name=".usuarios.EditarUsuarioActivity" />
-
-        <!-- Pantalla principal de eventos productivos -->
         <activity android:name=".eventosproductivos.EventoProductivoActivity" />
-
-        <!-- Pantalla para crear un evento productivo -->
+        <activity android:name=".eventosproductivos.EventosProductivosPorTipoActivity" />
         <activity android:name=".eventosproductivos.CrearEventoProductivoActivity" />
-
-        <!-- Pantalla de detalle de un evento productivo -->
         <activity android:name=".eventosproductivos.DetalleEventoProductivoActivity" />
-
-        <activity android:name=".eventosproductivos.RegistrarProduccionActivity" />
-        <activity android:name=".eventosproductivos.ProduccionPeonActivity" />
-
-
-        <!-- Pantalla principal de granjas -->
-        <activity android:name=".granja.GranjaActivity" />
-
-        <!-- Pantalla para editar una granja -->
-        <activity android:name=".granja.EditarGranjaActivity" />
-
-        <!-- Pantalla para crear una granja -->
+        <activity android:name=".granja.GranjaActivity"/>
+        <activity android:name=".granja.EditarGranjaActivity"/>
         <activity android:name=".granja.CrearGranjaActivity" />
-
+        <activity android:name=".eventosreproductivos.EventoReproductivoActivity" />
+        <activity android:name=".eventosreproductivos.EventosReproductivosPorTipoActivity" />
+        <activity android:name=".eventosreproductivos.CrearEventoReproductivoActivity" />
+        <activity android:name=".eventosreproductivos.DetalleEventoReproductivoActivity" />
+        <activity android:name=".eventossanitarios.EventoSanitarioActivity" />
+        <activity android:name=".eventossanitarios.EventosSanitariosPorTipoActivity" />
+        <activity android:name=".eventossanitarios.CrearEventoSanitarioActivity" />
+        <activity android:name=".eventossanitarios.DetalleEventoSanitarioActivity" />
+        <activity android:name=".alertas.AlertasVeterinariaActivity" />
+        <activity android:name=".alertas.CrearAlertaVeterinariaActivity" />
+        <activity android:name=".tareas.TareaActivity" />
+        <activity android:name=".tareas.CrearTareaActivity" />
+        <activity android:name=".tareas.DetalleTareaActivity" />
+        <activity android:name=".tareas.TareasPendientesActivity" />
 
     </application>
 

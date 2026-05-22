@@ -1,9 +1,14 @@
 package com.example.cattlemanager.usuarios
 
+import android.graphics.Rect
 import android.os.Bundle
+import android.view.MotionEvent
+import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
+import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.cattlemanager.R
 import com.example.cattlemanager.databinding.ActivityCrearUsuarioBinding
 import com.example.cattlemanager.model.Rol
 import com.example.cattlemanager.model.UsuarioRequest
@@ -17,30 +22,37 @@ class CrearUsuarioActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCrearUsuarioBinding
 
-    private val roles = listOf(
-        "Veterinario",
-        "Encargado",
-        "Peón"
-    )
+    private val roles = listOf("Veterinario", "Encargado", "Peón")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCrearUsuarioBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.btnVolver.setOnClickListener { finish() }
         configurarSpinner()
 
-        binding.btnGuardarUsuario.setOnClickListener {
-            crearUsuario()
+        binding.btnGuardarUsuario.setOnClickListener { crearUsuario() }
+    }
+
+    override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
+        if (ev.action == MotionEvent.ACTION_DOWN) {
+            val v = currentFocus
+            if (v is EditText) {
+                val outRect = Rect()
+                v.getGlobalVisibleRect(outRect)
+                if (!outRect.contains(ev.rawX.toInt(), ev.rawY.toInt())) {
+                    v.clearFocus()
+                    val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.hideSoftInputFromWindow(v.windowToken, 0)
+                }
+            }
         }
+        return super.dispatchTouchEvent(ev)
     }
 
     private fun configurarSpinner() {
-        val adapter = ArrayAdapter(
-            this,
-            android.R.layout.simple_spinner_item,
-            roles
-        )
+        val adapter = ArrayAdapter(this, R.layout.spinner_item_white, roles)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.spinnerRol.adapter = adapter
     }
@@ -80,7 +92,6 @@ class CrearUsuarioActivity : AppCompatActivity() {
                     Toast.makeText(this@CrearUsuarioActivity, "Empleado creado", Toast.LENGTH_SHORT).show()
                     finish()
                 }
-
             } catch (e: Exception) {
                 e.printStackTrace()
                 withContext(Dispatchers.Main) {

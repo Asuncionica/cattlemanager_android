@@ -1,50 +1,398 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<LinearLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:gravity="center"
-    android:background="#FFF3E0"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="16dp">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/tvBienvenidaEnc"
-        android:text="Bienvenido ENCARGADO"
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        android:textColor="#E65100"
-        android:gravity="center"
-        android:layout_marginBottom="50dp"/>
+        android:layout_height="match_parent"
+        android:contentDescription="@null"
+        android:scaleType="centerCrop"
+        android:src="@drawable/hero_ganaderia_realista" />
 
-    <Button
-        android:id="@+id/btnAnimalesEnc"
-        android:text="🐄 Gestionar Animales"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/vet_overlay_gradient" />
 
-    <Button
-        android:id="@+id/btnUsuarios"
-        android:text="👷 Gestionar Empleados"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:fillViewport="true"
+        android:paddingBottom="92dp">
 
-    <Button
-        android:id="@+id/btnProduccionEnc"
-        android:text="📊 Producción"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    <Button
-        android:id="@+id/btnGranja"
-        android:text="🏡 Datos de la Granja"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+            <!-- CABECERA -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="170dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp"
+                android:paddingTop="18dp">
 
-</LinearLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Bienvenido,"
+                    android:textAlignment="center"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tvNombreUsuario"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:fontFamily="serif"
+                    android:gravity="center"
+                    android:text=""
+                    android:textAlignment="center"
+                    android:textColor="#FFF8EA"
+                    android:textSize="34sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:gravity="center"
+                    android:text="Gestión de Granja"
+                    android:textAlignment="center"
+                    android:textColor="#FF7043"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <!-- BOTONES SUPERIORES -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingStart="18dp"
+                android:paddingEnd="18dp">
+
+                <!-- FILA 1 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/btnAnimalesEnc"
+                        android:layout_width="0dp"
+                        android:layout_height="85dp"
+                        android:layout_marginEnd="7dp"
+                        android:layout_weight="1"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="@drawable/dashboard_card_ripple"
+                        android:stateListAnimator="@animator/dashboard_card_state"
+                        app:cardBackgroundColor="#00FFFFFF"
+                        app:cardCornerRadius="18dp"
+                        app:cardElevation="6dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/card_enc_animales"
+                            android:gravity="center_vertical"
+                            android:orientation="vertical"
+                            android:padding="14dp">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Animales"
+                                android:textColor="#FFFFFF"
+                                android:textSize="17sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:text="Gestión del rebaño"
+                                android:textColor="#F5FFFFFF"
+                                android:textSize="11sp" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/btnUsuarios"
+                        android:layout_width="0dp"
+                        android:layout_height="85dp"
+                        android:layout_marginStart="7dp"
+                        android:layout_weight="1"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="@drawable/dashboard_card_ripple"
+                        android:stateListAnimator="@animator/dashboard_card_state"
+                        app:cardBackgroundColor="#00FFFFFF"
+                        app:cardCornerRadius="18dp"
+                        app:cardElevation="6dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/card_enc_empleados"
+                            android:gravity="center_vertical"
+                            android:orientation="vertical"
+                            android:padding="14dp">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Empleados"
+                                android:textColor="#FFFFFF"
+                                android:textSize="17sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:text="Personal y roles"
+                                android:textColor="#F5FFFFFF"
+                                android:textSize="11sp" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+
+                <!-- FILA 2 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:orientation="horizontal">
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/btnProduccionEnc"
+                        android:layout_width="0dp"
+                        android:layout_height="85dp"
+                        android:layout_marginEnd="7dp"
+                        android:layout_weight="1"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="@drawable/dashboard_card_ripple"
+                        android:stateListAnimator="@animator/dashboard_card_state"
+                        app:cardBackgroundColor="#00FFFFFF"
+                        app:cardCornerRadius="18dp"
+                        app:cardElevation="6dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/card_enc_produccion"
+                            android:gravity="center_vertical"
+                            android:orientation="vertical"
+                            android:padding="14dp">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Producción"
+                                android:textColor="#FFFFFF"
+                                android:textSize="17sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:text="Control productivo"
+                                android:textColor="#F5FFFFFF"
+                                android:textSize="11sp" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/btnGranja"
+                        android:layout_width="0dp"
+                        android:layout_height="85dp"
+                        android:layout_marginStart="7dp"
+                        android:layout_weight="1"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="@drawable/dashboard_card_ripple"
+                        android:stateListAnimator="@animator/dashboard_card_state"
+                        app:cardBackgroundColor="#00FFFFFF"
+                        app:cardCornerRadius="18dp"
+                        app:cardElevation="6dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/card_enc_granja"
+                            android:gravity="center_vertical"
+                            android:orientation="vertical"
+                            android:padding="14dp">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Granja"
+                                android:textColor="#FFFFFF"
+                                android:textSize="17sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:text="Instalaciones"
+                                android:textColor="#F5FFFFFF"
+                                android:textSize="11sp" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- ESPACIO PARA VER LA VACA -->
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="130dp" />
+
+            <!-- BOTONES INFERIORES, MISMO ANCHO QUE LOS DE ARRIBA -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingStart="18dp"
+                android:paddingEnd="18dp"
+                android:paddingBottom="24dp">
+
+                <!-- TAREAS -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/btnTareas"
+                        android:layout_width="0dp"
+                        android:layout_height="85dp"
+                        android:layout_marginEnd="7dp"
+                        android:layout_marginBottom="12dp"
+                        android:layout_weight="1"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="@drawable/dashboard_card_ripple"
+                        android:stateListAnimator="@animator/dashboard_card_state"
+                        app:cardBackgroundColor="#00FFFFFF"
+                        app:cardCornerRadius="18dp"
+                        app:cardElevation="6dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/card_enc_tareas"
+                            android:gravity="center_vertical"
+                            android:orientation="vertical"
+                            android:padding="14dp">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Tareas"
+                                android:textColor="#FFFFFF"
+                                android:textSize="17sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:text="Asignar y seguir"
+                                android:textColor="#F5FFFFFF"
+                                android:textSize="11sp" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="85dp"
+                        android:layout_marginStart="7dp"
+                        android:layout_weight="1" />
+                </LinearLayout>
+
+                <!-- AVISAR VETERINARIO -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/btnAlertasVet"
+                        android:layout_width="0dp"
+                        android:layout_height="85dp"
+                        android:layout_marginEnd="7dp"
+                        android:layout_weight="1"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="@drawable/dashboard_card_ripple"
+                        android:stateListAnimator="@animator/dashboard_card_state"
+                        app:cardBackgroundColor="#00FFFFFF"
+                        app:cardCornerRadius="18dp"
+                        app:cardElevation="6dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/card_enc_alertas"
+                            android:gravity="center_vertical"
+                            android:orientation="vertical"
+                            android:padding="14dp">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Avisar Vet"
+                                android:textColor="#FFFFFF"
+                                android:textSize="17sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:text="Alertas sanitarias"
+                                android:textColor="#F5FFFFFF"
+                                android:textSize="11sp" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="85dp"
+                        android:layout_marginStart="7dp"
+                        android:layout_weight="1" />
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <ImageButton
+        android:id="@+id/btnCerrarSesion"
+        android:layout_width="52dp"
+        android:layout_height="52dp"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="18dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/encargado_logout_button"
+        android:contentDescription="@null"
+        android:elevation="6dp"
+        android:padding="14dp"
+        android:src="@drawable/ic_power" />
+
+</FrameLayout>

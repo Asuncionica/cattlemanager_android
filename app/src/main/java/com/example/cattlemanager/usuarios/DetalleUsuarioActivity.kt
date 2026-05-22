@@ -24,6 +24,7 @@ class DetalleUsuarioActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         usuarioId = intent.getLongExtra("id", 0)
+        binding.btnVolver.setOnClickListener { finish() }
         binding.btnEditarUsuario.setOnClickListener {
             val intent = Intent(this, EditarUsuarioActivity::class.java)
             intent.putExtra("id", usuarioId)

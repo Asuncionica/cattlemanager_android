@@ -22,6 +22,8 @@ class UsuarioActivity : AppCompatActivity() {
         binding = ActivityUsuariosBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.btnVolver.setOnClickListener { finish() }
+
         binding.recyclerUsuarios.layoutManager = LinearLayoutManager(this)
 
         binding.btnCrearUsuario.setOnClickListener {

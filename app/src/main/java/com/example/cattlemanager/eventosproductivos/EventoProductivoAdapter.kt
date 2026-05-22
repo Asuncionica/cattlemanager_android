@@ -35,11 +35,11 @@ class EventoProductivoAdapter(
         val identificadorAnimal = evento.animal?.identificador ?: "Sin animal"
 
         holder.binding.tvTipoEvento.text = evento.tipo
-        holder.binding.tvFechaEvento.text = "Fecha: ${evento.fecha}"
-        holder.binding.tvAnimalEvento.text = "Animal: $identificadorAnimal"
+        holder.binding.tvFechaEvento.text = evento.fecha
+        holder.binding.tvAnimalEvento.text = identificadorAnimal
         holder.binding.tvDescripcionEvento.text = descripcionCorta
 
-        holder.itemView.setOnClickListener {
+        holder.binding.btnVerEvento.setOnClickListener {
             onClick(evento)
         }
     }

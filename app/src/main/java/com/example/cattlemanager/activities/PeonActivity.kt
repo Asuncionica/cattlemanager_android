@@ -2,53 +2,79 @@ package com.example.cattlemanager.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
+import android.view.animation.DecelerateInterpolator
 import androidx.appcompat.app.AppCompatActivity
+import com.example.cattlemanager.alertas.CrearAlertaVeterinariaActivity
 import com.example.cattlemanager.databinding.ActivityPeonBinding
-import com.example.cattlemanager.eventosproductivos.ProduccionPeonActivity
-import com.example.cattlemanager.eventosproductivos.RegistrarProduccionActivity
+import com.example.cattlemanager.eventosproductivos.EventoProductivoActivity
+import com.example.cattlemanager.security.SessionManager
+import com.example.cattlemanager.tareas.TareasPendientesActivity
 
-// Activity principal para el rol PEÓN
-// Ofrece acceso limitado a funcionalidades de la app
 class PeonActivity : AppCompatActivity() {
 
-    // Binding para acceder a las vistas del layout
     private lateinit var binding: ActivityPeonBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        // Inicializa el binding
         binding = ActivityPeonBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Recoge el nombre del usuario enviado desde el login
-        val nombreUsuario = intent.getStringExtra("nombreUsuario") ?: "Peón"
+        val nombreUsuario = intent.getStringExtra("nombreUsuario") ?: ""
+        binding.tvNombreUsuario.text = nombreUsuario
 
-        // Muestra mensaje de bienvenida personalizado
-        binding.tvBienvenidaPeon.text = "¡Hola $nombreUsuario! Bienvenido Peón"
-
-        // Botón para acceder a la lista de animales
         binding.btnAnimalesPeon.setOnClickListener {
-            val intent = Intent(this, AnimalActivity::class.java)
-
-            // Se envía el rol para limitar permisos en otras pantallas
-            intent.putExtra("rolUsuario", "PEON")
-
-            startActivity(intent)
+            startActivity(Intent(this, AnimalActivity::class.java).apply {
+                putExtra("rolUsuario", "PEON")
+            })
         }
-
-        // Botón de producción (funcionalidad aún no implementada)
         binding.btnProduccionPeon.setOnClickListener {
-            startActivity(Intent(this, RegistrarProduccionActivity::class.java))
+            startActivity(Intent(this, EventoProductivoActivity::class.java))
         }
-        binding.btnVerProduccion.setOnClickListener {
-            startActivity(Intent(this, ProduccionPeonActivity::class.java))
+        binding.btnTareas.setOnClickListener {
+            startActivity(Intent(this, TareasPendientesActivity::class.java))
+        }
+        binding.btnAlertasVet.setOnClickListener {
+            startActivity(Intent(this, CrearAlertaVeterinariaActivity::class.java))
+        }
+        binding.btnCerrarSesion.setOnClickListener { cerrarSesion() }
+
+        animarEntrada()
+    }
+
+    private fun animarEntrada() {
+        val interp = DecelerateInterpolator()
+        val offsetY = 70f * resources.displayMetrics.density
+
+        listOf(
+            binding.btnAnimalesPeon,
+            binding.btnProduccionPeon,
+            binding.btnTareas,
+            binding.btnAlertasVet
+        ).forEachIndexed { i, card ->
+            card.alpha = 0f
+            card.translationY = offsetY
+            card.animate()
+                .alpha(1f)
+                .translationY(0f)
+                .setDuration(420)
+                .setStartDelay((i * 90).toLong())
+                .setInterpolator(interp)
+                .start()
         }
 
-        // Botón de tareas (funcionalidad aún no implementada)
-        binding.btnTareas.setOnClickListener {
-            Toast.makeText(this, "Abrir Mis Tareas (pendiente)", Toast.LENGTH_SHORT).show()
-        }
+        binding.btnCerrarSesion.alpha = 0f
+        binding.btnCerrarSesion.animate()
+            .alpha(1f)
+            .setDuration(300)
+            .setStartDelay(460L)
+            .setInterpolator(interp)
+            .start()
+    }
+
+    private fun cerrarSesion() {
+        SessionManager(this).clearSession()
+        val intent = Intent(this, MainActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
     }
 }

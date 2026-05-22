@@ -53,5 +53,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
     implementation("com.google.android.material:material:1.9.0")
     implementation("androidx.cardview:cardview:1.0.0")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
+    implementation("androidx.security:security-crypto:1.1.0-alpha06")
 
 }
