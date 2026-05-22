@@ -121,6 +121,7 @@ class DetalleAnimalActivity : AppCompatActivity() {
         binding.tvRaza.text = animal.raza
         binding.tvFecha.text = animal.fechaNacimiento
         binding.tvGranja.text = animal.granja?.nombre ?: "Sin granja"
+        binding.tvLoteGenetico.text = animal.loteGenetico?.nombre ?: "Sin lote asignado"
         aplicarEstiloSexo()
     }
 

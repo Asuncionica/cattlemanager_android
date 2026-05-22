@@ -28,6 +28,7 @@ xmlns:tools="http://schemas.android.com/tools">
         <activity android:name=".activities.DetalleAnimalActivity"/>
         <activity android:name=".activities.CrearAnimalActivity" />
         <activity android:name=".activities.EditarAnimalActivity" />
+        <activity android:name=".activities.LotesGeneticosActivity" />
         <activity android:name=".usuarios.UsuarioActivity" />
         <activity android:name=".usuarios.DetalleUsuarioActivity"/>
         <activity android:name=".usuarios.CrearUsuarioActivity"/>

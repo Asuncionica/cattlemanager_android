@@ -6,5 +6,5 @@ data class AnimalRequest(
     val sexo: String,
     val fechaNacimiento: String,
     val granja: GranjaIdRequest,
-    val loteGenetico: LoteGeneticoIdRequest? = null
+    val loteGeneticoId: Long? = null
 )

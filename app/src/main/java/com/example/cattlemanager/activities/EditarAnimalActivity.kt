@@ -1,11 +1,14 @@
 package com.example.cattlemanager.activities
 
 import android.os.Bundle
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.cattlemanager.R
 import com.example.cattlemanager.databinding.ActivityCrearAnimalBinding
 import com.example.cattlemanager.model.AnimalRequest
 import com.example.cattlemanager.model.GranjaIdRequest
+import com.example.cattlemanager.model.LoteGeneticoResponse
 import com.example.cattlemanager.network.RetrofitClient
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -17,6 +20,8 @@ class EditarAnimalActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCrearAnimalBinding
     private var animalId: Long = 0
     private var granjaId: Long = 0
+    private var loteActualId: Long? = null
+    private var listaLotes: List<LoteGeneticoResponse> = emptyList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +39,8 @@ class EditarAnimalActivity : AppCompatActivity() {
         binding.etFecha.setText(intent.getStringExtra("fecha"))
 
         cargarGranja()
+        cargarAnimalActual()
+        cargarLotes()
 
         binding.btnGuardar.setOnClickListener {
             editarAnimal()
@@ -54,6 +61,54 @@ class EditarAnimalActivity : AppCompatActivity() {
         }
     }
 
+    private fun cargarAnimalActual() {
+        val api = RetrofitClient.getAnimalApi(this)
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val animal = api.obtenerAnimalPorId(animalId)
+                withContext(Dispatchers.Main) {
+                    loteActualId = animal.loteGenetico?.id
+                    seleccionarLoteActual()
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    private fun cargarLotes() {
+        val api = RetrofitClient.getLoteGeneticoApi(this)
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val lotes = api.getLotesGeneticos()
+                withContext(Dispatchers.Main) {
+                    listaLotes = lotes
+                    val nombres = lotes.map { it.nombre }.toMutableList()
+                    nombres.add(0, "Sin lote genético")
+
+                    val adapter = ArrayAdapter(
+                        this@EditarAnimalActivity,
+                        R.layout.spinner_item_white,
+                        nombres
+                    )
+                    adapter.setDropDownViewResource(R.layout.spinner_dropdown_item)
+                    binding.spinnerLoteGenetico.adapter = adapter
+                    seleccionarLoteActual()
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    private fun seleccionarLoteActual() {
+        val idActual = loteActualId ?: return
+        val posicion = listaLotes.indexOfFirst { it.id == idActual }
+        if (posicion >= 0) {
+            binding.spinnerLoteGenetico.setSelection(posicion + 1)
+        }
+    }
+
     private fun editarAnimal() {
         val identificador = binding.etIdentificador.text.toString().trim()
         val raza = binding.etRaza.text.toString().trim()
@@ -70,12 +125,20 @@ class EditarAnimalActivity : AppCompatActivity() {
             return
         }
 
+        val seleccionLote = binding.spinnerLoteGenetico.selectedItemPosition
+        val loteGeneticoId = if (seleccionLote == 0) {
+            null
+        } else {
+            listaLotes[seleccionLote - 1].id
+        }
+
         val animal = AnimalRequest(
             identificador = identificador,
             raza = raza,
             sexo = sexo,
             fechaNacimiento = fecha,
-            granja = GranjaIdRequest(granjaId)
+            granja = GranjaIdRequest(granjaId),
+            loteGeneticoId = loteGeneticoId
         )
 
         val api = RetrofitClient.getAnimalApi(this)

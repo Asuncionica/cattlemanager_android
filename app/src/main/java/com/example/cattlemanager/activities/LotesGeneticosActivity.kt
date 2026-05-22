@@ -1,12 +1,14 @@
 package com.example.cattlemanager.activities
 
 import android.os.Bundle
+import android.graphics.Color
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.cattlemanager.adapter.LoteGeneticoAdapter
 import com.example.cattlemanager.databinding.ActivityLotesGeneticosBinding
 import com.example.cattlemanager.model.LoteGeneticoResponse
 import com.example.cattlemanager.network.RetrofitClient
@@ -14,6 +16,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import retrofit2.HttpException
 
 class LotesGeneticosActivity : AppCompatActivity() {
 
@@ -22,6 +25,7 @@ class LotesGeneticosActivity : AppCompatActivity() {
 
     // 2. Creamos una lista en memoria para almacenar los lotes provisionalmente
     private var listaLotes: MutableList<LoteGeneticoResponse> = mutableListOf()
+    private lateinit var loteAdapter: LoteGeneticoAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +46,9 @@ class LotesGeneticosActivity : AppCompatActivity() {
 
     private fun setupRecyclerView() {
         // Configuramos el RecyclerView para que muestre los elementos en una lista vertical ordenada
+        loteAdapter = LoteGeneticoAdapter(listaLotes)
         binding.rvLotes.layoutManager = LinearLayoutManager(this)
+        binding.rvLotes.adapter = loteAdapter
     }
 
     private fun obtenerLotesDelServidor() {
@@ -58,6 +64,7 @@ class LotesGeneticosActivity : AppCompatActivity() {
                 // Volvemos al hilo principal (Main) para actualizar la interfaz
                 withContext(Dispatchers.Main) {
                     listaLotes = lotesBackend.toMutableList()
+                    loteAdapter.actualizar(listaLotes)
 
                     // Un aviso temporal para comprobar en pantalla que los datos llegaron
                     Toast.makeText(
@@ -92,26 +99,40 @@ class LotesGeneticosActivity : AppCompatActivity() {
         // 2. Campo para el Nombre
         val inputNombre = EditText(this).apply {
             hint = "Nombre (Ej: Holando 2026)"
+            setSingleLine(true)
+            setTextColor(Color.BLACK)
+            setHintTextColor(Color.DKGRAY)
         }
 
         // 3. Campo para la Descripción
+        val inputVariedad = EditText(this).apply {
+            hint = "Variedad (Ej: Holando)"
+            setSingleLine(true)
+            setTextColor(Color.BLACK)
+            setHintTextColor(Color.DKGRAY)
+        }
+
         val inputDesc = EditText(this).apply {
             hint = "Descripción (Ej: Inseminación primavera)"
+            setTextColor(Color.BLACK)
+            setHintTextColor(Color.DKGRAY)
         }
 
         // 4. Metemos los campos dentro del contenedor y el contenedor al diálogo
         contenedorCampos.addView(inputNombre)
+        contenedorCampos.addView(inputVariedad)
         contenedorCampos.addView(inputDesc)
         builder.setView(contenedorCampos)
 
         // 5. Configurar botón de Confirmar
         builder.setPositiveButton("Guardar") { dialog, _ ->
             val nombre = inputNombre.text.toString().trim()
+            val variedad = inputVariedad.text.toString().trim()
             val descripcion = inputDesc.text.toString().trim()
 
             if (nombre.isNotEmpty()) {
                 // CORREGIDO: Ahora llama al método real de persistencia remota
-                guardarLoteEnServidor(nombre, descripcion)
+                guardarLoteEnServidor(nombre, variedad, descripcion)
             } else {
                 Toast.makeText(this, "El nombre es obligatorio", Toast.LENGTH_SHORT).show()
             }
@@ -127,11 +148,12 @@ class LotesGeneticosActivity : AppCompatActivity() {
         builder.show()
     }
 
-    private fun guardarLoteEnServidor(nombre: String, descripcion: String) {
+    private fun guardarLoteEnServidor(nombre: String, variedad: String, descripcion: String) {
         val loteApi = RetrofitClient.getLoteGeneticoApi(this)
 
         val nuevoLote = LoteGeneticoResponse(
             nombre = nombre,
+            variedad = variedad.ifBlank { null },
             descripcion = descripcion,
             fechaCreacion = null
         )
@@ -141,19 +163,24 @@ class LotesGeneticosActivity : AppCompatActivity() {
                 val loteGuardado = loteApi.crearLoteGenetico(nuevoLote)
 
                 withContext(Dispatchers.Main) {
+                    listaLotes.add(loteGuardado)
+                    loteAdapter.actualizar(listaLotes)
                     Toast.makeText(
                         this@LotesGeneticosActivity,
                         "Lote '${loteGuardado.nombre}' creado con éxito",
                         Toast.LENGTH_SHORT
                     ).show()
-
-                    obtenerLotesDelServidor()
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
+                    val mensaje = if (e is HttpException && e.code() == 409) {
+                        "Ya existe un lote con ese nombre"
+                    } else {
+                        "Fallo al guardar: ${e.message}"
+                    }
                     Toast.makeText(
                         this@LotesGeneticosActivity,
-                        "Fallo al guardar: ${e.message}",
+                        mensaje,
                         Toast.LENGTH_LONG
                     ).show()
                 }

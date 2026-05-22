@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.cattlemanager.databinding.ActivityAltaAnimalBinding
 import com.example.cattlemanager.model.AnimalRequest
 import com.example.cattlemanager.model.GranjaIdRequest
-import com.example.cattlemanager.model.LoteGeneticoIdRequest
 import com.example.cattlemanager.model.LoteGeneticoResponse
 import com.example.cattlemanager.network.RetrofitClient
 import kotlinx.coroutines.CoroutineScope
@@ -79,10 +78,10 @@ class AltaAnimalActivity : AppCompatActivity() {
 
         // Obtener el índice seleccionado y extraer únicamente el ID relacional del lote
         val seleccionIdx = binding.spinnerLoteGenetico.selectedItemPosition
-        val loteGenetico = if (seleccionIdx == 0) {
+        val loteGeneticoId = if (seleccionIdx == 0) {
             null
         } else {
-            listaLotes[seleccionIdx - 1].id?.let { LoteGeneticoIdRequest(it) }
+            listaLotes[seleccionIdx - 1].id
         }
 
         // Fecha formateada en ISO estándar para el backend
@@ -98,7 +97,7 @@ class AltaAnimalActivity : AppCompatActivity() {
             sexo = "HEMBRA", // Regla de negocio por defecto para la ficha básica de producción
             fechaNacimiento = fechaActual,
             granja = granjaRequest, // Inyección del objeto requerido por tu data class
-            loteGenetico = loteGenetico
+            loteGeneticoId = loteGeneticoId
         )
 
         val animalApi = RetrofitClient.getAnimalApi(this)

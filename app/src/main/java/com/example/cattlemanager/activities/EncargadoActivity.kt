@@ -43,6 +43,9 @@ class EncargadoActivity : AppCompatActivity() {
                 putExtra("rolUsuario", "ENCARGADO")
             })
         }
+        binding.btnLotesGeneticos.setOnClickListener {
+            startActivity(Intent(this, LotesGeneticosActivity::class.java))
+        }
         binding.btnAlertasVet.setOnClickListener {
             startActivity(Intent(this, CrearAlertaVeterinariaActivity::class.java))
         }
@@ -61,6 +64,7 @@ class EncargadoActivity : AppCompatActivity() {
             binding.btnProduccionEnc,
             binding.btnGranja,
             binding.btnTareas,
+            binding.btnLotesGeneticos,
             binding.btnAlertasVet
         ).forEachIndexed { i, card ->
             card.alpha = 0f
