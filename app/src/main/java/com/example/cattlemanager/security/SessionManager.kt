@@ -2,8 +2,10 @@ package com.example.cattlemanager.security
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Base64
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
+import org.json.JSONObject
 
 class SessionManager(context: Context) {
 
@@ -43,10 +45,31 @@ class SessionManager(context: Context) {
 
     fun getUserName(): String? = prefs.getString(KEY_USER_NAME, null)
 
-    fun isLoggedIn(): Boolean = !getToken().isNullOrBlank() && getRoleId() != 0L
+    fun isLoggedIn(): Boolean {
+        val token = getToken()
+        if (token.isNullOrBlank() || getRoleId() == 0L) {
+            return false
+        }
+        if (isTokenExpired(token)) {
+            clearSession()
+            return false
+        }
+        return true
+    }
 
     fun clearSession() {
         prefs.edit().clear().apply()
+    }
+
+    private fun isTokenExpired(token: String): Boolean {
+        return try {
+            val payload = token.split(".").getOrNull(1) ?: return true
+            val decoded = Base64.decode(payload, Base64.URL_SAFE or Base64.NO_WRAP or Base64.NO_PADDING)
+            val expirationSeconds = JSONObject(String(decoded)).optLong("exp", 0L)
+            expirationSeconds == 0L || expirationSeconds * 1000L <= System.currentTimeMillis()
+        } catch (e: Exception) {
+            true
+        }
     }
 
     companion object {

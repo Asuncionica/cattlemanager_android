@@ -46,7 +46,9 @@ class LotesGeneticosActivity : AppCompatActivity() {
 
     private fun setupRecyclerView() {
         // Configuramos el RecyclerView para que muestre los elementos en una lista vertical ordenada
-        loteAdapter = LoteGeneticoAdapter(listaLotes)
+        loteAdapter = LoteGeneticoAdapter(listaLotes) { lote ->
+            confirmarEliminacion(lote)
+        }
         binding.rvLotes.layoutManager = LinearLayoutManager(this)
         binding.rvLotes.adapter = loteAdapter
     }
@@ -177,6 +179,76 @@ class LotesGeneticosActivity : AppCompatActivity() {
                         "Ya existe un lote con ese nombre"
                     } else {
                         "Fallo al guardar: ${e.message}"
+                    }
+                    Toast.makeText(
+                        this@LotesGeneticosActivity,
+                        mensaje,
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            }
+        }
+    }
+
+    private fun confirmarEliminacion(lote: LoteGeneticoResponse) {
+        val loteId = lote.id
+        if (loteId == null) {
+            Toast.makeText(this, "No se puede eliminar un lote sin ID", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        AlertDialog.Builder(this)
+            .setTitle("Eliminar lote")
+            .setMessage("¿Seguro que quieres eliminar '${lote.nombre}'?")
+            .setPositiveButton("Eliminar") { _, _ -> eliminarLote(lote) }
+            .setNegativeButton("Cancelar", null)
+            .show()
+    }
+
+    private fun eliminarLote(lote: LoteGeneticoResponse) {
+        val loteId = lote.id ?: return
+        val loteApi = RetrofitClient.getLoteGeneticoApi(this)
+
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                // Ejecutamos la llamada web que ahora retorna un objeto Response
+                val respuesta = loteApi.eliminarLoteGenetico(loteId)
+
+                withContext(Dispatchers.Main) {
+                    // Verificamos si la respuesta del backend indica éxito (ej: código 200 o 204)
+                    if (respuesta.isSuccessful) {
+                        listaLotes.removeAll { it.id == loteId }
+                        loteAdapter.actualizar(listaLotes)
+                        Toast.makeText(
+                            this@LotesGeneticosActivity,
+                            "Lote eliminado",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else {
+                        // En caso de que falle por lógica del servidor (ej: código 409 si tiene animales)
+                        val mensajeError = if (respuesta.code() == 409) {
+                            "No se puede eliminar: tiene animales asociados"
+                        } else {
+                            "Error del servidor: ${respuesta.code()}"
+                        }
+                        Toast.makeText(this@LotesGeneticosActivity, mensajeError, Toast.LENGTH_LONG).show()
+                    }
+                }
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    val mensaje = when {
+                        e is HttpException && e.code() == 409 -> {
+                            "No se puede eliminar: tiene animales asociados"
+                        }
+                        e is HttpException && e.code() == 404 -> {
+                            listaLotes.removeAll { it.id == loteId }
+                            loteAdapter.actualizar(listaLotes)
+                            obtenerLotesDelServidor()
+                            "Ese lote ya no existe. Lista actualizada."
+                        }
+                        else -> {
+                            "Fallo al eliminar: ${e.message}"
+                        }
                     }
                     Toast.makeText(
                         this@LotesGeneticosActivity,
