@@ -22,6 +22,7 @@ class EditarAnimalActivity : AppCompatActivity() {
     private var granjaId: Long = 0
     private var loteActualId: Long? = null
     private var listaLotes: List<LoteGeneticoResponse> = emptyList()
+    private var usuarioHaTocadoSpinnerLote = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +38,10 @@ class EditarAnimalActivity : AppCompatActivity() {
         binding.etRaza.setText(intent.getStringExtra("raza"))
         binding.etSexo.setText(intent.getStringExtra("sexo"))
         binding.etFecha.setText(intent.getStringExtra("fecha"))
+        binding.spinnerLoteGenetico.setOnTouchListener { _, _ ->
+            usuarioHaTocadoSpinnerLote = true
+            false
+        }
 
         cargarGranja()
         cargarAnimalActual()
@@ -102,6 +107,9 @@ class EditarAnimalActivity : AppCompatActivity() {
     }
 
     private fun seleccionarLoteActual() {
+        if (usuarioHaTocadoSpinnerLote) {
+            return
+        }
         val idActual = loteActualId ?: return
         val posicion = listaLotes.indexOfFirst { it.id == idActual }
         if (posicion >= 0) {
