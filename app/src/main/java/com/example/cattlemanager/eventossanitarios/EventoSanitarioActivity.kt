@@ -37,13 +37,13 @@ class EventoSanitarioActivity : AppCompatActivity() {
             }
             val menu = PopupMenu(this, view)
             listaAnimales.forEachIndexed { index, animal ->
-                menu.menu.add(0, index, index, animal.identificador)
+                menu.menu.add(0, index, index, animal.identificador ?: "Sin identificador")
             }
             menu.setOnMenuItemClickListener { item ->
                 val animal = listaAnimales[item.itemId]
                 selectedAnimalId = animal.id
-                selectedAnimalNombre = animal.identificador
-                binding.tvAnimalSeleccionado.text = animal.identificador
+                selectedAnimalNombre = animal.identificador ?: "Sin identificador"
+                binding.tvAnimalSeleccionado.text = selectedAnimalNombre
                 true
             }
             menu.show()

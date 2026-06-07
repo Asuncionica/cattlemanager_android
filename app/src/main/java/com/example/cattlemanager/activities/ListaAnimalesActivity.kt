@@ -2,7 +2,9 @@ package com.example.cattlemanager.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.cattlemanager.adapter.AnimalAdapter
@@ -66,7 +68,15 @@ class ListaAnimalesActivity : AppCompatActivity() {
                     }
                 }
             } catch (e: Exception) {
-                e.printStackTrace()
+                Log.e("ERROR_LISTA_ANIMALES", "Error al cargar animales", e)
+
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(
+                        this@ListaAnimalesActivity,
+                        "Error animales: ${e.message}",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
             }
         }
     }

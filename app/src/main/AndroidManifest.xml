@@ -56,6 +56,7 @@ xmlns:tools="http://schemas.android.com/tools">
         <activity android:name=".tareas.CrearTareaActivity" />
         <activity android:name=".tareas.DetalleTareaActivity" />
         <activity android:name=".tareas.TareasPendientesActivity" />
+        <activity android:name=".activities.ListaAnimalesActivity" />
 
     </application>
 

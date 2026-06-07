@@ -29,18 +29,29 @@ class AnimalAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val animal = lista[position]
 
-        // Enlace de datos básico
-        holder.binding.tvNombre.text = animal.identificador
-        holder.binding.tvRazaEdad.text = "${animal.raza} · ${calcularEdad(animal.fechaNacimiento)}"
+        holder.binding.tvNombre.text = animal.identificador ?: "Sin identificador"
 
-        // Vinculación segura del Lote Genético de la vaca
+        val raza = animal.raza ?: "Sin raza"
+        val edad = calcularEdad(animal.fechaNacimiento)
+        holder.binding.tvRazaEdad.text = "$raza · $edad"
+
         val nombreLote = animal.loteGenetico?.nombre ?: "Sin lote asignado"
         holder.binding.tvLoteGenetico.text = "Lote: $nombreLote"
 
-        // Lógica visual condicional por sexo
-        val esMacho = animal.sexo.equals("Macho", ignoreCase = true) || animal.sexo.equals("MACHO", ignoreCase = true)
-        val colorBarra = if (esMacho) Color.parseColor("#1565C0") else Color.parseColor("#2E7D32")
-        val fondoRes = if (esMacho) R.drawable.animal_card_male else R.drawable.animal_card_female
+        val sexo = animal.sexo ?: ""
+        val esMacho = sexo.equals("MACHO", ignoreCase = true)
+
+        val colorBarra = if (esMacho) {
+            Color.parseColor("#1565C0")
+        } else {
+            Color.parseColor("#2E7D32")
+        }
+
+        val fondoRes = if (esMacho) {
+            R.drawable.animal_card_male
+        } else {
+            R.drawable.animal_card_female
+        }
 
         holder.binding.layoutFondo.setBackgroundResource(fondoRes)
         holder.binding.viewSexoBarra.setBackgroundColor(colorBarra)
@@ -51,19 +62,31 @@ class AnimalAdapter(
 
     override fun getItemCount(): Int = lista.size
 
-    private fun calcularEdad(fechaNacimiento: String): String {
+    private fun calcularEdad(fechaNacimiento: String?): String {
+        if (fechaNacimiento.isNullOrBlank()) {
+            return "Sin fecha"
+        }
+
         return try {
             val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-            val fecha = sdf.parse(fechaNacimiento) ?: return ""
+            val fecha = sdf.parse(fechaNacimiento) ?: return "Sin fecha"
+
             val hoy = Calendar.getInstance()
             val nac = Calendar.getInstance().apply { time = fecha }
+
             val meses = (hoy.get(Calendar.YEAR) - nac.get(Calendar.YEAR)) * 12 +
                     (hoy.get(Calendar.MONTH) - nac.get(Calendar.MONTH))
+
             when {
-                meses < 1  -> "< 1 mes"
+                meses < 1 -> "< 1 mes"
                 meses < 12 -> "$meses ${if (meses == 1) "mes" else "meses"}"
-                else       -> { val a = meses / 12; "$a ${if (a == 1) "año" else "años"}" }
+                else -> {
+                    val anios = meses / 12
+                    "$anios ${if (anios == 1) "año" else "años"}"
+                }
             }
-        } catch (e: Exception) { "" }
+        } catch (e: Exception) {
+            "Sin fecha"
+        }
     }
 }
