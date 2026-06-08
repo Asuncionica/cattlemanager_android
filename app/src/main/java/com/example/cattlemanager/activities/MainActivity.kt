@@ -2,10 +2,12 @@ package com.example.cattlemanager.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.method.PasswordTransformationMethod
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.cattlemanager.BuildConfig
+import com.example.cattlemanager.R
 import com.example.cattlemanager.databinding.ActivityMainBinding
 import com.example.cattlemanager.security.SessionManager
 import kotlinx.coroutines.CoroutineScope
@@ -48,6 +50,19 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         sessionManager = SessionManager(this)
+
+        var passwordVisible = false
+        binding.togglePasswordButton.setOnClickListener {
+            passwordVisible = !passwordVisible
+            if (passwordVisible) {
+                binding.passwordEditText.transformationMethod = null
+                binding.togglePasswordButton.setImageResource(R.drawable.ic_visibility_off)
+            } else {
+                binding.passwordEditText.transformationMethod = PasswordTransformationMethod.getInstance()
+                binding.togglePasswordButton.setImageResource(R.drawable.ic_visibility)
+            }
+            binding.passwordEditText.setSelection(binding.passwordEditText.text.length)
+        }
 
         val retrofit = Retrofit.Builder()
             .baseUrl(BuildConfig.BASE_URL)

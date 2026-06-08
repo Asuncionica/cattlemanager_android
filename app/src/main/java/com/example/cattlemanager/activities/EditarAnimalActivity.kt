@@ -34,9 +34,18 @@ class EditarAnimalActivity : AppCompatActivity() {
 
         animalId = intent.getLongExtra("id", 0)
 
+        val sexoAdapter = ArrayAdapter(
+            this,
+            R.layout.spinner_item_white,
+            listOf("MACHO", "HEMBRA")
+        )
+        sexoAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item)
+        binding.spinnerSexo.adapter = sexoAdapter
+
         binding.etIdentificador.setText(intent.getStringExtra("identificador"))
         binding.etRaza.setText(intent.getStringExtra("raza"))
-        binding.etSexo.setText(intent.getStringExtra("sexo"))
+        val sexoActual = intent.getStringExtra("sexo")?.uppercase() ?: ""
+        binding.spinnerSexo.setSelection(if (sexoActual.startsWith("H")) 1 else 0)
         binding.etFecha.setText(intent.getStringExtra("fecha"))
         binding.spinnerLoteGenetico.setOnTouchListener { _, _ ->
             usuarioHaTocadoSpinnerLote = true
@@ -120,10 +129,10 @@ class EditarAnimalActivity : AppCompatActivity() {
     private fun editarAnimal() {
         val identificador = binding.etIdentificador.text.toString().trim()
         val raza = binding.etRaza.text.toString().trim()
-        val sexo = binding.etSexo.text.toString().trim()
+        val sexo = binding.spinnerSexo.selectedItem.toString()
         val fecha = binding.etFecha.text.toString().trim()
 
-        if (identificador.isEmpty() || raza.isEmpty() || sexo.isEmpty() || fecha.isEmpty()) {
+        if (identificador.isEmpty() || raza.isEmpty() || fecha.isEmpty()) {
             Toast.makeText(this, "Rellena todos los campos", Toast.LENGTH_SHORT).show()
             return
         }
