@@ -96,20 +96,36 @@
                 android:textColorHint="#6D735E"
                 android:textSize="15sp" />
 
-            <EditText
-                android:id="@+id/passwordEditText"
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="52dp"
-                android:layout_marginTop="12dp"
-                android:background="@drawable/login_input_background"
-                android:hint="Contraseña"
-                android:inputType="textPassword"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp"
-                android:singleLine="true"
-                android:textColor="#1F2D1D"
-                android:textColorHint="#6D735E"
-                android:textSize="15sp" />
+                android:layout_marginTop="12dp">
+
+                <EditText
+                    android:id="@+id/passwordEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/login_input_background"
+                    android:hint="Contraseña"
+                    android:inputType="textPassword"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="48dp"
+                    android:singleLine="true"
+                    android:textColor="#1F2D1D"
+                    android:textColorHint="#6D735E"
+                    android:textSize="15sp" />
+
+                <ImageButton
+                    android:id="@+id/togglePasswordButton"
+                    android:layout_width="48dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="end|center_vertical"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Mostrar u ocultar contraseña"
+                    android:padding="12dp"
+                    android:src="@drawable/ic_visibility" />
+
+            </FrameLayout>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/loginButton"

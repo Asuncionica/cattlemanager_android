@@ -124,16 +124,13 @@
                     <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
                         android:text="SEXO" android:textColor="#AAFFFFFF" android:textSize="11sp"
                         android:textAllCaps="true" android:layout_marginBottom="6dp"/>
-                    <EditText
-                        android:id="@+id/etSexo"
-                        android:layout_width="match_parent" android:layout_height="52dp"
+                    <Spinner
+                        android:id="@+id/spinnerSexo"
+                        android:layout_width="match_parent"
+                        android:layout_height="52dp"
                         android:background="@drawable/form_input_dark"
-                        android:hint="Macho / Hembra"
-                        android:inputType="textCapWords"
-                        android:padding="14dp"
-                        android:textColor="#FFFFFF"
-                        android:textColorHint="#66FFFFFF"
-                        android:textSize="15sp"
+                        android:popupBackground="#FFFFFF"
+                        android:spinnerMode="dropdown"
                         android:layout_marginBottom="16dp"/>
 
                     <View android:layout_width="match_parent" android:layout_height="1dp"

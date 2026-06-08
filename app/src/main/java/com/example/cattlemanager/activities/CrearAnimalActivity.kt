@@ -29,6 +29,14 @@ class CrearAnimalActivity : AppCompatActivity() {
         binding.tvTituloFormulario.text = "Crear Animal"
         binding.btnVolver.setOnClickListener { finish() }
 
+        val sexoAdapter = ArrayAdapter(
+            this,
+            R.layout.spinner_item_white,
+            listOf("MACHO", "HEMBRA")
+        )
+        sexoAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item)
+        binding.spinnerSexo.adapter = sexoAdapter
+
         cargarGranja()
         cargarLotes()
 
@@ -78,10 +86,10 @@ class CrearAnimalActivity : AppCompatActivity() {
     private fun crearAnimal() {
         val identificador = binding.etIdentificador.text.toString().trim()
         val raza = binding.etRaza.text.toString().trim()
-        val sexo = binding.etSexo.text.toString().trim()
+        val sexo = binding.spinnerSexo.selectedItem.toString()
         val fecha = binding.etFecha.text.toString().trim()
 
-        if (identificador.isEmpty() || raza.isEmpty() || sexo.isEmpty() || fecha.isEmpty()) {
+        if (identificador.isEmpty() || raza.isEmpty() || fecha.isEmpty()) {
             Toast.makeText(this, "Rellena todos los campos", Toast.LENGTH_SHORT).show()
             return
         }
