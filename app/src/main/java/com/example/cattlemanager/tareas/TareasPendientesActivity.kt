@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.cattlemanager.databinding.ActivityTareasPendientesBinding
 import com.example.cattlemanager.model.Tarea
 import com.example.cattlemanager.network.RetrofitClient
+import com.example.cattlemanager.security.SessionManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -19,12 +20,14 @@ import kotlinx.coroutines.withContext
 class TareasPendientesActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityTareasPendientesBinding
-    private var peonId: Long = 0L
+    private lateinit var sessionManager: SessionManager
 
+    private var peonId: Long = 0L
     private var todasLasTareas: List<Tarea> = emptyList()
     private val urgentIds = mutableSetOf<Long>()
 
     private enum class Filtro { PENDIENTES, TODAS, COMPLETADAS }
+
     private var filtroActual = Filtro.PENDIENTES
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,20 +35,32 @@ class TareasPendientesActivity : AppCompatActivity() {
         binding = ActivityTareasPendientesBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        sessionManager = SessionManager(this)
+
         peonId = intent.getLongExtra(
             "peonId",
-            getSharedPreferences("app", MODE_PRIVATE).getLong("USUARIO_ID", 0L)
+            sessionManager.getUserId()
         )
 
         cargarUrgentes()
 
         binding.recyclerTareasPendientes.layoutManager = LinearLayoutManager(this)
 
-        binding.btnVolver.setOnClickListener { finish() }
+        binding.btnVolver.setOnClickListener {
+            finish()
+        }
 
-        binding.btnFiltroPendientes.setOnClickListener { cambiarFiltro(Filtro.PENDIENTES) }
-        binding.btnFiltroTodas.setOnClickListener { cambiarFiltro(Filtro.TODAS) }
-        binding.btnFiltroCompletadas.setOnClickListener { cambiarFiltro(Filtro.COMPLETADAS) }
+        binding.btnFiltroPendientes.setOnClickListener {
+            cambiarFiltro(Filtro.PENDIENTES)
+        }
+
+        binding.btnFiltroTodas.setOnClickListener {
+            cambiarFiltro(Filtro.TODAS)
+        }
+
+        binding.btnFiltroCompletadas.setOnClickListener {
+            cambiarFiltro(Filtro.COMPLETADAS)
+        }
 
         actualizarEstiloFiltros()
         cargarTareas()
@@ -59,6 +74,7 @@ class TareasPendientesActivity : AppCompatActivity() {
     private fun cargarUrgentes() {
         val prefs = getSharedPreferences("urgent_tasks", MODE_PRIVATE)
         val ids = prefs.getStringSet("ids", emptySet()) ?: emptySet()
+
         urgentIds.clear()
         urgentIds.addAll(ids.mapNotNull { it.toLongOrNull() })
     }
@@ -71,7 +87,12 @@ class TareasPendientesActivity : AppCompatActivity() {
     }
 
     private fun toggleUrgente(tareaId: Long) {
-        if (tareaId in urgentIds) urgentIds.remove(tareaId) else urgentIds.add(tareaId)
+        if (tareaId in urgentIds) {
+            urgentIds.remove(tareaId)
+        } else {
+            urgentIds.add(tareaId)
+        }
+
         guardarUrgentes()
         renderTareas()
     }
@@ -83,22 +104,34 @@ class TareasPendientesActivity : AppCompatActivity() {
     }
 
     private fun actualizarEstiloFiltros() {
-        val inactivoBg    = Color.TRANSPARENT
+        val inactivoBg = Color.TRANSPARENT
         val inactivoBorde = Color.parseColor("#55FFFFFF")
         val inactivoTexto = Color.parseColor("#CCFFFFFF")
 
-        data class BtnCfg(val color: String, val activo: Boolean,
-                          val btn: com.google.android.material.button.MaterialButton)
+        data class BtnCfg(
+            val color: String,
+            val activo: Boolean,
+            val btn: com.google.android.material.button.MaterialButton
+        )
 
         listOf(
-            BtnCfg("#FFB74D", filtroActual == Filtro.PENDIENTES,    binding.btnFiltroPendientes),
-            BtnCfg("#78909C", filtroActual == Filtro.TODAS,          binding.btnFiltroTodas),
-            BtnCfg("#81C784", filtroActual == Filtro.COMPLETADAS,    binding.btnFiltroCompletadas)
+            BtnCfg("#FFB74D", filtroActual == Filtro.PENDIENTES, binding.btnFiltroPendientes),
+            BtnCfg("#78909C", filtroActual == Filtro.TODAS, binding.btnFiltroTodas),
+            BtnCfg("#81C784", filtroActual == Filtro.COMPLETADAS, binding.btnFiltroCompletadas)
         ).forEach { (color, activo, btn) ->
             val c = Color.parseColor(color)
-            btn.backgroundTintList = ColorStateList.valueOf(if (activo) c else inactivoBg)
-            btn.strokeColor        = ColorStateList.valueOf(if (activo) c else inactivoBorde)
-            btn.setTextColor(if (activo) Color.WHITE else inactivoTexto)
+
+            btn.backgroundTintList = ColorStateList.valueOf(
+                if (activo) c else inactivoBg
+            )
+
+            btn.strokeColor = ColorStateList.valueOf(
+                if (activo) c else inactivoBorde
+            )
+
+            btn.setTextColor(
+                if (activo) Color.WHITE else inactivoTexto
+            )
         }
     }
 
@@ -108,7 +141,7 @@ class TareasPendientesActivity : AppCompatActivity() {
             Filtro.TODAS -> todasLasTareas
             Filtro.COMPLETADAS -> todasLasTareas.filter { it.completada }
         }
-        // Urgentes primero, luego por fecha ascendente (vence antes = arriba)
+
         return filtradas.sortedWith(
             compareByDescending<Tarea> { it.id in urgentIds }
                 .thenBy { it.fechaVencimiento }
@@ -123,13 +156,8 @@ class TareasPendientesActivity : AppCompatActivity() {
             Filtro.TODAS -> "${lista.size} en total"
             Filtro.COMPLETADAS -> "${lista.size} completada${if (lista.size != 1) "s" else ""}"
         }
-        binding.tvContadorPendientes.text = etiquetaContador
 
-        val mensajeVacio = when (filtroActual) {
-            Filtro.PENDIENTES -> "Sin tareas pendientes\nEstás al día. ¡Bien hecho!"
-            Filtro.TODAS -> "No tienes tareas asignadas"
-            Filtro.COMPLETADAS -> "Aún no has completado ninguna tarea"
-        }
+        binding.tvContadorPendientes.text = etiquetaContador
 
         if (lista.isEmpty()) {
             binding.layoutSinTareas.visibility = View.VISIBLE
@@ -137,6 +165,7 @@ class TareasPendientesActivity : AppCompatActivity() {
         } else {
             binding.layoutSinTareas.visibility = View.GONE
             binding.recyclerTareasPendientes.visibility = View.VISIBLE
+
             binding.recyclerTareasPendientes.adapter = TareaAdapter(
                 lista = lista,
                 onClick = { tarea -> abrirDetalle(tarea) },
@@ -151,6 +180,13 @@ class TareasPendientesActivity : AppCompatActivity() {
             binding.tvContadorPendientes.text = "0 pendientes"
             binding.layoutSinTareas.visibility = View.VISIBLE
             binding.recyclerTareasPendientes.visibility = View.GONE
+
+            Toast.makeText(
+                this,
+                "No se encontró el ID del peón",
+                Toast.LENGTH_SHORT
+            ).show()
+
             return
         }
 
@@ -158,16 +194,23 @@ class TareasPendientesActivity : AppCompatActivity() {
 
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                val todas = api.obtenerTareas().content.filter { it.peon?.id == peonId }
+                val respuesta = api.obtenerTareasPorPeon(peonId)
+                val tareas = respuesta.content
 
                 withContext(Dispatchers.Main) {
-                    todasLasTareas = todas
+                    todasLasTareas = tareas
                     renderTareas()
                 }
+
             } catch (e: Exception) {
                 e.printStackTrace()
+
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(this@TareasPendientesActivity, "Error al cargar tareas", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this@TareasPendientesActivity,
+                        "Error al cargar tareas del peón",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }
@@ -175,6 +218,7 @@ class TareasPendientesActivity : AppCompatActivity() {
 
     private fun abrirDetalle(tarea: Tarea) {
         val intent = Intent(this, DetalleTareaActivity::class.java)
+
         intent.putExtra("id", tarea.id)
         intent.putExtra("titulo", tarea.titulo)
         intent.putExtra("descripcion", tarea.descripcion)
@@ -184,6 +228,7 @@ class TareasPendientesActivity : AppCompatActivity() {
         intent.putExtra("peonId", tarea.peon?.id ?: 0L)
         intent.putExtra("peonNombre", tarea.peon?.nombre ?: "")
         intent.putExtra("rolUsuario", "PEON")
+
         startActivity(intent)
     }
 }

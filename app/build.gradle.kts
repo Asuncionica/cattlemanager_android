@@ -17,12 +17,12 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         // Cambiar la IP según el entorno de desarrollo
-        buildConfigField("String", "BASE_URL", "\"http://192.168.1.14:8085/\"")
+        buildConfigField("String", "BASE_URL", "\"http://192.168.1.131:8085/\"")
     }
 
     buildTypes {
         debug {
-            buildConfigField("String", "BASE_URL", "\"http://192.168.1.14:8085/\"")
+            buildConfigField("String", "BASE_URL", "\"http://192.168.1.131:8085/\"")
         }
         release {
             isMinifyEnabled = true
@@ -32,7 +32,7 @@ android {
                 "proguard-rules.pro"
             )
             // En producción cambiar a la URL HTTPS real
-            buildConfigField("String", "BASE_URL", "\"http://192.168.1.14:8085/\"")
+            buildConfigField("String", "BASE_URL", "\"http://192.168.1.131:8085/\"")
         }
     }
     compileOptions {

@@ -41,6 +41,7 @@ xmlns:tools="http://schemas.android.com/tools">
         <activity android:name=".eventosproductivos.EventosProductivosPorTipoActivity" />
         <activity android:name=".eventosproductivos.CrearEventoProductivoActivity" />
         <activity android:name=".eventosproductivos.DetalleEventoProductivoActivity" />
+        <activity android:name=".eventosproductivos.ListaEventosProductivosActivity" />
         <activity android:name=".granja.GranjaActivity"/>
         <activity android:name=".granja.EditarGranjaActivity"/>
         <activity android:name=".granja.CrearGranjaActivity" />
