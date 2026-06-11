@@ -51,6 +51,30 @@ class MainActivity : AppCompatActivity() {
 
         sessionManager = SessionManager(this)
 
+        // =========================================================================
+        // ◄ COMPROBACIÓN DE PERSISTENCIA (SESIÓN ACTIVA) ►
+        // Si el usuario ya está logueado y el token no ha expirado, salta el login
+        // =========================================================================
+        if (sessionManager.isLoggedIn()) {
+            val rolId = sessionManager.getRoleId()
+            val nombreUsuario = sessionManager.getUserName() ?: ""
+
+            val intent = when (rolId.toInt()) {
+                1 -> Intent(this, VeterinarioActivity::class.java)
+                2 -> Intent(this, EncargadoActivity::class.java)
+                3 -> Intent(this, PeonActivity::class.java)
+                else -> null
+            }
+
+            if (intent != null) {
+                intent.putExtra("nombreUsuario", nombreUsuario)
+                startActivity(intent)
+                finish() // Cierra MainActivity para que no puedan regresar atrás al login
+                return // Detiene el onCreate aquí para que no dibuje el formulario
+            }
+        }
+        // =========================================================================
+
         var passwordVisible = false
         binding.togglePasswordButton.setOnClickListener {
             passwordVisible = !passwordVisible
