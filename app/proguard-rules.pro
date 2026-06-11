@@ -7,7 +7,7 @@
 
 # Gson
 -keepattributes EnclosingMethod
--keep class sun.misc.Unsafe { *; }
+-dontwarn sun.misc.Unsafe
 -keep class com.google.gson.** { *; }
 
 # Modelos de datos (evitar que Gson falle al deserializar)
